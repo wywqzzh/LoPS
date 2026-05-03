@@ -29,7 +29,7 @@
 
 ### 每轮状态记录位置
 - **D-07:** 每轮重构使用独立目录记录状态和材料，推荐根路径为 `.planning/runs/<run-id>/`。
-- **D-08:** 每轮目录应能容纳 intake、analysis、proposal、verification 等材料，但 Phase 1 只需要定义契约和初始模板，不需要实现后续阶段的完整内容。
+- **D-08:** Phase 1 只建立最小可用骨架：`.planning/runs/` 目录约定和一个 intake Markdown 模板。不要在本阶段提前设计完整的 analysis、proposal、verification 模板或复杂状态系统。
 - **D-09:** 不把科研重构轮次直接塞进 `.planning/phases/...`，避免 GSD 阶段目录和科研脚本轮次混淆。
 
 ### 轮次命名方式
@@ -39,6 +39,7 @@
 ### the agent's Discretion
 - Phase 1 计划可以决定 Markdown 模板的具体章节标题和字段顺序，只要遵守 D-01 到 D-11。
 - Phase 1 计划可以决定项目级 README 是新建根目录 `README.md` 还是修正当前异常的 `README.md/` 目录结构，但不得破坏用户已有内容。
+- Phase 1 必须保持简单：优先让第一轮重构尽快开始，而不是构建完整任务管理系统。
 
 </decisions>
 
@@ -73,7 +74,7 @@
 - 规划文档和对用户说明应使用中文；配置键名和代码路径可以保留英文。
 
 ### Integration Points
-- Phase 1 的主要落点应是项目级 README 和 `.planning/runs/` 下的模板/说明。
+- Phase 1 的主要落点应是项目级 README 和一个 `.planning/runs/` intake 模板。
 - 后续 Phase 2 应读取每轮独立目录中的 intake 信息，而不是重新向用户索要已经记录的目标脚本、环境和数据来源。
 
 </code_context>
@@ -83,6 +84,7 @@
 
 - 用户明确选择：A=1、B=1、C=1、D=1、E=1。
 - 这代表：Markdown 模板为主、最小阻塞、简洁 README、每轮独立目录、日期加短名。
+- 用户随后补充：Phase 1 可以简单些。因此 Phase 1 不应扩展成完整多轮任务管理系统，只交付启动第一轮重构所需的最小骨架。
 
 </specifics>
 
