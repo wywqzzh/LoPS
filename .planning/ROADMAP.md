@@ -11,7 +11,7 @@ v1 的目标是把 LoPS 建成一套可重复的科研脚本重构流程：Phase
 - Decimal phases (2.1, 2.2): Urgent insertions marked with INSERTED
 
 - [x] **Phase 1: 项目骨架与任务接收契约** - 定义每轮重构如何接收目标脚本、环境、数据和状态记录。 (completed 2026-05-03)
-- [ ] **Phase 2: 重构 generateGrammar 模块** - 作为第一项完整脚本重构，在一个 phase 内完成 generateGrammar.py 的深度分析、多轮讨论、方案确认、实现和一致性验证。
+- [x] **Phase 2: 重构 generateGrammar 模块** - 作为第一项完整脚本重构，在一个 phase 内完成 generateGrammar.py 的深度分析、多轮讨论、方案确认、实现和一致性验证。 (completed 2026-05-04)
 
 ## Phase Details
 
@@ -70,7 +70,7 @@ Plans:
 - [x] 02-04: 实现 legacy/structured 输出、pipeline 和运行脚本。
 
 **Wave 5** *(blocked on Wave 4 completion)*
-- [ ] 02-05: 建立验证脚本、数据来源记录和完成验证报告。
+- [x] 02-05: 建立验证脚本、数据来源记录和完成验证报告。
 
 ## 重构 Phase 模式
 
@@ -112,4 +112,4 @@ Phases execute in numeric order: 1 -> 2 -> ...
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. 项目骨架与任务接收契约 | 2/2 | Complete    | 2026-05-03 |
-| 2. 重构 generateGrammar 模块 | 4/5 | Executing | - |
+| 2. 重构 generateGrammar 模块 | 5/5 | Complete | 2026-05-04 |

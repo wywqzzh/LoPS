@@ -44,21 +44,21 @@
 
 ### 数据与运行脚本
 
-- [ ] **DATA-01**: 系统可以把确认需要纳入项目的数据整理到 `data` 下的合适位置。
+- [x] **DATA-01**: 系统可以把确认需要纳入项目的数据整理到 `data` 下的合适位置。
 - [x] **DATA-02**: 系统可以在 `script` 下创建运行新模块的脚本。
 - [x] **DATA-03**: 运行脚本可以使用整理后的数据执行新实现并生成可比较输出。
-- [ ] **DATA-04**: 数据迁移记录必须说明文件来源、用途和与原始脚本路径的关系。
+- [x] **DATA-04**: 数据迁移记录必须说明文件来源、用途和与原始脚本路径的关系。
 
 ### 一致性验证
 
-- [ ] **VERF-01**: 系统可以使用相同输入运行原始实现和重构后实现。
-- [ ] **VERF-02**: 如果原始代码无随机过程，系统不额外设置随机种子。
-- [ ] **VERF-03**: 如果原始代码有随机过程且未固定种子，系统可以复制临时旧代码到 `src/LoPS/temp` 并加入统一随机种子。
-- [ ] **VERF-04**: 系统可以使用同一随机种子运行临时旧实现和新实现。
-- [ ] **VERF-05**: 系统可以比较旧实现和新实现的输出，默认要求完全一致。
-- [ ] **VERF-06**: 如果完全一致不现实，系统必须记录数值容差、原因和对比结果。
-- [ ] **VERF-07**: 验证通过后，系统必须删除 `src/LoPS/temp` 中用于验证的临时代码。
-- [ ] **VERF-08**: 每轮完成后必须留下运行结果、验证方式和一致性结论。
+- [x] **VERF-01**: 系统可以使用相同输入运行原始实现和重构后实现。
+- [x] **VERF-02**: 如果原始代码无随机过程，系统不额外设置随机种子。
+- [x] **VERF-03**: 如果原始代码有随机过程且未固定种子，系统可以复制临时旧代码到 `src/LoPS/temp` 并加入统一随机种子。
+- [x] **VERF-04**: 系统可以使用同一随机种子运行临时旧实现和新实现。
+- [x] **VERF-05**: 系统可以比较旧实现和新实现的输出，默认要求完全一致。
+- [x] **VERF-06**: 如果完全一致不现实，系统必须记录数值容差、原因和对比结果。
+- [x] **VERF-07**: 验证通过后，系统必须删除 `src/LoPS/temp` 中用于验证的临时代码。
+- [x] **VERF-08**: 每轮完成后必须留下运行结果、验证方式和一致性结论。
 - [x] **VERF-09**: 对目标脚本调用到并参与重构的本地模块，系统必须进行模块级行为测试。
 - [x] **VERF-10**: 模块级行为测试必须在相同数据和相同随机参数下，对比重构模块与原始模块的结果一致性。
 
@@ -111,18 +111,18 @@
 | ARCH-02 | Phase 2 | Complete |
 | ARCH-03 | Phase 2 | Complete |
 | ARCH-04 | Phase 2 | Complete |
-| DATA-01 | Phase 2 | Pending |
+| DATA-01 | Phase 2 | Complete |
 | DATA-02 | Phase 2 | Complete |
 | DATA-03 | Phase 2 | Complete |
-| DATA-04 | Phase 2 | Pending |
-| VERF-01 | Phase 2 | Pending |
-| VERF-02 | Phase 2 | Pending |
-| VERF-03 | Phase 2 | Pending |
-| VERF-04 | Phase 2 | Pending |
-| VERF-05 | Phase 2 | Pending |
-| VERF-06 | Phase 2 | Pending |
-| VERF-07 | Phase 2 | Pending |
-| VERF-08 | Phase 2 | Pending |
+| DATA-04 | Phase 2 | Complete |
+| VERF-01 | Phase 2 | Complete |
+| VERF-02 | Phase 2 | Complete |
+| VERF-03 | Phase 2 | Complete |
+| VERF-04 | Phase 2 | Complete |
+| VERF-05 | Phase 2 | Complete |
+| VERF-06 | Phase 2 | Complete |
+| VERF-07 | Phase 2 | Complete |
+| VERF-08 | Phase 2 | Complete |
 | VERF-09 | Phase 2 | Complete |
 | VERF-10 | Phase 2 | Complete |
 

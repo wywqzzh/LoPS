@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 02-04-PLAN.md
-last_updated: "2026-05-04T12:50:14.000Z"
+status: complete
+stopped_at: Completed Phase 2
+last_updated: "2026-05-04T12:57:28.000Z"
 last_activity: 2026-05-04
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 7
-  completed_plans: 6
-  percent: 86
+  completed_plans: 7
+  percent: 100
 ---
 
 # 项目状态
@@ -21,22 +21,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-03)
 
 **核心价值:** 每次重构都必须在不改变科研计算结果的前提下，把外部脚本重新设计并实现为边界清晰、可运行、可验证的 LoPS 模块。  
-**当前重点:** Phase 2 — 重构 generateGrammar 模块
+**当前重点:** Phase 2 已完成 — 重构 generateGrammar 模块
 
 ## Current Position（当前位置）
 
 Phase: 2
-Plan: 02-05 待执行
-Status: Executing Phase 02
+Plan: 全部完成
+Status: Complete
 Last activity: 2026-05-04
 
-Progress: [█████████░] 86%
+Progress: [██████████] 100%
 
 ## Performance Metrics（执行指标）
 
 **速度:**
 
-- 已完成计划总数: 6
+- 已完成计划总数: 7
 - 平均耗时: n/a
 - 总执行时间: 0 hours
 
@@ -48,7 +48,7 @@ Progress: [█████████░] 86%
 
 **近期趋势:**
 
-- 最近 5 个计划: 02-01, 02-02, 02-03, 02-04
+- 最近 5 个计划: 02-01, 02-02, 02-03, 02-04, 02-05
 - 趋势: n/a
 
 *每个计划完成后更新*
@@ -69,15 +69,16 @@ Progress: [█████████░] 86%
 - Phase 2 执行结论：`Utils.count`、`BDscore` 和 `learnBayesNetBlock` 已在 `src/LoPS/generate_grammar/scoring.py` 中重实现，并通过旧新模块级行为对照测试。
 - Phase 2 执行结论：`GrammarLearner` 已使用 `"G-L"` 形式 token 重实现核心 chunk 学习和 skip-gram 检测，不生成旧占位符。
 - Phase 2 执行结论：pipeline 已输出顶层 `legacy` 和 `structured` 两个字典，并通过运行脚本 smoke test 生成 34 个文件。
+- Phase 2 验证结论：34/34 新输出的 `legacy` 与旧 `grammar2/` 基准逐 key/value 精确一致，`src/LoPS/temp` 无残留。
 
 ### Pending Todos（待办）
 
-- 继续执行 Phase 2 的剩余计划：`02-05`。
+- Phase 2 已完成。下一项重构需要用户提供新的目标脚本、运行环境、运行命令和数据来源。
 
 ### Blockers/Concerns（阻塞与关注点）
 
 - Phase 2 深度分析报告、讨论上下文和重构设计均已完成。
-- Phase 2 已完成 `02-01` 到 `02-04`，下一步执行 `02-05-PLAN.md`。
+- 无当前阻塞。Phase 2 验证已通过。
 
 ## Deferred Items（延后事项）
 
@@ -88,6 +89,6 @@ Progress: [█████████░] 86%
 
 ## Session Continuity（会话连续性）
 
-Last session: 2026-05-04T12:50:14.000Z
-Stopped at: Completed 02-04-PLAN.md
+Last session: 2026-05-04T12:57:28.000Z
+Stopped at: Completed Phase 2
 Resume file: None
