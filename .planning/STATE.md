@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-05-04T12:29:37.000Z"
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-05-04T12:39:10.000Z"
 last_activity: 2026-05-04
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 7
-  completed_plans: 4
-  percent: 57
+  completed_plans: 5
+  percent: 71
 ---
 
 # 项目状态
@@ -26,17 +26,17 @@ See: .planning/PROJECT.md (updated 2026-05-03)
 ## Current Position（当前位置）
 
 Phase: 2
-Plan: 02-03 待执行
+Plan: 02-04 待执行
 Status: Executing Phase 02
 Last activity: 2026-05-04
 
-Progress: [██████░░░░] 57%
+Progress: [███████░░░] 71%
 
 ## Performance Metrics（执行指标）
 
 **速度:**
 
-- 已完成计划总数: 4
+- 已完成计划总数: 5
 - 平均耗时: n/a
 - 总执行时间: 0 hours
 
@@ -48,7 +48,7 @@ Progress: [██████░░░░] 57%
 
 **近期趋势:**
 
-- 最近 5 个计划: 02-01, 02-02
+- 最近 5 个计划: 02-01, 02-02, 02-03
 - 趋势: n/a
 
 *每个计划完成后更新*
@@ -67,15 +67,16 @@ Progress: [██████░░░░] 57%
 - Phase 2 分析结论：默认运行实际依赖 `generateGrammar.py`、`src.bayesianScore.BDscore`、`src.bayesianScore.learnBayesNetBlock` 和 `src.Utils.count`。
 - Phase 2 分析结论：sandbox 全量 34 个输出与原项目既有 `grammar2/` 输出全部 MD5 一致。
 - Phase 2 执行结论：`Utils.count`、`BDscore` 和 `learnBayesNetBlock` 已在 `src/LoPS/generate_grammar/scoring.py` 中重实现，并通过旧新模块级行为对照测试。
+- Phase 2 执行结论：`GrammarLearner` 已使用 `"G-L"` 形式 token 重实现核心 chunk 学习和 skip-gram 检测，不生成旧占位符。
 
 ### Pending Todos（待办）
 
-- 继续执行 Phase 2 的剩余计划：`02-03` 到 `02-05`。
+- 继续执行 Phase 2 的剩余计划：`02-04` 到 `02-05`。
 
 ### Blockers/Concerns（阻塞与关注点）
 
 - Phase 2 深度分析报告、讨论上下文和重构设计均已完成。
-- Phase 2 已完成 `02-01` 和 `02-02`，下一步执行 `02-03-PLAN.md`。
+- Phase 2 已完成 `02-01`、`02-02` 和 `02-03`，下一步执行 `02-04-PLAN.md`。
 
 ## Deferred Items（延后事项）
 
@@ -86,6 +87,6 @@ Progress: [██████░░░░] 57%
 
 ## Session Continuity（会话连续性）
 
-Last session: 2026-05-04T12:29:37.000Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-05-04T12:39:10.000Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None

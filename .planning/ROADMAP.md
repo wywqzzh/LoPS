@@ -64,7 +64,7 @@ Plans:
 - [x] 02-02: 重实现 scoring 模块并对比原始模块行为。
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 02-03: 实现 token 化 grammar 学习核心。
+- [x] 02-03: 实现 token 化 grammar 学习核心。
 
 **Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 02-04: 实现 legacy/structured 输出、pipeline 和运行脚本。
@@ -112,4 +112,4 @@ Phases execute in numeric order: 1 -> 2 -> ...
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. 项目骨架与任务接收契约 | 2/2 | Complete    | 2026-05-03 |
-| 2. 重构 generateGrammar 模块 | 2/5 | Executing | - |
+| 2. 重构 generateGrammar 模块 | 3/5 | Executing | - |
