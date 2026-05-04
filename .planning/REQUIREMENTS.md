@@ -86,26 +86,26 @@
 | ANLY-02 | Phase 2 | Pending |
 | ANLY-03 | Phase 2 | Pending |
 | ANLY-04 | Phase 2 | Pending |
-| DSGN-01 | Phase 3 | Pending |
-| DSGN-02 | Phase 3 | Pending |
-| DSGN-03 | Phase 3 | Pending |
-| DSGN-04 | Phase 3 | Pending |
-| MOD-01 | Phase 4 | Pending |
-| MOD-02 | Phase 4 | Pending |
-| MOD-03 | Phase 4 | Pending |
-| MOD-04 | Phase 4 | Pending |
-| DATA-01 | Phase 4 | Pending |
-| DATA-02 | Phase 4 | Pending |
-| DATA-03 | Phase 4 | Pending |
-| DATA-04 | Phase 4 | Pending |
-| VERF-01 | Phase 5 | Pending |
-| VERF-02 | Phase 5 | Pending |
-| VERF-03 | Phase 5 | Pending |
-| VERF-04 | Phase 5 | Pending |
-| VERF-05 | Phase 5 | Pending |
-| VERF-06 | Phase 5 | Pending |
-| VERF-07 | Phase 5 | Pending |
-| VERF-08 | Phase 5 | Pending |
+| DSGN-01 | Phase 2 | Pending |
+| DSGN-02 | Phase 2 | Pending |
+| DSGN-03 | Phase 2 | Pending |
+| DSGN-04 | Phase 2 | Pending |
+| MOD-01 | Phase 2 | Pending |
+| MOD-02 | Phase 2 | Pending |
+| MOD-03 | Phase 2 | Pending |
+| MOD-04 | Phase 2 | Pending |
+| DATA-01 | Phase 2 | Pending |
+| DATA-02 | Phase 2 | Pending |
+| DATA-03 | Phase 2 | Pending |
+| DATA-04 | Phase 2 | Pending |
+| VERF-01 | Phase 2 | Pending |
+| VERF-02 | Phase 2 | Pending |
+| VERF-03 | Phase 2 | Pending |
+| VERF-04 | Phase 2 | Pending |
+| VERF-05 | Phase 2 | Pending |
+| VERF-06 | Phase 2 | Pending |
+| VERF-07 | Phase 2 | Pending |
+| VERF-08 | Phase 2 | Pending |
 
 **Coverage:**
 - v1 requirements: 28 total
@@ -114,4 +114,4 @@
 
 ---
 *Requirements defined: 2026-05-03*
-*Last updated: 2026-05-03 after initial definition*
+*Last updated: 2026-05-04 after changing each refactor to one phase*
