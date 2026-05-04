@@ -9,15 +9,16 @@
 本阶段交付 generateGrammar.py 脚本的完整重构：深度分析原始行为（包括依赖模块 bayesianScore.py）、制定重构方案、在 LoPS 中实现新模块、验证新旧输出完全一致。
 
 **范围包括**：
-- 分析目标脚本的功能、执行流程、依赖关系、输入输出和随机过程
+- 重构 3 个模块：generateGrammar.py (664行)、bayesianScore.py (372行)、Utils.py (104行)
+- 分析所有模块的功能、执行流程、依赖关系、输入输出和随机过程
 - 设计模块边界、接口和数据路径
-- 在 `src/LoPS/grammar_chunking/` 实现新模块
+- 在 `src/LoPS/grammar_chunking/` 实现新模块（utils.py, bayesian_score.py, chunking.py）
 - 在 `script/` 创建运行脚本
-- 使用相同输入和随机种子验证新旧输出一致性
-- 清理 `src/LoPS/temp/` 中的临时验证代码
+- 验证每个模块的输出一致性（单元测试 + 集成测试 + 端到端测试）
+- 验证全部 34 个输入文件的输出一致性
 
 **范围不包括**：
-- 重构 bayesianScore.py（属于外部项目）
+- 重构 condindepEmp.py（被导入但未在当前执行路径中使用）
 - 复制输入数据到 LoPS 项目（只记录外部路径）
 - 优化算法性能或改进算法逻辑
 - 添加新功能或扩展原有功能
@@ -28,9 +29,10 @@
 ## Implementation Decisions
 
 ### 模块拆分策略
-- **D-01:** 采用三层拆分架构：数据层（加载/保存 pickle）、算法层（Chunking 核心逻辑）、工具层（BDscore、KL 散度等计算）
-- **D-02:** bayesianScore.py 不纳入重构范围，新模块直接导入外部的 bayesianScore.py
-- **D-03:** 模块结构为 `src/LoPS/grammar_chunking/`，包含 `__init__.py`、`data_loader.py`、`chunking.py`、`tools.py`
+- **D-01:** 重构 3 个模块：generateGrammar.py (664行)、bayesianScore.py (372行)、Utils.py (104行)
+- **D-02:** condindepEmp.py 被 bayesianScore.py 导入但在当前执行路径中未使用，不纳入重构范围
+- **D-03:** 新模块结构：`src/LoPS/grammar_chunking/` 包含 `utils.py`（count函数）、`bayesian_score.py`（BDscore和learnBayesNetBlock）、`chunking.py`（主算法逻辑）
+- **D-04:** 每个依赖模块都需要独立验证输出一致性（单元测试 + 集成测试）
 
 ### 随机种子处理
 - **D-04:** 当前执行路径 `main("ghost2", 0.5, False)` 中**无随机源被触发**（已通过代码追踪确认）
@@ -50,11 +52,11 @@
 - **D-13:** 随机种子参数可选，默认 None（保持原始行为），验证时传入固定值
 
 ### 验证策略
-- **D-09:** 由于原始代码是确定性的（无随机源），验证应该**完全一致**（pickle 字节级比较）
-- **D-10:** 如果字节级比较失败，逐字段比较，对浮点数组使用 `np.allclose(rtol=1e-9, atol=1e-12)`
-- **D-11:** 先验证 1 个文件（快速反馈），通过后验证全部 34 个文件
-- **D-12:** 记录每个文件的验证结果和任何使用的数值容差
-- **D-13:** 不需要创建 `src/LoPS/temp/` 临时代码（原始代码已是确定性的）
+- **D-09:** 分层验证：单元测试（utils.count）→ 集成测试（bayesian_score.BDscore, learnBayesNetBlock）→ 端到端测试（完整流程）
+- **D-10:** 由于原始代码是确定性的（无随机源），验证应该**完全一致**（pickle 字节级比较）
+- **D-11:** 如果字节级比较失败，逐字段比较，对浮点数组使用 `np.allclose(rtol=1e-9, atol=1e-12)`
+- **D-12:** 先验证 1 个文件（快速反馈），通过后验证全部 34 个文件
+- **D-13:** 记录每个模块和每个文件的验证结果
 
 ### Claude's Discretion
 - 具体的类和函数命名（只要清晰表达意图）
