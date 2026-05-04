@@ -18,6 +18,7 @@
 - [ ] **ANLY-02**: 系统可以记录目标脚本的输入、输出、关键中间结果和副作用。
 - [ ] **ANLY-03**: 系统可以记录目标脚本依赖的本地文件、外部模块、数据文件和工作目录假设。
 - [ ] **ANLY-04**: 系统可以识别原始代码中是否存在随机过程，以及是否已经固定随机种子。
+- [ ] **ANLY-05**: 系统可以识别目标脚本在本轮有效分支中调用到的其它本地模块，并把这些模块纳入同一轮分析和重构范围。
 
 ### 方案设计
 
@@ -32,6 +33,7 @@
 - [ ] **MOD-02**: 新模块可以通过显式参数接收输入路径、输出路径、配置和必要随机种子。
 - [ ] **MOD-03**: 新模块不得依赖未记录的当前工作目录、隐藏全局状态或外部数据路径。
 - [ ] **MOD-04**: 系统可以保留原始算法语义，同时改进结构、命名和可读性。
+- [ ] **MOD-05**: 目标脚本调用到的本地模块也必须重构到 LoPS 的新模块结构中，除非用户明确确认某个模块或分支不参与本轮重构。
 
 ### 架构质量
 
@@ -57,6 +59,8 @@
 - [ ] **VERF-06**: 如果完全一致不现实，系统必须记录数值容差、原因和对比结果。
 - [ ] **VERF-07**: 验证通过后，系统必须删除 `src/LoPS/temp` 中用于验证的临时代码。
 - [ ] **VERF-08**: 每轮完成后必须留下运行结果、验证方式和一致性结论。
+- [ ] **VERF-09**: 对目标脚本调用到并参与重构的本地模块，系统必须进行模块级行为测试。
+- [ ] **VERF-10**: 模块级行为测试必须在相同数据和相同随机参数下，对比重构模块与原始模块的结果一致性。
 
 ## v2 需求
 
@@ -93,6 +97,7 @@
 | ANLY-02 | Phase 2 | Pending |
 | ANLY-03 | Phase 2 | Pending |
 | ANLY-04 | Phase 2 | Pending |
+| ANLY-05 | Phase 2 | Pending |
 | DSGN-01 | Phase 2 | Pending |
 | DSGN-02 | Phase 2 | Pending |
 | DSGN-03 | Phase 2 | Pending |
@@ -101,6 +106,7 @@
 | MOD-02 | Phase 2 | Pending |
 | MOD-03 | Phase 2 | Pending |
 | MOD-04 | Phase 2 | Pending |
+| MOD-05 | Phase 2 | Pending |
 | ARCH-01 | Phase 2 | Pending |
 | ARCH-02 | Phase 2 | Pending |
 | ARCH-03 | Phase 2 | Pending |
@@ -117,12 +123,14 @@
 | VERF-06 | Phase 2 | Pending |
 | VERF-07 | Phase 2 | Pending |
 | VERF-08 | Phase 2 | Pending |
+| VERF-09 | Phase 2 | Pending |
+| VERF-10 | Phase 2 | Pending |
 
 **Coverage:**
-- v1 requirements: 32 total
-- Mapped to phases: 32
+- v1 requirements: 36 total
+- Mapped to phases: 36
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-05-03*
-*Last updated: 2026-05-04 after adding architecture-quality requirements*
+*Last updated: 2026-05-04 after adding dependency-module refactor and behavior-test requirements*
