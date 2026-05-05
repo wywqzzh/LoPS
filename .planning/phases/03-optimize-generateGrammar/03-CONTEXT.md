@@ -77,11 +77,21 @@
 - **D-28:** 若某个优化会改变浮点计算顺序、候选并列顺序、字典顺序或 pickle 结构，plan 必须先识别风险并设计针对性验证。
 - **D-29:** 若验证失败，不能降低验证标准；应定位差异来源，并回到设计或实现修正。
 
+### 计划阶段补充约束
+
+- **D-30:** `GrammarLearner.learn()` 可以引入 `ParsedSequence` 统一承载解析结果，但不得先建立 `TransitionStats` 再筛选候选；当前候选统计依赖 `pair_posterior`，其中包含 Dirichlet 先验信息，不等同于纯数据频次。
+- **D-31:** 本阶段暂不采用“先按 pair frequency 预筛选，再计算 BD score”的性能优化；候选评分顺序必须保持当前语义：先计算无父节点得分、有父节点得分和 `pair_posterior`，再按现有规则过滤和选择。
+- **D-32:** `_parse_longest()` 与 `_parse_probabilities()` 可以改为共享一次解析结果，但解析序列、位置级 grammar、token 概率、token 频次和时间占比必须与当前实现完全一致。
+- **D-33:** `_organize_discrete_data()` 可以改为更直接的数组化实现，但必须证明 `data_parent`、`data_child`、`data_condition`、`condition_state` 和学习得到的状态依赖矩阵在相同输入下与当前过程一致。
+- **D-34:** `detect_skip_gram()` 可以重构内部表达，但 `N` 的映射逻辑、插入位置、候选父子关系、BD score、posterior 和最终 skip-gram 结果必须保持过程一致。
+- **D-35:** 本阶段验证不能只比较最终输出；每个被优化的关键函数都必须有相同输入下的重要中间指标过程一致性测试。
+- **D-36:** 新增过程测试之外，Phase 2 已有测试和全量验证必须继续通过；包括 `unittest discover -s tests` 和 34 个被试的 `validate_generate_grammar.py --quiet`。
+
 ### the agent's Discretion
 
 - planner 可以决定具体文件拆分、辅助函数命名、类型别名位置和测试文件组织，只要遵守核心 tuple token、数组状态矩阵、正式输出独立于旧格式、单文件核心优先的决策。
 - planner 可以决定是否把 `GrammarLearner` 内部拆成更小的私有方法，但不得引入过度抽象或复杂类层级。
-- planner 可以决定如何实现等价 pair posterior 计算，但必须在测试中证明与当前后验语义一致。
+- planner 可以决定如何实现等价 pair posterior 计算，但不得改变当前候选评分顺序，也不得把 pair posterior 误写为纯 raw count。
 - planner 可以设计性能观察脚本或 benchmark 片段，但不得把性能脚本混入正式核心模块。
 
 </decisions>

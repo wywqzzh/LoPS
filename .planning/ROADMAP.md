@@ -12,6 +12,7 @@ v1 的目标是把 LoPS 建成一套可重复的科研脚本重构流程：Phase
 
 - [x] **Phase 1: 项目骨架与任务接收契约** - 定义每轮重构如何接收目标脚本、环境、数据和状态记录。 (completed 2026-05-03)
 - [x] **Phase 2: 重构 generateGrammar 模块** - 作为第一项完整脚本重构，在一个 phase 内完成 generateGrammar.py 的深度分析、多轮讨论、方案确认、实现和一致性验证。 (completed 2026-05-04)
+- [ ] **Phase 3: generateGrammar 顶层算法审计与优化** - 在保持科研结果可验证的前提下，从顶层学习流程开始重新审计算法设计，识别可删除、可合并、可缓存或可改写的逻辑，再决定底层函数的保留、删除或修改。
 
 ## Phase Details
 
@@ -72,9 +73,44 @@ Plans:
 **Wave 5** *(blocked on Wave 4 completion)*
 - [x] 02-05: 建立验证脚本、数据来源记录和完成验证报告。
 
+### Phase 3: generateGrammar 顶层算法审计与优化
+**Goal**: 对 Phase 2 已完成的 `generate_grammar` 模块进行算法级优化。优化必须从顶层学习流程和数据流开始，而不是先局部微调底层函数；顶层方案需要决定哪些底层算法应保留、删除、合并、缓存、向量化或重写，并通过全量验证证明结果仍可追溯。
+**Depends on**: Phase 2
+**Requirements**: [OPT-01, OPT-02, OPT-03, OPT-04, OPT-05, OPT-06, OPT-07, OPT-08]
+**UI hint**: no
+**Success Criteria** (what must be TRUE):
+  1. 已产出当前 `generate_grammar` 顶层算法分析报告，覆盖 pipeline、`GrammarLearner.learn`、候选生成、状态矩阵构建、BD score、收敛逻辑、skip-gram 检测的调用关系、数据形状和复杂度。
+  2. discuss 阶段从顶层流程开始确认哪些计算是必要的，哪些可以延迟、缓存、合并、删除或换成更直接的表达。
+  3. 每个优化点都说明影响范围：涉及的顶层步骤、底层函数、数据结构、输出字段和验证风险。
+  4. plan 阶段先形成完整优化设计，经用户确认后才修改正式实现代码，避免零散底层改动先行。
+  5. 优化设计不得重新引入旧版本代码、旧版本数据路径或旧格式兼容逻辑。
+  6. 优化实现继续遵守 KISS 原则，优先选择清晰、直接、可验证的算法和数据结构。
+  7. 每个算法优化都有对应等价性验证；默认要求 34 个被试的新输出经验证适配后与基准输出逐 key/value 一致。
+  8. 完成记录说明优化前后的运行方式、验证方式、性能观察和一致性结论。
+**Plans**: 6 plans
+
+Plans:
+**Wave 1**
+- [ ] 03-01: 建立过程一致性基线和核心类型契约。
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [ ] 03-02: 合并解析与概率统计。
+
+**Wave 3** *(blocked on Wave 2 completion)*
+- [ ] 03-03: 数组化离散状态数据组织。
+
+**Wave 4** *(blocked on Wave 3 completion)*
+- [ ] 03-04: 重整 GrammarLearner.learn 主循环。
+
+**Wave 5** *(blocked on Wave 4 completion)*
+- [ ] 03-05: 重构 skip-gram 和输出适配边界。
+
+**Wave 6** *(blocked on Wave 5 completion)*
+- [ ] 03-06: 全量回归验证和优化记录。
+
 ## 重构 Phase 模式
 
-从 Phase 2 开始，每个新增 phase 都代表一项完整脚本重构，而不是把一次重构拆成多个 phase。每个重构 phase 应按以下顺序推进：
+从 Phase 2 开始，每个新增重构 phase 都代表一项完整脚本重构，而不是把一次重构拆成多个 phase。若某个已完成重构模块需要算法级优化，可以新增独立优化 phase；优化 phase 必须先从顶层算法和数据流审计开始，再决定底层算法的保留、删除或修改。每个重构 phase 应按以下顺序推进：
 
 1. 用户提供目标脚本、运行环境、运行命令、数据来源和预期输出。
 2. 先对目标脚本及其在本轮有效分支中调用到的本地模块做深度分析，并把分析报告写入该 phase 文档。
@@ -113,3 +149,4 @@ Phases execute in numeric order: 1 -> 2 -> ...
 |-------|----------------|--------|-----------|
 | 1. 项目骨架与任务接收契约 | 2/2 | Complete    | 2026-05-03 |
 | 2. 重构 generateGrammar 模块 | 5/5 | Complete | 2026-05-04 |
+| 3. generateGrammar 顶层算法审计与优化 | 0/6 | Ready to execute | - |
