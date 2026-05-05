@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 from LoPS.generate_grammar.config import GrammarLearningParams
-from LoPS.generate_grammar.grammar import CandidateScore, GrammarLearner
+from LoPS.generate_grammar.grammar import CandidateScore, GrammarLearner, GrammarLearningResult
 from LoPS.generate_grammar.scoring import bd_score
 from LoPS.generate_grammar.state_graph import StateDependencyGraph
 
@@ -313,6 +313,47 @@ class TestGenerateGrammarProcess(unittest.TestCase):
         self.assertEqual(chunks, ["G-L", "E-A"])
         self.assertEqual(ratios, [2.0, 1.8])
         self.assertEqual(components, [["G", "L"], ["E", "A"]])
+
+    def test_skip_gram_process_matches_snapshot(self) -> None:
+        """验证 skip-gram 的 N 插入、二值变量和 posterior 过程保持固定。
+
+        输入语义：构造一个 N 后第 2 个非 N token 命中 E-A 的最终解析序列。
+        输出语义：N 插入序列、插入位置、n_parent、target_child、BD score、posterior 和最终结果
+        必须匹配当前过程快照。
+        关键约束：该测试保护 N 映射和插入位置，防止后续改成看似等价但位置不同的实现。
+        """
+
+        result = GrammarLearningResult(
+            grammar_tokens=["G", "E-A"],
+            probabilities=[0.5, 0.5],
+            original_sequence=["G", "G", "E", "A"],
+            time_probabilities=np.array([0.5, 0.5]),
+            frequencies=[2, 1],
+            parsed_sequence=["G", "G", "E-A"],
+            parsed_state_features=pd.DataFrame(),
+            active_tokens=["G", "E-A"],
+            participant_file_names=[],
+            participant_ids=[],
+            components=[["G", ""], ["E", "A"]],
+        )
+
+        sequence_with_n, n_insert_positions = self.learner._build_skip_gram_sequence(
+            result.parsed_sequence,
+            np.array([0]),
+        )
+        trace = self.learner._score_skip_gram_sequence(sequence_with_n, n_insert_positions)
+        skip_gram = self.learner.detect_skip_gram(result, np.array([0]))
+
+        self.assertEqual(sequence_with_n, ["G", "N", "G", "E-A"])
+        self.assertEqual(n_insert_positions, [1])
+        np.testing.assert_array_equal(trace.n_parent, np.array([[1, 2, 1, 1]]))
+        np.testing.assert_array_equal(trace.target_child, np.array([[1, 2, 1, 1]]))
+        self.assertEqual(trace.score_without_parent, -3.2425923514855164)
+        self.assertEqual(trace.score_with_parent, -1.8562979903656258)
+        np.testing.assert_array_equal(trace.posterior, np.array([[3.5, 0.5], [0.5, 1.5]]))
+        self.assertEqual(trace.pair_frequency, 0.375)
+        self.assertTrue(skip_gram.found)
+        self.assertEqual(skip_gram.count, 1.5)
 
 
 if __name__ == "__main__":
