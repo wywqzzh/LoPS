@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 from LoPS.generate_grammar.config import GrammarLearningParams
-from LoPS.generate_grammar.grammar import GrammarLearner
+from LoPS.generate_grammar.grammar import CandidateScore, GrammarLearner
 from LoPS.generate_grammar.scoring import bd_score
 from LoPS.generate_grammar.state_graph import StateDependencyGraph
 
@@ -235,6 +235,84 @@ class TestGenerateGrammarProcess(unittest.TestCase):
         np.testing.assert_array_equal(pair_posterior, np.array([[2.0, 1.0], [1.0, 2.0]]))
         self.assertEqual(raw_count, 1)
         self.assertNotEqual(pair_posterior[1, 1], raw_count)
+
+    def test_candidate_score_process_matches_snapshot(self) -> None:
+        """验证单个候选评分过程保持当前 BD score 和 posterior 语义。
+
+        输入语义：使用固定小样本中 `E-A -> G-L` 的候选评分上下文。
+        输出语义：候选评分行包含旧主循环同样的得分、posterior、frequency 和 ratio。
+        关键约束：该过程测试保护 03-04 抽函数边界，不允许把 pair posterior 改成 raw count。
+        """
+
+        parsed = self.learner._build_parsed_sequence(self.tokens, self.grammar_tokens)
+        parsed_state = self.learner._align_state_features_to_parsed_sequence(parsed, self.state_features)
+        organized = self.learner._organize_discrete_data(
+            parsed,
+            self.grammar_tokens,
+            parsed_state,
+            StateDependencyGraph([[], [], [], [], [], []]),
+        )
+        probabilities = [parsed.token_probabilities[token] for token in self.grammar_tokens]
+        child_index = self.grammar_tokens.index("G-L")
+        parent_index = self.grammar_tokens.index("E-A")
+        data_child = organized.child_values("G-L")
+        condition_names = organized.condition_state[child_index]
+        data_condition = organized.condition_values(condition_names)
+        nstates_child = int(np.max(data_child).T)
+        nstates_condition = np.array(np.max(data_condition, 1).T, dtype=int)
+        score_without_parent, _ = bd_score(
+            data_child,
+            data_condition,
+            nstates_child,
+            nstates_condition,
+            self.learner.params.chunk_alpha,
+        )
+
+        candidate = self.learner._score_candidate_pair(
+            organized=organized,
+            probabilities=probabilities,
+            parsed_length=len(parsed.token_strings),
+            child_index=child_index,
+            parent_index=parent_index,
+            child_token="G-L",
+            parent_token="E-A",
+            data_child=data_child,
+            data_condition=data_condition,
+            nstates_child=nstates_child,
+            nstates_condition=nstates_condition,
+            score_without_parent=score_without_parent,
+        )
+
+        self.assertIsNotNone(candidate)
+        self.assertEqual(candidate.parent_token, "E-A")
+        self.assertEqual(candidate.child_token, "G-L")
+        self.assertEqual(candidate.chunk, "E-A-G-L")
+        self.assertEqual(candidate.components, ["E-A", "G-L"])
+        self.assertEqual(candidate.score_without_parent, -1.3862943611198904)
+        self.assertEqual(candidate.score_with_parent, -1.3862943611198904)
+        np.testing.assert_array_equal(candidate.pair_posterior, np.array([[2.0, 1.0], [1.0, 2.0]]))
+        self.assertEqual(candidate.pair_frequency, 2 / 3)
+        self.assertEqual(candidate.ratio, 1.0)
+
+    def test_select_next_chunk_preserves_existing_ratio_rule(self) -> None:
+        """验证抽出的候选选择函数保留旧 ratio 筛选规则。
+
+        输入语义：人工构造三个候选评分行，ratio 顺序特意打乱。
+        输出语义：返回值应与旧 choose_candidate_chunks 的排序和 keep_ratio 规则一致。
+        关键约束：该测试只验证选择规则，不代表真实候选都一定会被选中。
+        """
+
+        candidates = [
+            CandidateScore("A", "B", "A-B", ["A", "B"], 1.0, 0.91, np.ones((2, 2)), 0.2, 1.1),
+            CandidateScore("G", "L", "G-L", ["G", "L"], 1.0, 0.5, np.ones((2, 2)), 0.3, 2.0),
+            CandidateScore("E", "A", "E-A", ["E", "A"], 1.0, 0.56, np.ones((2, 2)), 0.3, 1.8),
+        ]
+
+        chunks, ratios, components = self.learner._select_next_chunk(candidates)
+
+        self.assertEqual(chunks, ["G-L", "E-A"])
+        self.assertEqual(ratios, [2.0, 1.8])
+        self.assertEqual(components, [["G", "L"], ["E", "A"]])
 
 
 if __name__ == "__main__":
