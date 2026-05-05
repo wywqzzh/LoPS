@@ -103,7 +103,7 @@ Plans:
 - [x] 03-04: 重整 GrammarLearner.learn 主循环。
 
 **Wave 5** *(blocked on Wave 4 completion)*
-- [ ] 03-05: 重构 skip-gram 和输出适配边界。
+- [x] 03-05: 重构 skip-gram 和输出适配边界。
 
 **Wave 6** *(blocked on Wave 5 completion)*
 - [ ] 03-06: 全量回归验证和优化记录。
