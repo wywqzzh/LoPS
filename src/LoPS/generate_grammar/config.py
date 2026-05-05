@@ -27,7 +27,6 @@ class GrammarLearningParams:
     max_iterations: int = 100000
     convergence_window: int = 5
     convergence_kl_threshold: float = 0.05
-    candidate_ratio_min: float = 1.0
     candidate_ratio_keep: float = 0.85
     min_pair_frequency: float = 0.05
     removed_token: str = "N"
