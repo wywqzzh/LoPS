@@ -94,7 +94,7 @@ Plans:
 - [x] 03-01: 建立过程一致性基线和核心类型契约。
 
 **Wave 2** *(blocked on Wave 1 completion)*
-- [ ] 03-02: 合并解析与概率统计。
+- [x] 03-02: 合并解析与概率统计。
 
 **Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 03-03: 数组化离散状态数据组织。
