@@ -62,6 +62,17 @@
 - [x] **VERF-09**: 对目标脚本调用到并参与重构的本地模块，系统必须进行模块级行为测试。
 - [x] **VERF-10**: 模块级行为测试必须在相同数据和相同随机参数下，对比重构模块与原始模块的结果一致性。
 
+### 算法优化
+
+- [x] **OPT-01**: 系统可以对已完成重构模块进行独立算法优化阶段，而不把优化混入原始重构完成状态。
+- [x] **OPT-02**: 算法优化必须从顶层 pipeline、主循环、数据流和输出约束开始分析，再决定底层函数如何变化。
+- [x] **OPT-03**: 优化前必须记录现有算法的核心数据结构、关键中间结果、循环边界、复杂度热点和可观测输出。
+- [x] **OPT-04**: 优化讨论必须明确哪些底层逻辑保留、删除、合并、缓存、延迟计算、向量化或重写。
+- [x] **OPT-05**: 优化计划必须给出模块设计、类设计、函数接口设计、迁移步骤、风险点和验证矩阵。
+- [x] **OPT-06**: 优化实现不得重新依赖旧版本代码、旧版本数据目录或旧格式兼容逻辑。
+- [x] **OPT-07**: 每个算法优化必须有等价性验证，默认要求全量数据输出经统一验证适配后与基准逐 key/value 一致。
+- [x] **OPT-08**: 优化完成后必须记录性能观察、正确性验证结果、保留的权衡和后续可优化点。
+
 ## v2 需求
 
 ### 自动化辅助
@@ -125,12 +136,20 @@
 | VERF-08 | Phase 2 | Complete |
 | VERF-09 | Phase 2 | Complete |
 | VERF-10 | Phase 2 | Complete |
+| OPT-01 | Phase 3 | Complete |
+| OPT-02 | Phase 3 | Complete |
+| OPT-03 | Phase 3 | Complete |
+| OPT-04 | Phase 3 | Complete |
+| OPT-05 | Phase 3 | Complete |
+| OPT-06 | Phase 3 | Complete |
+| OPT-07 | Phase 3 | Complete |
+| OPT-08 | Phase 3 | Complete |
 
 **Coverage:**
-- v1 requirements: 36 total
-- Mapped to phases: 36
+- v1 requirements: 44 total
+- Mapped to phases: 44
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-05-03*
-*Last updated: 2026-05-04 after adding dependency-module refactor and behavior-test requirements*
+*Last updated: 2026-05-05 after completing v1 generateGrammar refactor and top-level algorithm optimization*
