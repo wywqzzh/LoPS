@@ -49,11 +49,10 @@ def build_structured_output(
         "parameters": asdict(params),
         "grammar": grammar_items,
         "parsed": {
-            # parsed 保存最终解析序列、对齐状态和每个基础位置对应的 grammar。
+            # parsed 保存最终解析序列和对齐状态；旧格式 gram 字段由验证适配器从 sequence 重建。
             "original_sequence": result.original_sequence,
             "sequence": result.parsed_sequence,
             "state_features": result.parsed_state_features,
-            "position_grammar": result.position_grammar,
         },
         "skip_gram": {
             # skip_gram 字段使用新目标 token 名称，例如 "E-A"。

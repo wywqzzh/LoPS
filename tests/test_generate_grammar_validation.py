@@ -67,6 +67,7 @@ class GenerateGrammarValidationTest(unittest.TestCase):
         old_output = pd.read_pickle(BASELINE_GRAMMAR_DIR / "031222-401.pkl")
         legacy = convert_generate_grammar_output_to_legacy(output)
         self.assertEqual(list(legacy.keys()), list(LEGACY_FIELD_ORDER))
+        self.assertNotIn("position_grammar", output["parsed"])
         for key in old_output.keys():
             self.assertIn(key, legacy)
 

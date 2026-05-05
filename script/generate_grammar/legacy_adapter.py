@@ -75,6 +75,24 @@ def _legacy_symbol_by_token(tokens: list[str]) -> dict[str, str]:
     return symbol_by_token
 
 
+def _legacy_position_grammar(parsed_sequence: list[str], grammar_tokens: list[str]) -> list[str]:
+    """从新结构解析序列重建验证格式需要的旧 gram 序列。
+
+    输入语义：parsed_sequence 是正式输出中的最终解析 token 序列；grammar_tokens 是 grammar 顺序。
+    输出语义：返回旧字段 `gram` 所需的 token 序列，重复次数沿用旧 parse_pro 的最后一个 grammar token 长度。
+    关键约束：该重建逻辑只存在于验证适配器，不能反向污染正式结构化输出。
+    """
+
+    # 旧 gram 字段不是正式输出语义；它按最后一个 grammar token 的基础长度固定重复每个解析 token。
+    if len(grammar_tokens) == 0:
+        return []
+    repeat_count = token_length(grammar_tokens[-1])
+    position_grammar = []
+    for token in parsed_sequence:
+        position_grammar.extend([token] * repeat_count)
+    return position_grammar
+
+
 def convert_generate_grammar_output_to_legacy(output: Mapping[str, Any]) -> dict[str, Any]:
     """把 generate_grammar 结构化输出转换为基准 pickle 字段。
 
@@ -94,7 +112,7 @@ def convert_generate_grammar_output_to_legacy(output: Mapping[str, Any]) -> dict
     # 以下字段按基准 pickle 顺序写入，便于人工检查，也避免 pandas pickle 比较时出现顺序歧义。
     legacy_output["sets"] = [_legacy_token(token) for token in grammar_tokens]
     legacy_output["pro"] = [item["probability"] for item in grammar_items]
-    legacy_output["gram"] = [_legacy_token(token) for token in parsed["position_grammar"]]
+    legacy_output["gram"] = [_legacy_token(token) for token in _legacy_position_grammar(parsed["sequence"], grammar_tokens)]
     legacy_output["sequence"] = "".join(parsed["original_sequence"])
     # time_pro 是按 grammar 顺序排列的概率数组，转换时保持 ndarray 形态用于精确比较。
     legacy_output["time_pro"] = np.array([item["time_probability"] for item in grammar_items])
