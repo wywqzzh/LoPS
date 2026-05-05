@@ -131,7 +131,6 @@ class GrammarLearningResult:
 
     grammar_tokens: list[str]
     probabilities: list[float]
-    position_grammar: list[str]
     original_sequence: list[str]
     time_probabilities: np.ndarray
     frequencies: list[int]
@@ -154,6 +153,27 @@ class SkipGramResult:
 
     found: bool
     count: int | float
+
+
+@dataclass(frozen=True)
+class SkipGramCandidateTrace:
+    """保存一次 skip-gram 检测的关键过程指标。
+
+    输入语义：由最终解析序列和被删除 token 原始位置构造。
+    输出语义：记录插回 N 后的序列、N 插入位置、BD score 输入变量、得分、posterior 和最终判定指标。
+    关键约束：该结构只用于测试和过程解释，不进入正式结构化输出。
+    """
+
+    parent_token: str
+    child_token: str
+    sequence_with_n: list[str]
+    n_insert_positions: list[int]
+    n_parent: np.ndarray
+    target_child: np.ndarray
+    score_without_parent: float
+    score_with_parent: float
+    posterior: np.ndarray
+    pair_frequency: float
 
 
 def static_probability(tokens: Sequence[str], active_tokens: Sequence[str]) -> list[float]:
@@ -703,7 +723,6 @@ class GrammarLearner:
             final_parsed.token_probabilities[token]
             for token in active_tokens
         ]
-        position_grammar = final_parsed.position_grammar
         frequencies = [
             final_parsed.token_counts[token]
             for token in active_tokens
@@ -725,7 +744,6 @@ class GrammarLearner:
         return GrammarLearningResult(
             grammar_tokens=grammar_tokens,
             probabilities=probabilities,
-            position_grammar=position_grammar,
             original_sequence=original_sequence,
             time_probabilities=time_probabilities,
             frequencies=frequencies,
@@ -749,25 +767,59 @@ class GrammarLearner:
         关键约束：检测窗口按解析后的 chunk 序列移动，但删除 token 的插回位置按基础 token 长度映射。
         """
 
+        sequence_with_n, n_insert_positions = self._build_skip_gram_sequence(result.parsed_sequence, n_positions)
+        trace = self._score_skip_gram_sequence(sequence_with_n, n_insert_positions)
+        if (
+            trace.score_without_parent / trace.score_with_parent > 1
+            and trace.pair_frequency > self.params.skip_gram_min_frequency
+        ):
+            return SkipGramResult(True, trace.posterior[1, 1])
+        return SkipGramResult(False, 0)
+
+    def _build_skip_gram_sequence(
+        self,
+        parsed_sequence: Sequence[str],
+        n_positions: np.ndarray,
+    ) -> tuple[list[str], list[int]]:
+        """把删除的 N 按旧位置映射规则插回解析序列。
+
+        输入语义：parsed_sequence 是最终 chunk 解析序列；n_positions 是 N 在原始基础 token 序列中的位置。
+        输出语义：返回插入 N 后的序列，以及 N 在新序列中的插入下标。
+        关键约束：保持旧实现的单步 if 逻辑；每个解析 token 后最多插入一个 N，不改成 while 批量插入。
+        """
+
         # skip-gram 检测要把之前删除的 N 插回当前解析序列中，再判断 N 后第 2 到第 5 个 token 是否为 E-A。
-        parsed_sequence = result.parsed_sequence
         position_sum = -1
         n_pointer = 0
         sequence_with_n = []
+        n_insert_positions = []
         for token in parsed_sequence:
             # position_sum 以基础 token 数推进，用于把原始 N 位置映射回解析后的 chunk 序列。
             position_sum += token_length(token)
             sequence_with_n.append(token)
             if n_pointer < len(n_positions) and position_sum >= n_positions[n_pointer]:
+                n_insert_positions.append(len(sequence_with_n))
                 sequence_with_n.append(self.params.removed_token)
                 position_sum += 1
                 n_pointer += 1
+        return sequence_with_n, n_insert_positions
+
+    def _score_skip_gram_sequence(
+        self,
+        sequence_with_n: Sequence[str],
+        n_insert_positions: Sequence[int],
+    ) -> SkipGramCandidateTrace:
+        """对插回 N 的序列计算 skip-gram BD score 和 posterior。
+
+        输入语义：sequence_with_n 是 `_build_skip_gram_sequence()` 的输出序列；
+        n_insert_positions 是该序列中 N 的下标列表。
+        输出语义：返回 SkipGramCandidateTrace，包含二值变量、BD score、posterior 和 pair frequency。
+        关键约束：目标 token 搜索窗口仍使用 `[min_offset, max_offset]`，并跳过窗口内的 N。
+        """
 
         n_parent = np.array([1] * len(sequence_with_n))
         target_child = np.array([1] * len(sequence_with_n))
-        for index, token in enumerate(sequence_with_n):
-            if token != self.params.removed_token:
-                continue
+        for index in n_insert_positions:
             n_parent[index] = 2
             for next_index in range(
                 index + self.params.skip_gram_min_offset,
@@ -781,29 +833,35 @@ class GrammarLearner:
                     break
 
         # BDscore 输入仍使用 1/2 编码，表示 N parent 与目标 child 两个二值变量。
-        target_child = target_child.reshape(-1, 1).T
-        n_parent = n_parent.reshape(-1, 1).T
-        target_states = int(np.max(target_child).T)
-        n_states = int(np.max(n_parent).T)
+        target_child_matrix = target_child.reshape(-1, 1).T
+        n_parent_matrix = n_parent.reshape(-1, 1).T
+        target_states = int(np.max(target_child_matrix).T)
+        n_states = int(np.max(n_parent_matrix).T)
 
         # score_without_parent/score_with_parent 的比值和 U[1,1] 频率阈值共同决定 skipGram。
         score_without_parent, _ = bd_score(
-            target_child.reshape(-1, 1),
+            target_child_matrix.reshape(-1, 1),
             [],
             target_states,
             [],
             self.params.skip_gram_alpha,
         )
         score_with_parent, posterior = bd_score(
-            target_child,
-            n_parent,
+            target_child_matrix,
+            n_parent_matrix,
             target_states,
             [n_states],
             self.params.skip_gram_alpha,
         )
-        if (
-            score_without_parent / score_with_parent > 1
-            and posterior[1, 1] / len(sequence_with_n) > self.params.skip_gram_min_frequency
-        ):
-            return SkipGramResult(True, posterior[1, 1])
-        return SkipGramResult(False, 0)
+        return SkipGramCandidateTrace(
+            parent_token=self.params.removed_token,
+            child_token=self.params.skip_gram_target,
+            sequence_with_n=list(sequence_with_n),
+            n_insert_positions=list(n_insert_positions),
+            n_parent=n_parent_matrix,
+            target_child=target_child_matrix,
+            score_without_parent=score_without_parent,
+            score_with_parent=score_with_parent,
+            posterior=posterior,
+            pair_frequency=posterior[1, 1] / len(sequence_with_n),
+        )

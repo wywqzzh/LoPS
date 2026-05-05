@@ -78,7 +78,6 @@ class GenerateGrammarCoreTest(unittest.TestCase):
         result = GrammarLearningResult(
             grammar_tokens=["G", "E-A"],
             probabilities=[0.5, 0.5],
-            position_grammar=[],
             original_sequence=["G", "G", "E", "A"],
             time_probabilities=np.array([0.5, 0.5]),
             frequencies=[2, 1],
