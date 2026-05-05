@@ -91,6 +91,36 @@ class TestGenerateGrammarProcess(unittest.TestCase):
             np.array([2 / 3, 1 / 3, 0, 0, 0, 0], dtype=float),
         )
 
+    def test_build_parsed_sequence_matches_legacy_parse_outputs(self) -> None:
+        """验证 ParsedSequence 与旧解析入口的过程结果完全一致。
+
+        输入语义：基础 token 序列和 grammar token 顺序。
+        输出语义：ParsedSequence 中的 tuple token、字符串 token、跨度、频次、概率和 position_grammar
+        必须能还原旧 `_parse_longest()` 与 `_parse_probabilities()` 的返回值。
+        关键约束：该测试保护 03-02 的共享解析实现，防止后续重新引入重复但不一致的解析逻辑。
+        """
+
+        parsed = self.learner._build_parsed_sequence(self.tokens, self.grammar_tokens)
+        legacy_tokens, _ = self.learner._parse_longest(self.tokens, self.grammar_tokens)
+        legacy_grammar, legacy_probabilities, legacy_position_grammar, legacy_frequencies = (
+            self.learner._parse_probabilities(self.tokens, self.grammar_tokens)
+        )
+
+        self.assertEqual(parsed.tokens, [("G", "L"), ("E", "A"), ("G", "L")])
+        self.assertEqual(parsed.token_strings, legacy_tokens)
+        self.assertEqual(parsed.span_starts, [0, 2, 4])
+        self.assertEqual(parsed.span_lengths, [2, 2, 2])
+        self.assertEqual(parsed.position_grammar, legacy_position_grammar)
+        self.assertEqual([parsed.token_counts[token] for token in legacy_grammar], legacy_frequencies)
+        np.testing.assert_array_equal(
+            np.array([parsed.token_probabilities[token] for token in legacy_grammar], dtype=float),
+            np.array(legacy_probabilities, dtype=float),
+        )
+        np.testing.assert_array_equal(
+            np.array([parsed.token_time[token] for token in legacy_grammar], dtype=float),
+            np.array([2 / 3, 1 / 3, 0, 0, 0, 0], dtype=float),
+        )
+
     def test_organize_discrete_data_process_matches_snapshot(self) -> None:
         """验证离散 parent/child/condition 矩阵和状态条件列表保持固定。
 
