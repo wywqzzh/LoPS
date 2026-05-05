@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 03-05-PLAN.md
-last_updated: "2026-05-05T04:44:11.121Z"
+status: completed
+stopped_at: Completed 03-06-PLAN.md
+last_updated: "2026-05-05T04:48:48.180Z"
 last_activity: 2026-05-05
 progress:
   total_phases: 3
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 13
-  completed_plans: 12
-  percent: 92
+  completed_plans: 13
+  percent: 100
 ---
 
 # 项目状态
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-03)
 
 **核心价值:** 每次重构都必须在不改变科研计算结果的前提下，把外部脚本重新设计并实现为边界清晰、可运行、可验证的 LoPS 模块。  
-**当前重点:** Phase 3 已加入 — generateGrammar 顶层算法审计与优化
+**当前重点:** Phase 3 已完成 — generateGrammar 顶层算法审计与优化已通过过程测试、历史测试和 34 文件全量验证。
 
 ## Current Position（当前位置）
 
 Phase: 3
 Plan: 03-06
-Status: Executing Phase 03
+Status: Phase 03 Complete
 Last activity: 2026-05-05
 
-Progress: [█████████░] 92%
+Progress: [██████████] 100%
 
 ## Performance Metrics（执行指标）
 
@@ -76,16 +76,15 @@ Progress: [█████████░] 92%
 - Quick 260505-dek 决定：`generateGrammar` 正式核心包删除旧格式兼容输出；新旧一致性验证统一通过 `script/generate_grammar/legacy_adapter.py` 将新结构映射为旧格式后执行。
 - 全局注释规则：代码注释用于说明功能、解释过程和标明关键数据含义；每个函数和类必须使用中文 docstring 说明功能、输入输出语义和关键约束，重点逻辑处保留中文中间注释。
 - Phase 3 决定：算法优化从顶层流程和数据流开始，先确认整体学习算法设计，再决定底层函数保留、删除、合并、缓存、向量化或重写。
+- Phase 3 执行结论：`generate_grammar` 已完成解析合并、离散数据数组化、候选评分边界整理、skip-gram trace 拆分和旧格式适配隔离，并通过 34/34 全量一致性验证。
 
 ### Pending Todos（待办）
 
-- 继续执行 `$gsd-execute-phase 3`，下一步是 03-06：全量回归验证和优化记录。
-- 执行时必须保持新增过程测试、历史测试和 34 个被试全量验证都通过。
+- Phase 3 已完成。如继续当前里程碑，可运行 `$gsd-complete-milestone`；如新增重构任务，应先新增或讨论下一个 phase。
 
 ### Blockers/Concerns（阻塞与关注点）
 
-- Phase 2 深度分析报告、讨论上下文、重构设计和验证均已完成，可作为 Phase 3 的行为基准。
-- Phase 3 已完成 discuss 和 plan；当前关注点是执行阶段必须避免 TransitionStats 预筛选、候选 frequency 预筛选和只看最终输出的弱验证。
+- 无当前阻塞。Phase 3 的验证报告已记录保留权衡：不做 TransitionStats 预筛选、不做候选 frequency 预筛选、不做状态条件缓存和批处理并行化。
 
 ## Deferred Items（延后事项）
 
@@ -104,6 +103,6 @@ Progress: [█████████░] 92%
 
 ## Session Continuity（会话连续性）
 
-Last session: 2026-05-05T04:44:11.111Z
-Stopped at: Completed 03-05-PLAN.md
+Last session: 2026-05-05T04:48:48.167Z
+Stopped at: Completed 03-06-PLAN.md
 Resume file: None
