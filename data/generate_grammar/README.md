@@ -48,4 +48,4 @@ data/generate_grammar/smoke-output/
 
 ## 新旧验证转换
 
-正式新输出只包含 `source`、`parameters`、`grammar`、`parsed` 和 `skip_gram` 五个顶层字段。若需要与旧基准比较，由 `script/generate_grammar_legacy_adapter.py` 提供统一转换接口，把新结构临时映射为旧格式后再比较；该转换逻辑不属于核心模块。
+正式新输出只包含 `source`、`parameters`、`grammar`、`parsed` 和 `skip_gram` 五个顶层字段。若需要与旧基准比较，由 `script/generate_grammar/legacy_adapter.py` 提供统一转换接口，把新结构临时映射为旧格式后再比较；该转换逻辑不属于核心模块。

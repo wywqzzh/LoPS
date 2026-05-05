@@ -17,7 +17,7 @@ created: 2026-05-05
 - 将已有的 34 个新实现输出 `pkl` 文件迁移到 `data/generate_grammar/refactored-output/grammar`。
 - 调整 `.gitignore`，避免继续把 `.planning/runs` 当作运行数据输出目录。
 - 更新 `data/generate_grammar/README.md`、`README.md` 和 `AGENTS.md` 中的数据目录规则。
-- 运行现有测试，并用 `script/run_generate_grammar.py` 指定 `data/generate_grammar/smoke-output` 做一次脚本级验证。
+- 运行现有测试，并用 `script/generate_grammar/run_generate_grammar.py` 指定 `data/generate_grammar/smoke-output` 做一次脚本级验证。
 
 ## 非目标
 

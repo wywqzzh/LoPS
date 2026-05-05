@@ -1,3 +1,5 @@
+"""StrategySequence 数据读取和 generate_grammar 结果写入工具。"""
+
 from __future__ import annotations
 
 import pickle
@@ -11,9 +13,14 @@ import pandas as pd
 
 @dataclass(frozen=True)
 class StrategyStateData:
-    # 一个 StrategySequence pickle 对应一个 StrategyStateData。
-    # participant_file_names 保留源数据中的原始文件名；
-    # participant_ids 则去掉 .pkl 后缀，供新结构直接使用。
+    """保存单个 StrategySequence 输入文件解析后的 token、状态和被试信息。
+
+    输入语义：由 load_strategy_state_data() 从 pickle 中抽取字段后构造。
+    输出语义：向 grammar 学习流程提供 token 序列、初始 token、状态特征和被试标识。
+    关键约束：state_features 只包含调用方指定的状态列，participant_ids 去掉文件后缀。
+    """
+
+    # 一个 StrategySequence pickle 对应一个 StrategyStateData，便于后续按文件独立处理。
     input_file_name: str
     token_sequence: list[str]
     initial_tokens: list[str]
@@ -23,12 +30,26 @@ class StrategyStateData:
 
 
 def list_strategy_state_files(strategy_sequence_dir: Path) -> list[str]:
-    # 旧脚本使用 os.listdir，文件之间互不影响；这里排序只让运行日志和测试更稳定。
+    """列出目录中可作为 StrategySequence 输入的 pickle 文件名。
+
+    输入语义：strategy_sequence_dir 是已存在的数据目录。
+    输出语义：返回按文件名排序的 .pkl 文件名列表，不包含目录前缀。
+    关键约束：只筛选文件后缀，不读取文件内容；排序用于稳定日志和测试输出。
+    """
+
+    # 文件之间互不影响，排序只用于让运行日志和测试结果更稳定。
     return sorted(path.name for path in strategy_sequence_dir.iterdir() if path.suffix == ".pkl")
 
 
 def load_strategy_state_data(path: Path, state_names: Sequence[str]) -> StrategyStateData:
-    # 旧 StrategySequence pickle 是 pandas pickle；读取后只抽取默认 ghost2 分支需要的字段。
+    """读取一个 StrategySequence pickle 并转换为内部数据对象。
+
+    输入语义：path 指向 pandas pickle，state_names 指定要保留的状态特征列及顺序。
+    输出语义：返回 StrategyStateData，包含 token 序列、初始 token、状态特征和被试信息。
+    关键约束：pickle 必须包含 seq、S、state、fileNames 字段，状态列缺失会由 pandas 抛错。
+    """
+
+    # StrategySequence 文件使用 pandas pickle 存储，读取后只抽取学习流程需要的字段。
     result = pd.read_pickle(path)
 
     # 源数据 fileNames 包含 .pkl 后缀，因此原始文件名和被试 ID 分开保存。
@@ -45,7 +66,14 @@ def load_strategy_state_data(path: Path, state_names: Sequence[str]) -> Strategy
 
 
 def write_generate_grammar_output(output: Mapping[str, Any], path: Path) -> None:
-    # 输出统一由 LoPS pipeline 管理；调用方传入的是新版本结构化结果，不包含旧格式兼容字段。
+    """将结构化 grammar 输出写入 pickle 文件。
+
+    输入语义：output 是可转为 dict 的结构化结果，path 是目标 pickle 文件路径。
+    输出语义：成功时创建父目录并写入二进制 pickle，函数返回 None。
+    关键约束：该函数不解释输出内容，只负责持久化调用方传入的数据结构。
+    """
+
+    # 输出统一由 LoPS pipeline 管理；这里仅确保目录存在并执行 pickle 写入。
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("wb") as file:
         pickle.dump(dict(output), file)

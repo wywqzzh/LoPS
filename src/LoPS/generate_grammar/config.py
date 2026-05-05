@@ -1,17 +1,25 @@
+"""generate_grammar 模块的配置对象和默认学习参数。"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
 
 
-# 旧脚本 ghost2 默认最终使用 6 个状态列；BN10 等被旧代码覆盖掉，不属于本轮有效分支。
+# 当前 grammar 学习流程使用的状态特征列；列顺序会影响状态组合编码和得分结果。
 DEFAULT_STATE_NAMES = ("IS1", "IS2", "PG1", "PG2", "PE", "BN5")
 
 
 @dataclass(frozen=True)
 class GrammarLearningParams:
-    # 状态列、alpha、阈值和排除 token 都从旧 generateGrammar.py 默认路径抽取而来。
-    # 将它们集中到参数对象中，避免核心算法里散落魔法数字，也便于后续新脚本复用。
+    """保存 grammar 学习算法的数值阈值、状态列和 token 过滤规则。
+
+    输入语义：字段均为不可变配置值，由运行脚本或调用方传入核心学习流程。
+    输出语义：作为配置快照参与学习和结构化输出，不在算法过程中被修改。
+    关键约束：状态列顺序、alpha 和候选筛选阈值会直接影响学习结果，调用方应显式记录。
+    """
+
+    # 将学习参数集中到单一对象中，避免核心算法散落魔法数字，也便于脚本复用。
     state_names: tuple[str, ...] = DEFAULT_STATE_NAMES
     chunk_alpha: float = 0.5
     condition_alpha: float = 0.5
@@ -34,14 +42,27 @@ class GrammarLearningParams:
 
 @dataclass(frozen=True)
 class GenerateGrammarConfig:
-    # 路径配置只描述新版本运行所需的输入和输出；旧基准路径属于验证脚本，不进入核心配置。
-    # 输入和输出路径必须由调用方显式传入，src 层不保存任何项目外部数据目录默认值。
+    """保存一次 generate_grammar 运行所需的输入、状态图、输出路径和学习参数。
+
+    输入语义：strategy_sequence_dir 与 state_graph_dir 必须指向已存在的数据目录。
+    输出语义：output_dir 会作为结构化结果写入位置，由 validate() 确保存在。
+    关键约束：核心配置不内置项目外部路径，所有数据来源必须由调用方显式传入。
+    """
+
+    # 路径配置只描述本次运行所需的输入和输出，验证基准等流程由脚本层单独管理。
     strategy_sequence_dir: Path
     state_graph_dir: Path
     output_dir: Path
     learning: GrammarLearningParams = field(default_factory=GrammarLearningParams)
 
     def validate(self) -> None:
+        """检查输入目录并创建输出目录。
+
+        输入语义：读取当前配置对象中的三个路径字段，不接收额外参数。
+        输出语义：成功时返回 None，并保证 output_dir 已创建；路径无效时抛出 FileNotFoundError。
+        关键约束：只创建输出目录，不自动创建或修正输入目录，避免误用缺失数据。
+        """
+
         # 输入目录必须已经存在；当前项目内的默认数据由脚本层显式传入。
         if not self.strategy_sequence_dir.is_dir():
             raise FileNotFoundError(f"strategy_sequence directory not found: {self.strategy_sequence_dir}")

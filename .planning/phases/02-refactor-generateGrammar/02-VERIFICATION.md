@@ -15,7 +15,7 @@ PYTHONPATH=src conda run -n fmri python -m unittest discover -s tests
 脚本级旧新一致性验证：
 
 ```bash
-PYTHONPATH=src conda run -n fmri python script/validate_generate_grammar.py
+PYTHONPATH=src conda run -n fmri python script/generate_grammar/validate_generate_grammar.py
 ```
 
 ## 数据路径

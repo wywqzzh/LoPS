@@ -1,3 +1,8 @@
+"""语法学习核心算法。
+
+本模块只处理内存中的 token 序列、状态特征和概率评分，不负责文件读写或验证格式转换。
+"""
+
 from __future__ import annotations
 
 import math
@@ -15,8 +20,14 @@ from LoPS.generate_grammar.token import combine_tokens, split_token, token_lengt
 
 @dataclass
 class OrganizedGrammarData:
-    # _organize_discrete_data 的中间结果，字段命名对应旧 organize_data 的返回值。
-    # data_child/data_parent 使用 1 表示未出现、2 表示出现；data_condition 保存状态值 + 1。
+    """保存离散化后的语法学习矩阵。
+
+    输入语义：由解析后的 token 序列、有效 grammar token 列表、状态特征表和状态依赖图整理得到。
+    输出语义：data_child/data_parent 使用 1 表示未出现、2 表示出现；data_condition 保存状态值 + 1；
+    condition_state 记录每个 child token 需要附加评估的状态条件列名。
+    关键约束：字段顺序必须与 active_tokens 和状态列顺序一致，供后续 BD score 计算按位置索引。
+    """
+
     data_child: pd.DataFrame
     data_parent: pd.DataFrame
     data_condition: pd.DataFrame
@@ -25,8 +36,14 @@ class OrganizedGrammarData:
 
 @dataclass
 class GrammarLearningResult:
-    # 核心学习结果全部使用新 token 表示，例如 "G-L"、"E-A"。
-    # 验证脚本如需与历史结果比较，可在核心模块之外进行格式映射。
+    """保存一次 grammar 学习的完整内存结果。
+
+    输入语义：由 GrammarLearner.learn 根据基础 token 序列、初始 token 集、状态特征和状态依赖图产生。
+    输出语义：grammar_tokens、probabilities、frequencies 描述最终 token 分布；parsed_sequence 和
+    parsed_state_features 描述最长匹配后的序列及其状态对齐；components 保存合并 token 的直接组成。
+    关键约束：核心结果只使用模块内 token 表示，例如 "G-L"、"E-A"；外部格式映射应在适配层完成。
+    """
+
     grammar_tokens: list[str]
     probabilities: list[float]
     position_grammar: list[str]
@@ -43,13 +60,25 @@ class GrammarLearningResult:
 
 @dataclass
 class SkipGramResult:
-    # 记录 skip-gram 检测结果；字段名保持新代码语义，不承载历史输出格式。
+    """记录 skip-gram 检测结果。
+
+    输入语义：由最终解析序列和删除 token 的原始位置检测得到。
+    输出语义：found 表示是否满足 skip-gram 判定；count 表示目标共现计数，不满足时为 0。
+    关键约束：count 来自 BD score 后验矩阵中的二值共现单元，调用方不应假设它一定是整数类型。
+    """
+
     found: bool
     count: int | float
 
 
 def static_probability(tokens: Sequence[str], active_tokens: Sequence[str]) -> list[float]:
-    # 复刻旧 Tools.static_pro：按 active_tokens 的顺序统计当前解析序列中每个 grammar 的出现概率。
+    """按 active_tokens 顺序统计当前解析序列中各 token 的出现概率。
+
+    输入语义：tokens 是当前解析后的 token 序列；active_tokens 是需要统计的完整候选 token 顺序。
+    输出语义：返回与 active_tokens 等长的概率列表，概率为对应 token 计数除以总计数。
+    关键约束：tokens 中的每个元素都必须已存在于 active_tokens，否则计数表无法更新。
+    """
+
     counts = {}
     for active_token in active_tokens:
         counts.update({active_token: 0})
@@ -65,7 +94,15 @@ def choose_candidate_chunks(
     components: list[list[str]],
     keep_ratio: float,
 ) -> tuple[list[str], list[float], list[list[str]]]:
-    # 复刻旧 choice_max_n：先按 ratio 降序，再只保留 ratio > 1 且接近最大 ratio 的候选。
+    """从候选 chunk 中选择接近最佳得分的一组结果。
+
+    输入语义：ratios、chunks、components 按相同索引描述候选得分、合并 token 和组成 token；
+    keep_ratio 控制候选得分与最佳得分的最小相对比例。
+    输出语义：返回被选中的 chunk、ratio 和组成列表，顺序按 ratio 从高到低排列。
+    关键约束：只有 ratio > 1 的候选才表示加入 parent 后得分改善；输入三个列表必须等长。
+    """
+
+    # 先按 ratio 降序排序，便于从最佳候选开始做相对阈值筛选。
     ordered_indices = sorted(range(len(ratios)), key=lambda index: ratios[index], reverse=True)
     if len(ordered_indices) == 0:
         return [], [], []
@@ -81,7 +118,7 @@ def choose_candidate_chunks(
     best_ratio = ordered[0][1]
     selected = [ordered[0]]
     for candidate in ordered[1:]:
-        # 旧代码阈值是 0.85；这里通过 keep_ratio 暴露出来，但默认值仍保持旧行为。
+        # keep_ratio 表示候选与本轮最佳 ratio 的接近程度，低于阈值后停止扩展本轮合并集。
         if candidate[1] / best_ratio > keep_ratio:
             selected.append(candidate)
         else:
@@ -92,7 +129,13 @@ def choose_candidate_chunks(
 
 
 def kl_divergence(p: Mapping[str, float], q: Mapping[str, float]) -> float:
-    # 复刻旧 Tools.KL：若参考分布缺少某个 key，用 0.00001 作为平滑值。
+    """计算两个离散概率分布之间的 KL 散度。
+
+    输入语义：p 是当前分布，q 是参考分布，键为 token，值为非零概率。
+    输出语义：返回以 log2 计算的 KL(p || q) 标量。
+    关键约束：当参考分布缺少 p 中某个 token 时使用固定小概率平滑，避免除零或缺键。
+    """
+
     value = 0
     for key in p.keys():
         probability = p[key]
@@ -105,7 +148,21 @@ def kl_divergence(p: Mapping[str, float], q: Mapping[str, float]) -> float:
 
 
 class GrammarLearner:
+    """执行 grammar chunk 学习和 skip-gram 检测。
+
+    输入语义：实例只接收 GrammarLearningParams，实际数据通过 learn 和 detect_skip_gram 传入。
+    输出语义：learn 返回 GrammarLearningResult；detect_skip_gram 返回 SkipGramResult。
+    关键约束：类本身不读写文件、不持有路径；所有 token 合并、概率统计和状态条件都在内存中完成。
+    """
+
     def __init__(self, params: GrammarLearningParams):
+        """初始化语法学习器。
+
+        输入语义：params 提供迭代次数、候选筛选阈值、BD score 参数和 skip-gram 配置。
+        输出语义：构造后的实例可复用同一组参数处理多个内存数据集。
+        关键约束：初始化阶段不校验数据路径，也不产生随机状态。
+        """
+
         # GrammarLearner 只持有算法参数，不持有路径，也不读写文件。
         self.params = params
 
@@ -115,8 +172,16 @@ class GrammarLearner:
         grammar_tokens: list[str],
         state_features: pd.DataFrame | None = None,
     ) -> tuple[list[str], pd.DataFrame | None]:
+        """使用 grammar token 对基础 token 序列做最长匹配解析。
+
+        输入语义：tokens 是基础 token 序列；grammar_tokens 是按学习顺序排列的可匹配 token；
+        state_features 可选，若提供则必须与基础 token 序列按行对齐。
+        输出语义：返回解析后的 token 序列，以及按每个解析片段首个基础 token 对齐的状态特征表。
+        关键约束：grammar_tokens 必须至少覆盖 tokens 的每个位置；多个候选命中时选择基础 token 数最长者。
+        """
+
         # 对原始基础 token 序列做最长匹配解析。grammar_tokens 的顺序必须保持学习追加顺序；
-        # 当多个 token 都能匹配当前位置时，选择基础 token 长度最长的那个，等价于旧 parse()。
+        # 当多个 token 都能匹配当前位置时，选择基础 token 长度最长的那个。
         parsed_tokens = []
         parsed_state_rows = []
         pointer = 0
@@ -134,7 +199,7 @@ class GrammarLearner:
 
             parsed_tokens.append(grammar_tokens[matched_index])
             if state_features is not None:
-                # 旧 parse() 会把一个 chunk 对齐到该片段首个基础 token 的状态行。
+                # 一个 chunk 覆盖多个基础 token 时，状态行对齐到该片段的首个基础 token。
                 parsed_state_rows.append(list(state_features.iloc[pointer]))
             pointer += matched_length
 
@@ -148,11 +213,18 @@ class GrammarLearner:
         tokens: list[str],
         grammar_tokens: list[str],
     ) -> tuple[list[str], list[float], list[str], list[int]]:
-        # 复刻旧 parse_pro：用 grammar_tokens 对原始序列重新解析，并统计每个 grammar 的频数和概率。
+        """重新解析基础序列并统计 grammar token 的频数和概率。
+
+        输入语义：tokens 是基础 token 序列；grammar_tokens 是当前有效 token 列表。
+        输出语义：返回 token 列表、对应概率、位置展开后的 grammar 序列和对应频数。
+        关键约束：输出顺序保持 grammar_tokens 顺序；position_grammar 的展开长度遵循固定填充长度约束。
+        """
+
+        # 用 grammar_tokens 对原始序列重新解析，并统计每个 grammar 的频数和概率。
         cover_indices = []
         pointer = 0
         position_grammar = []
-        # 历史实现这里使用最后一次循环的 L 值填充 position_gram；保留该行为以维持计算结果可复现。
+        # position_grammar 使用最后一个 grammar token 的基础长度作为固定填充长度，以保持输出编码约束。
         last_grammar_length = token_length(grammar_tokens[-1])
 
         while pointer < len(tokens):
@@ -170,7 +242,7 @@ class GrammarLearner:
             pointer += matched_length
             position_grammar += [grammar_tokens[matched_index]] * last_grammar_length
 
-        # frequencies_by_token 必须按 grammar_tokens 顺序初始化，保证输出顺序与旧 S/sets 对齐。
+        # frequencies_by_token 必须按 grammar_tokens 顺序初始化，保证概率和频数输出顺序稳定。
         frequencies_by_token = {}
         for grammar_token in grammar_tokens:
             frequencies_by_token.update({grammar_token: 0})
@@ -188,8 +260,16 @@ class GrammarLearner:
         state_features: pd.DataFrame,
         state_dependencies: StateDependencyGraph,
     ) -> OrganizedGrammarData:
-        # 复刻旧 organize_data：把解析后的 token 序列转为离散 parent/child/condition 矩阵。
-        # 所有状态都使用 1/2 或 state+1 编码，因为旧 BDscore/count 假定状态从 1 开始。
+        """把解析序列和状态特征整理为 BD score 使用的离散矩阵。
+
+        输入语义：tokens 是当前解析序列；active_tokens 是当前可用 grammar token；state_features 与
+        tokens 按行对齐；state_dependencies 描述状态之间允许学习的条件关系。
+        输出语义：返回 parent、child、condition 三类矩阵以及每个 child token 的状态条件列名。
+        关键约束：二值 token 变量使用 1/2 编码；状态变量使用原状态值 + 1 编码，以满足计数矩阵从 1 开始。
+        """
+
+        # 把解析后的 token 序列转为离散 parent/child/condition 矩阵。
+        # 所有状态都使用 1/2 或 state+1 编码，因为 BDscore/count 假定状态从 1 开始。
         state_features = state_features.reset_index(drop=True)
         data_parent = {}
         data_child = {}
@@ -217,8 +297,7 @@ class GrammarLearner:
         data_condition_frame = pd.DataFrame(data_condition, dtype=int)
         data_policy_condition_frame = pd.DataFrame(data_policy_condition, dtype=int)
 
-        # learn_state_condition_links 需要的 data 结构与旧 organize_data 完全一致：
-        # 前半部分是状态条件变量，后半部分是 grammar parent 变量。
+        # learn_state_condition_links 的 data 前半部分是状态条件变量，后半部分是 grammar parent 变量。
         data = pd.concat([data_policy_condition_frame, data_parent_frame], axis=1).values.T
         data = np.array(data, dtype=int)
         nstates = np.max(data, axis=1).T
@@ -241,7 +320,7 @@ class GrammarLearner:
         condition_state = []
         names = np.array(list(data_condition_frame.columns))
         for index in range(casual_num, casual_num + effect_num):
-            # 旧代码按 Alearn[:, i] == 1 找到状态列名；这里保持相同映射。
+            # learned_adjacency[:, index] == 1 表示对应状态列被学习为该 grammar parent 的条件。
             condition_indices = np.where(learned_adjacency[:, index] == 1)[0]
             condition_state.append(list(names[condition_indices]))
 
@@ -261,8 +340,17 @@ class GrammarLearner:
         participant_file_names: list[str],
         participant_ids: list[str],
     ) -> GrammarLearningResult:
+        """学习 grammar token 并返回最终解析、概率和组成信息。
+
+        输入语义：token_sequence 是已完成输入清理的基础 token 序列；initial_tokens 是初始 token 集；
+        state_features 与 token_sequence 按行对齐；state_dependencies 提供状态条件约束；
+        participant_file_names 和 participant_ids 作为结果元数据透传。
+        输出语义：返回包含最终 grammar token、概率、时间占比、解析序列和组成关系的 GrammarLearningResult。
+        关键约束：每轮新增候选后都从 original_sequence 重新解析；收敛由解析概率分布 KL 均值决定。
+        """
+
         # original_sequence 是删除 N 后的基础 token 序列；后续每轮都重新从它做最长匹配，
-        # 这与旧 Chunking 中 sequence 保持原始字符串、seq 表示当前解析结果的设计一致。
+        # 保证候选 chunk 的加入不会累积破坏基础输入顺序。
         original_sequence = list(token_sequence)
         active_tokens = list(initial_tokens)
         parsed_sequence = list(original_sequence)
@@ -290,7 +378,7 @@ class GrammarLearner:
             candidate_components = []
 
             for child_index, child_token in enumerate(active_tokens):
-                # 旧代码排除 V、1、2、N、S、e 作为 child；这些 token 不参与 chunk 合并目标。
+                # 配置中的 excluded_child_tokens 不参与 chunk 合并目标，避免特殊标记进入 child 评估。
                 if child_token in self.params.excluded_child_tokens:
                     continue
 
@@ -316,7 +404,7 @@ class GrammarLearner:
                 )
 
                 for parent_index, parent_token in enumerate(active_tokens):
-                    # 旧代码跳过 parent==child、V、N 以及基础 token 有交集的候选。
+                    # 候选 parent 不能与 child 相同，也不能属于排除集；共享基础 token 的组合可按参数拒绝。
                     if parent_token == child_token or parent_token in self.params.excluded_parent_tokens:
                         continue
                     if self.params.reject_shared_base_tokens and tokens_share_base_token(parent_token, child_token):
@@ -333,7 +421,7 @@ class GrammarLearner:
                         parent_and_condition_data = np.array(data_parent, dtype=int)
                         nstates_parent_and_condition = nstates_parent
 
-                    # score_with_parent 是加入候选 grammar parent 后的得分；旧算法用二者比值做候选 ratio。
+                    # score_with_parent 是加入候选 grammar parent 后的得分；二者比值作为候选 ratio。
                     score_with_parent, _ = bd_score(
                         data_child,
                         parent_and_condition_data,
@@ -343,7 +431,7 @@ class GrammarLearner:
                     )
                     _, pair_posterior = bd_score(data_child, data_parent, 2, 2, 1)
                     pair_frequency = pair_posterior[1, 1] / len(parsed_sequence)
-                    # 旧代码要求 parent-child 同现频率同时高于独立概率乘积和最小频率阈值。
+                    # parent-child 同现频率必须同时高于独立概率乘积和最小频率阈值，过滤弱关联候选。
                     if (
                         pair_frequency < probabilities[child_index] * probabilities[parent_index]
                         or pair_frequency < self.params.min_pair_frequency
@@ -357,7 +445,7 @@ class GrammarLearner:
             if len(ratios) == 0:
                 break
 
-            # 一轮可能选出多个接近最佳 ratio 的 chunk；它们按旧 choice_max_n 顺序追加到 active_tokens。
+            # 一轮可能选出多个接近最佳 ratio 的 chunk；它们按候选筛选顺序追加到 active_tokens。
             selected_chunks, _, selected_components = choose_candidate_chunks(
                 ratios,
                 chunks,
@@ -369,7 +457,7 @@ class GrammarLearner:
 
             added_any = False
             for index, chunk in enumerate(selected_chunks):
-                # 新实现避免重复加入相同 token；正常旧流程不会重复，但这里防止无意义循环。
+                # 防止重复加入相同 token，避免在候选重复时产生无意义循环。
                 if chunk in active_tokens:
                     continue
                 active_tokens.append(chunk)
@@ -389,7 +477,7 @@ class GrammarLearner:
             parsed_state_features = parsed_state_features_or_none
             probabilities = static_probability(parsed_sequence, active_tokens)
 
-            # 使用解析概率分布的 KL 均值作为收敛条件，保持旧代码最近 5 次均值 <= 0.05 的语义。
+            # 使用解析概率分布的 KL 均值作为收敛条件；窗口和阈值由参数控制。
             predict_tokens, predict_probabilities, _, _ = self._parse_probabilities(original_sequence, active_tokens)
             current_distribution = {
                 token: predict_probabilities[index]
@@ -409,7 +497,7 @@ class GrammarLearner:
             original_sequence,
             active_tokens,
         )
-        # 旧代码会删除概率为 0 的 grammar，以保证输出只包含实际出现过的项。
+        # 删除概率为 0 的 grammar，保证输出只包含最终解析中实际出现过的项。
         nonzero_indices = np.where(np.array(probabilities) != 0)[0]
         grammar_tokens = [grammar_tokens[index] for index in nonzero_indices]
         probabilities = [probabilities[index] for index in nonzero_indices]
@@ -443,6 +531,13 @@ class GrammarLearner:
         result: GrammarLearningResult,
         n_positions: np.ndarray,
     ) -> SkipGramResult:
+        """检测删除 token 与目标 token 的 skip-gram 关系。
+
+        输入语义：result 提供最终解析序列；n_positions 是被删除 token 在原始基础序列中的位置。
+        输出语义：返回是否检测到 skip-gram 以及对应共现计数。
+        关键约束：检测窗口按解析后的 chunk 序列移动，但删除 token 的插回位置按基础 token 长度映射。
+        """
+
         # skip-gram 检测要把之前删除的 N 插回当前解析序列中，再判断 N 后第 2 到第 5 个 token 是否为 E-A。
         parsed_sequence = result.parsed_sequence
         position_sum = -1
@@ -467,14 +562,14 @@ class GrammarLearner:
                 index + self.params.skip_gram_min_offset,
                 min(index + self.params.skip_gram_max_offset + 1, len(sequence_with_n)),
             ):
-                # 旧逻辑跳过 N，只要窗口内命中目标 EA；新核心目标 token 是 "E-A"。
+                # 窗口内跳过被删除 token，只要命中配置的目标 token 即标记该 N 位置有效。
                 if sequence_with_n[next_index] != self.params.removed_token and (
                     sequence_with_n[next_index] == self.params.skip_gram_target
                 ):
                     target_child[index] = 2
                     break
 
-        # BDscore 输入仍使用 1/2 编码，和旧 skip_gram 中 N、EA 两个二值变量一致。
+        # BDscore 输入仍使用 1/2 编码，表示 N parent 与目标 child 两个二值变量。
         target_child = target_child.reshape(-1, 1).T
         n_parent = n_parent.reshape(-1, 1).T
         target_states = int(np.max(target_child).T)

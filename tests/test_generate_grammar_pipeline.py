@@ -1,3 +1,8 @@
+"""generate_grammar 文件级流水线测试。
+
+覆盖输入数据准备、状态对齐和单文件结构化输出。
+"""
+
 from __future__ import annotations
 
 import tempfile
@@ -15,8 +20,10 @@ from tests.generate_grammar_fixtures import STATE_GRAPH_DIR, STRATEGY_SEQUENCE_D
 
 
 class GenerateGrammarPipelineTest(unittest.TestCase):
-    # pipeline 测试覆盖文件级编排：删除 N、对齐状态、输出新版本结构化结果。
+    """覆盖 generate_grammar 的文件级 pipeline 编排行为。"""
+
     def test_prepare_strategy_state_data_removes_n_and_aligns_state_features(self) -> None:
+        """验证预处理会删除 N token 并同步对齐状态特征行。"""
         # prepare 阶段必须保证 token_sequence 与 state_features 等长，否则后续状态条件会错位。
         record = load_strategy_state_data(
             STRATEGY_SEQUENCE_DIR / "031222-401.pkl",
@@ -31,6 +38,7 @@ class GenerateGrammarPipelineTest(unittest.TestCase):
         self.assertTrue(len(prepared.n_positions) > 0)
 
     def test_process_strategy_state_file_returns_structured_output_only(self) -> None:
+        """验证单文件处理返回结构化输出并包含核心分区字段。"""
         # 单文件处理不写真实输出目录，使用临时目录配置只验证内存结果结构。
         with tempfile.TemporaryDirectory() as temp_dir:
             config = GenerateGrammarConfig(
@@ -41,7 +49,7 @@ class GenerateGrammarPipelineTest(unittest.TestCase):
 
             output = process_strategy_state_file("031222-401.pkl", config)
 
-        # 核心 pipeline 不再返回 legacy 字段；旧格式转换只允许在验证脚本适配层完成。
+        # 核心 pipeline 返回面向正式模块的结构化分区，格式转换由验证脚本单独处理。
         self.assertEqual(set(output.keys()), {"source", "parameters", "grammar", "parsed", "skip_gram"})
         structured = output
         self.assertEqual(set(structured.keys()), {"source", "parameters", "grammar", "parsed", "skip_gram"})

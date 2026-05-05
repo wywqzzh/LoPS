@@ -14,8 +14,8 @@ commit: uncommitted
 - 修改 `src/LoPS/generate_grammar/pipeline.py`，核心 pipeline 只输出新版本结构，不再返回 `legacy`/`structured` 双字典。
 - 修改 `src/LoPS/generate_grammar/config.py`，移除 `baseline_grammar_dir`，旧基准路径只属于验证脚本。
 - 修改 `src/LoPS/generate_grammar/structured.py`，在新结构 `parsed.original_sequence` 中保留原始 token 序列，供独立验证适配层使用。
-- 新增 `script/generate_grammar_legacy_adapter.py`，提供统一转换接口 `convert_generate_grammar_output_to_legacy()`。
-- 修改 `script/validate_generate_grammar.py`，验证流程先运行新 pipeline 生成新结构，再通过转换接口映射到旧格式，与 `data/generate_grammar/baseline/grammar` 比较。
+- 新增 `script/generate_grammar/legacy_adapter.py`，提供统一转换接口 `convert_generate_grammar_output_to_legacy()`。
+- 修改 `script/generate_grammar/validate_generate_grammar.py`，验证流程先运行新 pipeline 生成新结构，再通过转换接口映射到旧格式，与 `data/generate_grammar/baseline/grammar` 比较。
 - 更新测试：核心 pipeline 测试只验证新结构，验证测试单独覆盖旧格式转换接口。
 
 ## 验证
@@ -24,8 +24,8 @@ commit: uncommitted
 
 ```bash
 PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python -m unittest discover -s tests
-PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/run_generate_grammar.py --max-iterations 1 --output-dir data/generate_grammar/smoke-output
-PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/validate_generate_grammar.py
+PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/generate_grammar/run_generate_grammar.py --max-iterations 1 --output-dir data/generate_grammar/smoke-output
+PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/generate_grammar/validate_generate_grammar.py
 rg -n "legacy|LEGACY|baseline_grammar_dir|build_legacy_output|LoPS\.generate_grammar\.legacy|\"legacy\"" src/LoPS/generate_grammar --glob '!*.pkl'
 PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python -c "import pandas as pd; data=pd.read_pickle('data/generate_grammar/refactored-output/grammar/031222-401.pkl'); print(sorted(data.keys())); print('legacy' in data)"
 ```

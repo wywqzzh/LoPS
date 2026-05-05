@@ -1,3 +1,8 @@
+"""generate_grammar 核心算法测试。
+
+覆盖最长匹配解析、概率统计、候选筛选、skip-gram 检测和代表性真实文件学习流程。
+"""
+
 from __future__ import annotations
 
 import unittest
@@ -21,8 +26,10 @@ from tests.generate_grammar_fixtures import STATE_GRAPH_DIR, STRATEGY_SEQUENCE_D
 
 
 class GenerateGrammarCoreTest(unittest.TestCase):
-    # grammar 核心测试聚焦新 token 表示和纯内存算法，不涉及文件写入和 legacy 占位符。
+    """覆盖 grammar 学习核心算法的内存级行为。"""
+
     def test_parse_longest_uses_composite_tokens(self) -> None:
+        """验证最长匹配解析会优先使用可匹配的复合 token。"""
         # 最长匹配应优先选择 "G-L"、"E-A"，而不是逐个基础 token 解析。
         learner = GrammarLearner(GrammarLearningParams())
         parsed, parsed_state = learner._parse_longest(
@@ -34,6 +41,7 @@ class GenerateGrammarCoreTest(unittest.TestCase):
         self.assertIsNone(parsed_state)
 
     def test_parse_probabilities_returns_probabilities_and_frequencies(self) -> None:
+        """验证解析概率函数返回 grammar 顺序、位置解析和频数。"""
         # 该测试锁定 parse_pro 等价行为：返回 grammar 顺序、概率、位置 grammar 和频数。
         learner = GrammarLearner(GrammarLearningParams())
 
@@ -50,6 +58,7 @@ class GenerateGrammarCoreTest(unittest.TestCase):
         self.assertAlmostEqual(probabilities[2], 1 / 3)
 
     def test_choose_candidate_chunks_keeps_ratios_above_threshold_near_best(self) -> None:
+        """验证候选 chunk 筛选会保留接近最优且 ratio 大于阈值的项。"""
         # 候选筛选必须保留 ratio > 1 且与最大 ratio 足够接近的 chunk。
         chunks, ratios, components = choose_candidate_chunks(
             ratios=[1.1, 2.0, 1.8, 1.6, 0.9],
@@ -63,6 +72,7 @@ class GenerateGrammarCoreTest(unittest.TestCase):
         self.assertEqual(components, [["G", "L"], ["E", "A"]])
 
     def test_detect_skip_gram_finds_constructed_n_to_ea_case(self) -> None:
+        """验证构造序列能够触发 N 位置后的 skip-gram 检测。"""
         # 构造一个 N 后第 2 个 token 命中 E-A 的序列，验证 skip-gram 判定可触发。
         learner = GrammarLearner(GrammarLearningParams())
         result = GrammarLearningResult(
@@ -87,7 +97,8 @@ class GenerateGrammarCoreTest(unittest.TestCase):
         self.assertGreater(skip_gram.count, 0)
 
     def test_learn_returns_result_for_representative_real_file(self) -> None:
-        # 代表性真实文件 smoke test：确保核心 learn 能处理旧数据并返回非空结果。
+        """验证核心学习流程能处理代表性真实文件并返回非空结果。"""
+        # 代表性真实文件 smoke test：确保核心 learn 能处理迁移数据并返回非空结果。
         record = load_strategy_state_data(
             STRATEGY_SEQUENCE_DIR / "031222-401.pkl",
             DEFAULT_STATE_NAMES,

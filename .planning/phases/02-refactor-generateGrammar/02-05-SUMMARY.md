@@ -17,7 +17,7 @@ tech-stack:
   patterns: ["精确比较", "无数值容差", "外部数据只读记录"]
 key-files:
   created:
-    - script/validate_generate_grammar.py
+    - script/generate_grammar/validate_generate_grammar.py
     - tests/test_generate_grammar_validation.py
     - data/generate_grammar/README.md
     - .planning/phases/02-refactor-generateGrammar/02-VERIFICATION.md
@@ -48,7 +48,7 @@ completed: 2026-05-04
 
 ## Accomplishments
 
-- 创建 `script/validate_generate_grammar.py`，实现 `compare_values()`、`compare_legacy_dict()` 和 `validate_outputs()`。
+- 创建 `script/generate_grammar/validate_generate_grammar.py`，实现 `compare_values()`、`compare_legacy_dict()` 和 `validate_outputs()`。
 - 添加验证工具单元测试，覆盖 list、ndarray、DataFrame、缺失 key 和代表性 legacy key。
 - 创建 `data/generate_grammar/README.md`，记录只读数据来源、固定旧基准和不复制数据的原因。
 - 运行 `unittest discover`，18 个测试全部通过。
@@ -66,7 +66,7 @@ Each task was committed atomically:
 
 ## Files Created/Modified
 
-- `script/validate_generate_grammar.py` - 旧新输出精确比较脚本。
+- `script/generate_grammar/validate_generate_grammar.py` - 旧新输出精确比较脚本。
 - `tests/test_generate_grammar_validation.py` - 验证工具测试。
 - `data/generate_grammar/README.md` - 数据来源记录。
 - `.planning/phases/02-refactor-generateGrammar/02-VERIFICATION.md` - 全量验证报告。
@@ -77,7 +77,7 @@ Each task was committed atomically:
 
 ```bash
 PYTHONPATH=src conda run -n fmri python -m unittest discover -s tests
-PYTHONPATH=src conda run -n fmri python script/validate_generate_grammar.py
+PYTHONPATH=src conda run -n fmri python script/generate_grammar/validate_generate_grammar.py
 find src/LoPS/temp -mindepth 1 | wc -l
 ```
 

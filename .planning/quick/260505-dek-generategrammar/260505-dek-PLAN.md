@@ -23,6 +23,6 @@ Phase 2 的正式新版本代码不应继续输出或依赖旧版本格式。核
 ## 验证
 
 - 运行全部单元测试。
-- 运行 `script/run_generate_grammar.py`，确认默认路径输出新结构。
-- 运行 `script/validate_generate_grammar.py`，确认通过转换接口后 34 个文件与旧基准一致。
+- 运行 `script/generate_grammar/run_generate_grammar.py`，确认默认路径输出新结构。
+- 运行 `script/generate_grammar/validate_generate_grammar.py`，确认通过转换接口后 34 个文件与旧基准一致。
 - 搜索 `src/LoPS/generate_grammar`，确认核心包不再包含 `legacy` 模块或 `legacy` 输出路径。

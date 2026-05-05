@@ -18,7 +18,7 @@ commit: uncommitted
   - 删除旧项目数据目录默认常量。
   - `GenerateGrammarConfig` 的 `strategy_sequence_dir`、`state_graph_dir`、`output_dir` 仍由调用方构造配置时显式提供。
   - `baseline_grammar_dir` 仅作为验证基准路径，可由验证脚本显式传入。
-- 已修改 `script/run_generate_grammar.py` 和 `script/validate_generate_grammar.py`：
+- 已修改 `script/generate_grammar/run_generate_grammar.py` 和 `script/generate_grammar/validate_generate_grammar.py`：
   - 输入路径、输出路径和验证基准路径提供 `data/generate_grammar` 下的字符串默认值。
   - 仍可通过命令行覆盖这些默认路径。
 - 已修改测试：
@@ -32,8 +32,8 @@ commit: uncommitted
 
 ```bash
 PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python -m unittest discover -s tests
-PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/run_generate_grammar.py --strategy-sequence-dir data/generate_grammar/input/strategy_sequence --state-graph-dir data/generate_grammar/input/state_graph --output-dir data/generate_grammar/smoke-output
-PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/validate_generate_grammar.py --strategy-sequence-dir data/generate_grammar/input/strategy_sequence --state-graph-dir data/generate_grammar/input/state_graph --baseline-grammar-dir data/generate_grammar/baseline/grammar --output-dir data/generate_grammar/refactored-output/grammar
+PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/generate_grammar/run_generate_grammar.py --strategy-sequence-dir data/generate_grammar/input/strategy_sequence --state-graph-dir data/generate_grammar/input/state_graph --output-dir data/generate_grammar/smoke-output
+PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/generate_grammar/validate_generate_grammar.py --strategy-sequence-dir data/generate_grammar/input/strategy_sequence --state-graph-dir data/generate_grammar/input/state_graph --baseline-grammar-dir data/generate_grammar/baseline/grammar --output-dir data/generate_grammar/refactored-output/grammar
 rg -n "/home/zzh/project/Pacman|Pac-man|Monkey_Analysis|structre-learning|DEFAULT_STRATEGY|DEFAULT_STATE_GRAPH|DEFAULT_BASELINE|DEFAULT_OUTPUT_DIR" src script tests data README.md AGENTS.md --glob '!*.pkl' --glob '!poetry.lock'
 ```
 

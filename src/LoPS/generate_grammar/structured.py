@@ -1,3 +1,5 @@
+"""将 grammar 学习结果整理为面向后续分析的结构化输出。"""
+
 from __future__ import annotations
 
 from dataclasses import asdict
@@ -14,6 +16,13 @@ def build_structured_output(
     result: GrammarLearningResult,
     skip_gram: SkipGramResult,
 ) -> dict[str, Any]:
+    """组装单个输入文件对应的结构化 grammar 输出。
+
+    输入语义：input_file_name 标记来源文件，params 是学习配置，result 与 skip_gram 是学习产物。
+    输出语义：返回可 pickle 的 dict，包含来源、参数、grammar 条目、解析序列和 skip-gram 摘要。
+    关键约束：grammar 列表按 result.grammar_tokens 顺序展开，各概率和频率字段必须同长度对齐。
+    """
+
     # 输出目标是给后续科研分析提供清晰、去冗余的新结构。
     grammar_items = []
     for index, token in enumerate(result.grammar_tokens):

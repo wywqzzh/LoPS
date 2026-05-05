@@ -1,3 +1,5 @@
+"""状态组合计数、Bayesian Dirichlet 打分和状态条件连线学习。"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -5,12 +7,17 @@ from scipy.special import gammaln
 
 
 def count_state_combinations(data: np.ndarray, nstates: np.ndarray) -> np.ndarray:
-    # 该函数复刻旧 src.Utils.count：输入状态值使用 1-based 编码，组合索引用 0-based 计算。
-    # 返回向量的第 k 位表示第 k 种状态组合在样本中出现的次数。
+    """统计多变量离散状态组合在样本中的出现次数。
+
+    输入语义：data 的每一行是一类变量，状态值使用 1-based 编码；nstates 给出各变量状态数。
+    输出语义：返回计数向量，第 k 位表示第 k 种 0-based 展平组合出现的次数。
+    关键约束：空输入返回空列表；非空输入要求 data 与 nstates 的变量维度一致。
+    """
+
     data = np.asarray(data)
     nstates = np.asarray(nstates)
 
-    # 旧函数对空输入返回 [] 而不是空 ndarray；这里保留该边界行为用于旧新精确对照。
+    # 空输入没有可统计的状态组合，沿用调用方依赖的空列表边界返回值。
     if len(data) == 0 or data.size == 0:
         return []
 
@@ -18,7 +25,7 @@ def count_state_combinations(data: np.ndarray, nstates: np.ndarray) -> np.ndarra
     zero_based_data = data - 1
     combination_index = zero_based_data[0].copy()
     for index in range(1, len(zero_based_data)):
-        # 第 index 个变量的偏移量是之前所有变量状态数的乘积，和旧实现 np.prod(nstates[:i]) 一致。
+        # 第 index 个变量的偏移量是之前所有变量状态数的乘积，对应列主序展平组合编码。
         multiplier = np.prod(nstates[:index])
         combination_index += zero_based_data[index] * multiplier
 
@@ -36,7 +43,14 @@ def bd_score(
     nstates_parents: np.ndarray,
     alpha: float,
 ) -> tuple[float, np.ndarray]:
-    # 复刻旧 bayesianScore.BDscore：alpha 在调用侧已按旧逻辑决定，这里只负责构造 Dirichlet 先验。
+    """计算子变量在给定父变量条件下的 Bayesian Dirichlet 得分。
+
+    输入语义：data_v 是子变量样本，data_parents 是父变量样本矩阵，nstates* 描述离散状态数。
+    输出语义：返回总得分和后验参数矩阵，后验矩阵形状为 child 状态数乘 parent 组合数。
+    关键约束：alpha 由调用方按变量组合数缩放；data_v 和父变量样本数必须对齐。
+    """
+
+    # alpha 在调用侧根据变量状态数完成缩放，这里只负责构造均匀 Dirichlet 先验。
     data_v = np.asarray(data_v)
     data_parents = np.asarray(data_parents)
     nstates_parents = np.asarray(nstates_parents)
@@ -49,7 +63,7 @@ def bd_score(
             np.hstack((nstates_v, nstates_parents)),
         )
     else:
-        # 无 parent 分支保留旧代码对一维/二维 data_v 的 reshape 方式，避免微小形状差异影响结果。
+        # 无 parent 时需要把子变量整理为单变量样本矩阵，覆盖一维和二维输入形态。
         if len(data_v.shape) == 2:
             sample_count = max(data_v.shape[0], data_v.shape[1])
             counts = count_state_combinations(data_v.reshape(-1, sample_count), np.array([nstates_v]))
@@ -62,7 +76,7 @@ def bd_score(
         order="F",
     )
     posterior = prior + child_given_parents
-    # gammaln 公式是旧 BDscore 的核心打分，必须保持逐项顺序一致以支持精确行为测试。
+    # 使用 gammaln 写出 Dirichlet-multinomial 边际似然，逐列累加 parent 条件下的得分。
     score = np.sum(
         gammaln(np.sum(prior, axis=0))
         - gammaln(np.sum(posterior, axis=0))
@@ -83,7 +97,13 @@ def learn_state_condition_links(
     alpha: float,
     conditions: list[list[int]],
 ) -> tuple[np.ndarray, list, list, list]:
-    # 该函数只迁移默认路径用到的状态条件连线学习。
+    """学习条件状态到效果状态的候选依赖连线。
+
+    输入语义：data 按变量行、样本列排列，conditions 描述每个状态块的条件变量下标。
+    输出语义：返回学习到的邻接矩阵，以及参数、父节点、得分占位列表。
+    关键约束：当前调用路径只消费邻接矩阵；其余三个列表保持形状稳定以便调用侧解包。
+    """
+
     # best* 三个返回值当前仍为空列表，保留返回元组形状便于调用侧解包。
     var_num = data.shape[0]
     bestparents = [[] for _ in range(var_num)]
@@ -95,8 +115,8 @@ def learn_state_condition_links(
 
     for v in var_effect:
         for parent_block in var_casual:
-            # conditions[parent_block] 给出旧 StateGraph 约束的条件状态下标；
-            # block_message 当前默认是 {i: [i]}，但仍按旧代码展开，保证结构兼容。
+            # conditions[parent_block] 给出当前 parent block 需要共同纳入评分的条件状态下标。
+            # block_message 将块下标展开为变量下标，支持一个块包含多个状态变量的情况。
             condition = conditions[parent_block]
             condition = [block_message[index] for index in condition]
             condition = sum(condition, [])
@@ -112,7 +132,7 @@ def learn_state_condition_links(
 
             parent_variables = condition + block_message[parent_block]
             parent_alpha = alpha / (np.prod(nstates[v]) * np.prod(nstates[parent_variables]))
-            # bd2 表示条件状态加候选 parent block 后的得分；旧代码用 bd1 / bd2 > 1 判定连线。
+            # bd2 表示条件状态加候选 parent block 后的得分，分数比值用于判定是否连线。
             bd2, _ = bd_score(
                 data[v, :],
                 data[parent_variables, :],
@@ -121,7 +141,7 @@ def learn_state_condition_links(
                 parent_alpha,
             )
             if bd1 / bd2 > 1:
-                # 输出矩阵下标保留旧 v - (casual_num - block_num) 的偏移方式。
+                # effect 变量位于 data 尾部，写入邻接矩阵时需要转换到输出矩阵中的效果列下标。
                 learned_adjacency[parent_block, v - (casual_num - block_num)] = 1
 
     return learned_adjacency, bestparameters, bestparents, bestscores

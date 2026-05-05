@@ -22,8 +22,8 @@ commit: uncommitted
 
 ```bash
 PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python -m unittest discover -s tests
-PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/run_generate_grammar.py --max-iterations 1 --output-dir data/generate_grammar/smoke-output
-PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/validate_generate_grammar.py
+PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/generate_grammar/run_generate_grammar.py --max-iterations 1 --output-dir data/generate_grammar/smoke-output
+PYTHONPATH=src /home/zzh/anaconda3/envs/LoPS/bin/python script/generate_grammar/validate_generate_grammar.py
 find .planning -path '*.pkl' -type f
 ```
 

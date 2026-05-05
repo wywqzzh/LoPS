@@ -631,13 +631,13 @@ structured = {
 新增运行入口：
 
 ```text
-script/run_generate_grammar.py
+script/generate_grammar/run_generate_grammar.py
 ```
 
 默认运行：
 
 ```bash
-PYTHONPATH=src conda run -n fmri python script/run_generate_grammar.py
+PYTHONPATH=src conda run -n fmri python script/generate_grammar/run_generate_grammar.py
 ```
 
 默认读取：
@@ -660,13 +660,13 @@ data/generate_grammar/refactored-output/grammar2/
 新增验证入口：
 
 ```text
-script/validate_generate_grammar.py
+script/generate_grammar/validate_generate_grammar.py
 ```
 
 默认命令：
 
 ```bash
-PYTHONPATH=src conda run -n fmri python script/validate_generate_grammar.py
+PYTHONPATH=src conda run -n fmri python script/generate_grammar/validate_generate_grammar.py
 ```
 
 验证分两层。

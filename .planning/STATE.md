@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: complete
 stopped_at: Completed Phase 2
-last_updated: "2026-05-05T09:44:08+08:00"
+last_updated: "2026-05-05T10:17:34+08:00"
 last_activity: 2026-05-05
 progress:
   total_phases: 2
@@ -73,7 +73,8 @@ Progress: [██████████] 100%
 - Quick 260505-cij 决定：当前脚本和测试使用的 LoPS 内部数据必须放在 `data/generate_grammar`，`.planning` 只保存计划、讨论、分析和结论文档。
 - Quick 260505-cs4 决定：`src/LoPS` 不得保存旧项目或其它项目的数据目录、代码目录等绝对路径；`generateGrammar` 输入、状态图和旧基准数据已迁移到 `data/generate_grammar`，运行脚本可为这些固定目录设置默认参数。
 - 全局重构规则：新版本正式代码必须完全独立于旧版本代码和旧版本数据；新设计默认不考虑旧输出格式兼容，旧格式转换只能放在验证脚本或独立适配模块中，不能污染核心模块架构。
-- Quick 260505-dek 决定：`generateGrammar` 正式核心包删除旧格式兼容输出；新旧一致性验证统一通过 `script/generate_grammar_legacy_adapter.py` 将新结构映射为旧格式后执行。
+- Quick 260505-dek 决定：`generateGrammar` 正式核心包删除旧格式兼容输出；新旧一致性验证统一通过 `script/generate_grammar/legacy_adapter.py` 将新结构映射为旧格式后执行。
+- 全局注释规则：代码注释用于说明功能、解释过程和标明关键数据含义；每个函数和类必须使用中文 docstring 说明功能、输入输出语义和关键约束，重点逻辑处保留中文中间注释。
 
 ### Pending Todos（待办）
 
@@ -101,6 +102,6 @@ Progress: [██████████] 100%
 
 ## Session Continuity（会话连续性）
 
-Last session: 2026-05-05T09:44:08+08:00
-Stopped at: Completed quick task 260505-dek
+Last session: 2026-05-05T10:17:34+08:00
+Stopped at: Updated annotation rules and rewrote code comments
 Resume file: None

@@ -21,7 +21,7 @@ key-files:
     - src/LoPS/generate_grammar/legacy.py
     - src/LoPS/generate_grammar/structured.py
     - src/LoPS/generate_grammar/pipeline.py
-    - script/run_generate_grammar.py
+    - script/generate_grammar/run_generate_grammar.py
     - tests/test_generate_grammar_pipeline.py
   modified: []
 key-decisions:
@@ -53,7 +53,7 @@ completed: 2026-05-04
 - 创建 `legacy.py`，按旧占位符顺序构造 `sets`、`seq`、`S`、`components` 等旧字段。
 - 创建 `structured.py`，输出 `source`、`parameters`、`grammar`、`parsed` 和 `skip_gram`。
 - 创建 `pipeline.py`，实现数据准备、单文件处理和全量运行。
-- 创建 `script/run_generate_grammar.py`，支持显式传入输入路径、状态图路径、输出路径、基准路径、alpha 和最大迭代次数。
+- 创建 `script/generate_grammar/run_generate_grammar.py`，支持显式传入输入路径、状态图路径、输出路径、基准路径、alpha 和最大迭代次数。
 - 添加 pipeline 单元测试，验证代表性文件输出包含完整 `legacy` 与 `structured` 顶层结构。
 
 ## Task Commits
@@ -70,7 +70,7 @@ Each task was committed atomically:
 - `src/LoPS/generate_grammar/legacy.py` - 旧字段兼容输出。
 - `src/LoPS/generate_grammar/structured.py` - 新结构输出。
 - `src/LoPS/generate_grammar/pipeline.py` - 单文件和全量 pipeline。
-- `script/run_generate_grammar.py` - 命令行运行入口。
+- `script/generate_grammar/run_generate_grammar.py` - 命令行运行入口。
 - `tests/test_generate_grammar_pipeline.py` - pipeline 行为测试。
 
 ## Verification
@@ -79,7 +79,7 @@ Each task was committed atomically:
 
 ```bash
 PYTHONPATH=src conda run -n fmri python -m unittest tests.test_generate_grammar_pipeline
-PYTHONPATH=src conda run -n fmri python script/run_generate_grammar.py --max-iterations 1 --output-dir data/generate_grammar/smoke-output
+PYTHONPATH=src conda run -n fmri python script/generate_grammar/run_generate_grammar.py --max-iterations 1 --output-dir data/generate_grammar/smoke-output
 PYTHONPATH=src conda run -n fmri python -m unittest tests.test_generate_grammar_foundation tests.test_generate_grammar_scoring tests.test_generate_grammar_grammar tests.test_generate_grammar_pipeline
 ```
 
