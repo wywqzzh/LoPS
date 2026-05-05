@@ -18,7 +18,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--strategy-sequence-dir", type=Path, default="data/generate_grammar/input/strategy_sequence")
     parser.add_argument("--state-graph-dir", type=Path, default="data/generate_grammar/input/state_graph")
     parser.add_argument("--output-dir", type=Path, default="data/generate_grammar/refactored-output/grammar")
-    parser.add_argument("--baseline-grammar-dir", type=Path, default="data/generate_grammar/baseline/grammar")
     parser.add_argument("--alpha", type=float, default=0.5)
     parser.add_argument("--max-iterations", type=int, default=100000)
     return parser.parse_args()
@@ -39,7 +38,6 @@ def main() -> None:
         strategy_sequence_dir=args.strategy_sequence_dir,
         state_graph_dir=args.state_graph_dir,
         output_dir=args.output_dir,
-        baseline_grammar_dir=args.baseline_grammar_dir,
         learning=learning,
     )
     output_paths = run_generate_grammar(config)

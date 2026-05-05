@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: complete
 stopped_at: Completed Phase 2
-last_updated: "2026-05-05T09:22:29+08:00"
+last_updated: "2026-05-05T09:44:08+08:00"
 last_activity: 2026-05-05
 progress:
   total_phases: 2
@@ -68,10 +68,12 @@ Progress: [██████████] 100%
 - Phase 2 分析结论：sandbox 全量 34 个输出与原项目既有 `grammar2/` 输出全部 MD5 一致。
 - Phase 2 执行结论：`Utils.count`、`BDscore` 和 `learnBayesNetBlock` 已在 `src/LoPS/generate_grammar/scoring.py` 中重实现，并通过旧新模块级行为对照测试。
 - Phase 2 执行结论：`GrammarLearner` 已使用 `"G-L"` 形式 token 重实现核心 chunk 学习和 skip-gram 检测，不生成旧占位符。
-- Phase 2 执行结论：pipeline 已输出顶层 `legacy` 和 `structured` 两个字典，并通过运行脚本 smoke test 生成 34 个文件。
-- Phase 2 验证结论：34/34 新输出的 `legacy` 与旧 `grammar2/` 基准逐 key/value 精确一致，`src/LoPS/temp` 无残留。
+- Phase 2 执行结论：核心 pipeline 已重整为只输出新结构；旧格式不再进入正式核心输出。
+- Phase 2 验证结论：34/34 新输出通过脚本层转换接口映射为旧格式后，与旧 `grammar` 基准逐 key/value 精确一致，`src/LoPS/temp` 无残留。
 - Quick 260505-cij 决定：当前脚本和测试使用的 LoPS 内部数据必须放在 `data/generate_grammar`，`.planning` 只保存计划、讨论、分析和结论文档。
 - Quick 260505-cs4 决定：`src/LoPS` 不得保存旧项目或其它项目的数据目录、代码目录等绝对路径；`generateGrammar` 输入、状态图和旧基准数据已迁移到 `data/generate_grammar`，运行脚本可为这些固定目录设置默认参数。
+- 全局重构规则：新版本正式代码必须完全独立于旧版本代码和旧版本数据；新设计默认不考虑旧输出格式兼容，旧格式转换只能放在验证脚本或独立适配模块中，不能污染核心模块架构。
+- Quick 260505-dek 决定：`generateGrammar` 正式核心包删除旧格式兼容输出；新旧一致性验证统一通过 `script/generate_grammar_legacy_adapter.py` 将新结构映射为旧格式后执行。
 
 ### Pending Todos（待办）
 
@@ -95,9 +97,10 @@ Progress: [██████████] 100%
 |---|-------------|------|--------|-----------|
 | 260505-cij | 将当前脚本测试和运行使用的输入输出数据从 `.planning` 迁移到 `data/generate_grammar` 下 | 2026-05-05 | uncommitted | [.planning/quick/260505-cij-planning-data-generate-grammar](./quick/260505-cij-planning-data-generate-grammar/) |
 | 260505-cs4 | 移除 `src` 中旧项目数据目录依赖并将 `generateGrammar` 输入基准数据迁移到 `data` | 2026-05-05 | uncommitted | [.planning/quick/260505-cs4-src-generategrammar-data](./quick/260505-cs4-src-generategrammar-data/) |
+| 260505-dek | 隔离 `generateGrammar` 旧格式兼容并通过统一转换接口验证新旧一致性 | 2026-05-05 | uncommitted | [.planning/quick/260505-dek-generategrammar](./quick/260505-dek-generategrammar/) |
 
 ## Session Continuity（会话连续性）
 
-Last session: 2026-05-05T09:22:29+08:00
-Stopped at: Completed quick task 260505-cs4
+Last session: 2026-05-05T09:44:08+08:00
+Stopped at: Completed quick task 260505-dek
 Resume file: None

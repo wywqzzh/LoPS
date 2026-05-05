@@ -83,8 +83,8 @@ def learn_state_condition_links(
     alpha: float,
     conditions: list[list[int]],
 ) -> tuple[np.ndarray, list, list, list]:
-    # 该函数只迁移旧 learnBayesNetBlock 默认路径用到的状态条件连线学习。
-    # best* 三个返回值旧函数虽然基本为空，但 legacy 行为测试依赖返回元组形状，因此保留。
+    # 该函数只迁移默认路径用到的状态条件连线学习。
+    # best* 三个返回值当前仍为空列表，保留返回元组形状便于调用侧解包。
     var_num = data.shape[0]
     bestparents = [[] for _ in range(var_num)]
     bestparameters = [[] for _ in range(var_num)]

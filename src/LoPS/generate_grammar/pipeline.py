@@ -15,7 +15,6 @@ from LoPS.generate_grammar.data_io import (
     write_generate_grammar_output,
 )
 from LoPS.generate_grammar.grammar import GrammarLearner
-from LoPS.generate_grammar.legacy import build_legacy_output
 from LoPS.generate_grammar.state_graph import StateDependencyGraph, load_state_dependency_graph
 from LoPS.generate_grammar.structured import build_structured_output
 
@@ -84,14 +83,8 @@ def process_strategy_state_file(input_file_name: str, config: GenerateGrammarCon
     # skip_gram 必须在 grammar 学习完成后执行，因为它依赖最终 parsed_sequence。
     skip_gram = learner.detect_skip_gram(grammar_result, prepared.n_positions)
 
-    # 同一份核心结果同时生成旧兼容输出和新 structured 输出。
-    legacy_output = build_legacy_output(grammar_result, skip_gram)
-    structured_output = build_structured_output(input_file_name, config.learning, grammar_result, skip_gram)
-
-    return {
-        "legacy": legacy_output,
-        "structured": structured_output,
-    }
+    # 核心 pipeline 只返回新版本结构。旧格式转换只允许发生在验证脚本的适配层。
+    return build_structured_output(input_file_name, config.learning, grammar_result, skip_gram)
 
 
 def run_generate_grammar(config: GenerateGrammarConfig) -> list[Path]:

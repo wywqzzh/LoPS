@@ -26,7 +26,7 @@ class OrganizedGrammarData:
 @dataclass
 class GrammarLearningResult:
     # 核心学习结果全部使用新 token 表示，例如 "G-L"、"E-A"。
-    # legacy.py 会负责把这些 token 转回旧输出需要的无分隔符字符串和占位符。
+    # 验证脚本如需与历史结果比较，可在核心模块之外进行格式映射。
     grammar_tokens: list[str]
     probabilities: list[float]
     position_grammar: list[str]
@@ -43,7 +43,7 @@ class GrammarLearningResult:
 
 @dataclass
 class SkipGramResult:
-    # 对应旧输出字段 skipGram 和 skipGramNum。
+    # 记录 skip-gram 检测结果；字段名保持新代码语义，不承载历史输出格式。
     found: bool
     count: int | float
 
@@ -152,7 +152,7 @@ class GrammarLearner:
         cover_indices = []
         pointer = 0
         position_grammar = []
-        # 旧代码这里使用最后一次循环的 L 值填充 position_gram；为保持 legacy 输出一致，保留该行为。
+        # 历史实现这里使用最后一次循环的 L 值填充 position_gram；保留该行为以维持计算结果可复现。
         last_grammar_length = token_length(grammar_tokens[-1])
 
         while pointer < len(tokens):

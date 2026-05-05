@@ -16,6 +16,13 @@ from LoPS.generate_grammar.config import (
 )
 from LoPS.generate_grammar.pipeline import run_generate_grammar
 
+try:
+    # 单元测试从项目根目录导入 script 包；优先使用包路径，避免测试环境与运行入口分叉。
+    from script.generate_grammar_legacy_adapter import convert_generate_grammar_output_to_legacy
+except ModuleNotFoundError:
+    # 直接执行本文件时，Python 会把 script/ 放入 sys.path，此时使用同目录导入。
+    from generate_grammar_legacy_adapter import convert_generate_grammar_output_to_legacy
+
 
 def compare_values(old_value: Any, new_value: Any, path: str) -> list[str]:
     # 验证目标是 legacy 与旧 grammar 基准精确一致；不同类型分别使用最严格的比较方式。
@@ -78,20 +85,21 @@ def compare_legacy_dict(old: Mapping[str, Any], new: Mapping[str, Any], file_nam
     return differences
 
 
-def validate_outputs(config: GenerateGrammarConfig) -> int:
-    # 验证脚本会先运行新 pipeline，再读取新输出中的 legacy 字典与固定旧基准比较。
-    if config.baseline_grammar_dir is None:
-        raise ValueError("baseline_grammar_dir is required for validation")
-
+def validate_outputs(config: GenerateGrammarConfig, baseline_grammar_dir: Path) -> int:
+    # 验证脚本会先运行新 pipeline，再通过脚本层适配接口把新结构转换成旧格式用于比较。
+    if not baseline_grammar_dir.is_dir():
+        raise FileNotFoundError(f"Baseline grammar directory not found: {baseline_grammar_dir}")
+    if config.output_dir.resolve() == baseline_grammar_dir.resolve():
+        raise ValueError("output_dir must not be the baseline grammar directory")
     output_paths = run_generate_grammar(config)
     differences = []
     for output_path in output_paths:
         file_name = output_path.name
-        baseline_path = config.baseline_grammar_dir / file_name
+        baseline_path = baseline_grammar_dir / file_name
         old_output = pd.read_pickle(baseline_path)
         new_output = pd.read_pickle(output_path)
-        # 新 pickle 顶层有 legacy/structured；旧结果一致性只比较 legacy。
-        legacy_output = new_output["legacy"]
+        # 新输出不包含旧兼容字段；所有旧格式还原都集中在统一转换接口中。
+        legacy_output = convert_generate_grammar_output_to_legacy(new_output)
         differences.extend(compare_legacy_dict(old_output, legacy_output, file_name))
 
     if differences:
@@ -130,10 +138,9 @@ def main() -> int:
         strategy_sequence_dir=args.strategy_sequence_dir,
         state_graph_dir=args.state_graph_dir,
         output_dir=args.output_dir,
-        baseline_grammar_dir=args.baseline_grammar_dir,
         learning=learning,
     )
-    return validate_outputs(config)
+    return validate_outputs(config, args.baseline_grammar_dir)
 
 
 if __name__ == "__main__":

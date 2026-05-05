@@ -8,7 +8,7 @@ TOKEN_SEPARATOR = "-"
 
 def split_token(token: str) -> list[str]:
     # 新核心算法不再使用旧单字符占位符，复合 grammar 统一写成 "G-L-E-A"。
-    # 空字符串只会出现在 legacy components 的占位字段中，拆分时保持为空列表。
+    # 空字符串表示没有第二个组成项，拆分时保持为空列表。
     if token == "":
         return []
     return token.split(TOKEN_SEPARATOR)

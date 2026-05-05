@@ -9,6 +9,7 @@ import pandas as pd
 
 from LoPS.generate_grammar.config import GenerateGrammarConfig
 from LoPS.generate_grammar.pipeline import process_strategy_state_file
+from script.generate_grammar_legacy_adapter import LEGACY_FIELD_ORDER, convert_generate_grammar_output_to_legacy
 from script.validate_generate_grammar import compare_legacy_dict, compare_values
 from tests.generate_grammar_fixtures import BASELINE_GRAMMAR_DIR, STATE_GRAPH_DIR, STRATEGY_SEQUENCE_DIR
 
@@ -43,8 +44,8 @@ class GenerateGrammarValidationTest(unittest.TestCase):
 
         self.assertEqual(differences, ["031222-401.pkl.pro: missing key"])
 
-    def test_representative_output_contains_all_legacy_baseline_keys(self) -> None:
-        # 代表性真实文件检查新 legacy 至少覆盖旧基准中的全部字段。
+    def test_legacy_adapter_converts_representative_output_for_baseline_comparison(self) -> None:
+        # 代表性真实文件检查：核心输出先保持新结构，再由脚本层适配接口转换为旧字段。
         with tempfile.TemporaryDirectory() as temp_dir:
             config = GenerateGrammarConfig(
                 strategy_sequence_dir=STRATEGY_SEQUENCE_DIR,
@@ -54,7 +55,8 @@ class GenerateGrammarValidationTest(unittest.TestCase):
             output = process_strategy_state_file("031222-401.pkl", config)
 
         old_output = pd.read_pickle(BASELINE_GRAMMAR_DIR / "031222-401.pkl")
-        legacy = output["legacy"]
+        legacy = convert_generate_grammar_output_to_legacy(output)
+        self.assertEqual(list(legacy.keys()), list(LEGACY_FIELD_ORDER))
         for key in old_output.keys():
             self.assertIn(key, legacy)
 

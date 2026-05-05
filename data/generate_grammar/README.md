@@ -45,3 +45,7 @@ data/generate_grammar/smoke-output/
 ## 代码路径规则
 
 `src/LoPS` 中不得保存任何项目外部数据目录默认值。运行脚本可以为本目录下的固定数据位置设置默认参数；直接使用模块时，应在创建 `GenerateGrammarConfig` 时显式传入输入目录、输出目录和验证基准目录。
+
+## 新旧验证转换
+
+正式新输出只包含 `source`、`parameters`、`grammar`、`parsed` 和 `skip_gram` 五个顶层字段。若需要与旧基准比较，由 `script/generate_grammar_legacy_adapter.py` 提供统一转换接口，把新结构临时映射为旧格式后再比较；该转换逻辑不属于核心模块。
