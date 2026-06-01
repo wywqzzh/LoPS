@@ -13,8 +13,7 @@ from LoPS.generate_grammar.config import (
     DEFAULT_STATE_NAMES,
     GenerateGrammarConfig,
 )
-from LoPS.generate_grammar.data_io import load_strategy_state_data
-from LoPS.generate_grammar.state_graph import load_state_dependency_graph
+from LoPS.generate_grammar.data import load_state_dependency_graph, load_strategy_state_data
 from LoPS.generate_grammar.token import (
     combine_tokens,
     format_token,

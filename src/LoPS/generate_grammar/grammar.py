@@ -13,8 +13,7 @@ import numpy as np
 import pandas as pd
 
 from LoPS.generate_grammar.config import GrammarLearningParams
-from LoPS.generate_grammar.scoring import bd_score, learn_state_condition_links
-from LoPS.generate_grammar.state_graph import StateDependencyGraph
+from LoPS.structure_learning import StateDependencyGraph, bd_score, learn_condition_effect_links
 from LoPS.generate_grammar.token import (
     GrammarToken,
     combine_tokens,
@@ -448,7 +447,7 @@ class GrammarLearner:
             data_condition[:, index - 1] = state_values[index] + 1
             data_policy_condition[:, index - 1] = state_values[index - 1] + 1
 
-        # learn_state_condition_links 的 data 前半部分是状态条件变量，后半部分是 grammar parent 变量。
+        # learn_condition_effect_links 的 data 前半部分是状态条件变量，后半部分是 grammar parent 变量。
         data = np.vstack((data_policy_condition, data_parent)).astype(int)
         nstates = np.max(data, axis=1).T.astype(int)
         casual_num = len(state_names)
@@ -456,7 +455,7 @@ class GrammarLearner:
         block_message = {index: [index] for index in range(casual_num)}
 
         # 通过状态图学习每个 grammar token 需要附加哪些状态条件。
-        learned_adjacency, _, _, _ = learn_state_condition_links(
+        learned_adjacency, _, _, _ = learn_condition_effect_links(
             data=data,
             nstates=nstates,
             block_message=block_message,

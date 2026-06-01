@@ -14,14 +14,13 @@ from LoPS.generate_grammar.config import (
     DEFAULT_STATE_NAMES,
     GrammarLearningParams,
 )
-from LoPS.generate_grammar.data_io import load_strategy_state_data
+from LoPS.generate_grammar.data import load_state_dependency_graph, load_strategy_state_data
 from LoPS.generate_grammar.grammar import (
     GrammarLearner,
     GrammarLearningResult,
     SkipGramResult,
     choose_candidate_chunks,
 )
-from LoPS.generate_grammar.state_graph import load_state_dependency_graph
 from tests.generate_grammar_fixtures import STATE_GRAPH_DIR, STRATEGY_SEQUENCE_DIR
 
 

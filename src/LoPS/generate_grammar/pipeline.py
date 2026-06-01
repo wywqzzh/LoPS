@@ -14,14 +14,15 @@ import numpy as np
 import pandas as pd
 
 from LoPS.generate_grammar.config import GenerateGrammarConfig
-from LoPS.generate_grammar.data_io import (
+from LoPS.generate_grammar.data import (
+    StateDependencyGraph,
     StrategyStateData,
     list_strategy_state_files,
+    load_state_dependency_graph,
     load_strategy_state_data,
     write_generate_grammar_output,
 )
 from LoPS.generate_grammar.grammar import GrammarLearner
-from LoPS.generate_grammar.state_graph import StateDependencyGraph, load_state_dependency_graph
 from LoPS.generate_grammar.structured import build_structured_output
 
 

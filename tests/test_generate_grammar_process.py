@@ -13,8 +13,7 @@ import pandas as pd
 
 from LoPS.generate_grammar.config import GrammarLearningParams
 from LoPS.generate_grammar.grammar import CandidateScore, GrammarLearner, GrammarLearningResult
-from LoPS.generate_grammar.scoring import bd_score
-from LoPS.generate_grammar.state_graph import StateDependencyGraph
+from LoPS.structure_learning import StateDependencyGraph, bd_score
 
 
 class TestGenerateGrammarProcess(unittest.TestCase):

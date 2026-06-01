@@ -11,9 +11,8 @@ import numpy as np
 import pandas as pd
 
 from LoPS.generate_grammar.config import DEFAULT_STATE_NAMES
-from LoPS.generate_grammar.data_io import load_strategy_state_data
-from LoPS.generate_grammar.scoring import bd_score, count_state_combinations, learn_state_condition_links
-from LoPS.generate_grammar.state_graph import load_state_dependency_graph
+from LoPS.generate_grammar.data import load_state_dependency_graph, load_strategy_state_data
+from LoPS.structure_learning import bd_score, count_state_combinations, learn_condition_effect_links
 from tests.generate_grammar_fixtures import STATE_GRAPH_DIR, STRATEGY_SEQUENCE_DIR
 
 
@@ -132,7 +131,7 @@ class GenerateGrammarScoringTest(unittest.TestCase):
             ],
             dtype=int,
         )
-        actual_adjacency, _, _, _ = learn_state_condition_links(
+        actual_adjacency, _, _, _ = learn_condition_effect_links(
             data=data,
             nstates=nstates,
             block_message=block_message,

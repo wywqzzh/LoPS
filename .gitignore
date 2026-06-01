@@ -93,6 +93,9 @@ data/generate_grammar/comment-smoke-output/
 *.hdf5
 *.npy
 *.npz
+*.mat
+*.mp4
+
 
 # Images / documents
 *.png

@@ -13,9 +13,8 @@ from LoPS.generate_grammar.config import (
     DEFAULT_STATE_NAMES,
     GenerateGrammarConfig,
 )
-from LoPS.generate_grammar.data_io import load_strategy_state_data
+from LoPS.generate_grammar.data import load_state_dependency_graph, load_strategy_state_data
 from LoPS.generate_grammar.pipeline import prepare_strategy_state_data, process_strategy_state_file
-from LoPS.generate_grammar.state_graph import load_state_dependency_graph
 from tests.generate_grammar_fixtures import STATE_GRAPH_DIR, STRATEGY_SEQUENCE_DIR
 
 

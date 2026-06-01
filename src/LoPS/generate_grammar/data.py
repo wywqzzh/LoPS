@@ -1,4 +1,9 @@
-"""StrategySequence 数据读取和 generate_grammar 结果写入工具。"""
+"""generate_grammar 标准数据结构、输入读取和输出写入。
+
+本模块集中管理 generate_grammar 正式运行所需的数据边界：读取 StrategySequence，
+读取状态依赖图，并把结构化 grammar 结果写回 pickle。这里不实现 grammar 学习算法，
+只负责把磁盘数据转换成核心学习流程可以直接消费的内存对象。
+"""
 
 from __future__ import annotations
 
@@ -9,6 +14,8 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+
+from LoPS.structure_learning import StateDependencyGraph
 
 
 @dataclass(frozen=True)
@@ -63,6 +70,20 @@ def load_strategy_state_data(path: Path, state_names: Sequence[str]) -> Strategy
         participant_file_names=participant_file_names,
         participant_ids=participant_ids,
     )
+
+
+def load_state_dependency_graph(path: Path) -> StateDependencyGraph:
+    """读取 StateGraph pickle 并提取条件状态索引。
+
+    输入语义：path 指向包含 G 字段的 pandas pickle，G 是状态依赖邻接矩阵。
+    输出语义：返回 StateDependencyGraph，其中每行取值为 1 的列被转换为条件状态下标。
+    关键约束：矩阵必须支持二维索引；只有精确等于 1 的位置会被视为依赖关系。
+    """
+
+    # StateGraph pickle 中的 G 是用于约束状态条件的邻接矩阵。
+    result = pd.read_pickle(path)
+    graph = result["G"]
+    return StateDependencyGraph.from_adjacency_matrix(graph)
 
 
 def write_generate_grammar_output(output: Mapping[str, Any], path: Path) -> None:
