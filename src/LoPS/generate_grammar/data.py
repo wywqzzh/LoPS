@@ -73,16 +73,22 @@ def load_strategy_state_data(path: Path, state_names: Sequence[str]) -> Strategy
 
 
 def load_state_dependency_graph(path: Path) -> StateDependencyGraph:
-    """读取 StateGraph pickle 并提取条件状态索引。
+    """读取状态依赖图 pickle 并提取条件状态索引。
 
-    输入语义：path 指向包含 G 字段的 pandas pickle，G 是状态依赖邻接矩阵。
+    输入语义：path 指向新版本状态依赖图 pickle，验证场景下也可读取旧字段结构。
     输出语义：返回 StateDependencyGraph，其中每行取值为 1 的列被转换为条件状态下标。
-    关键约束：矩阵必须支持二维索引；只有精确等于 1 的位置会被视为依赖关系。
+    关键约束：正式链路优先读取 adjacency_matrix；G 只作为旧结果验证或历史数据适配入口。
     """
 
-    # StateGraph pickle 中的 G 是用于约束状态条件的邻接矩阵。
+    # 新版本状态依赖图使用清晰字段名，供正式 generate_grammar 链路直接消费。
     result = pd.read_pickle(path)
-    graph = result["G"]
+    if "adjacency_matrix" in result:
+        graph = result["adjacency_matrix"]
+    elif "G" in result:
+        # 旧字段只保留为验证适配能力，避免旧格式反向污染正式输出结构。
+        graph = result["G"]
+    else:
+        raise KeyError(f"{path} 中缺少 adjacency_matrix 或 G 字段，无法读取状态依赖图。")
     return StateDependencyGraph.from_adjacency_matrix(graph)
 
 

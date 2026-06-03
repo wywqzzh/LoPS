@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 
 from LoPS.generate_grammar.config import GenerateGrammarConfig
+from LoPS.generate_grammar.config import GrammarLearningParams
 from LoPS.generate_grammar.data import (
     StateDependencyGraph,
     StrategyStateData,
@@ -22,8 +23,8 @@ from LoPS.generate_grammar.data import (
     load_strategy_state_data,
     write_generate_grammar_output,
 )
-from LoPS.generate_grammar.grammar import GrammarLearner
-from LoPS.generate_grammar.structured import build_structured_output
+from LoPS.generate_grammar.grammar import GrammarLearner, GrammarLearningResult, SkipGramResult
+from LoPS.generate_grammar.token import split_token
 
 
 ProgressCallback = Callable[[str, Mapping[str, object]], None]
@@ -79,6 +80,59 @@ def prepare_strategy_state_data(
         participant_ids=list(data.participant_ids),
         state_dependencies=state_dependencies,
     )
+
+
+def build_structured_output(
+    input_file_name: str,
+    params: GrammarLearningParams,
+    result: GrammarLearningResult,
+    skip_gram: SkipGramResult,
+) -> dict[str, Any]:
+    """组装单个输入文件对应的结构化 grammar 输出。
+
+    输入语义：input_file_name 标记来源文件，params 是学习配置，result 与 skip_gram 是学习产物。
+    输出语义：返回可 pickle 的 dict，包含来源、参数、grammar 条目、解析序列和 skip-gram 摘要。
+    关键约束：grammar 列表按 result.grammar_tokens 顺序展开，各概率和频率字段必须同长度对齐。
+    """
+
+    # 输出目标是给后续科研分析提供清晰、去冗余的新结构。
+    grammar_items = []
+    for index, token in enumerate(result.grammar_tokens):
+        grammar_items.append(
+            {
+                # token 保留新核心表示；base_tokens 明确展开基础动作，避免后续再解析字符串。
+                "token": token,
+                "base_tokens": split_token(token),
+                "probability": result.probabilities[index],
+                "frequency": result.frequencies[index],
+                "time_probability": result.time_probabilities[index],
+                "components": result.components[index],
+            }
+        )
+
+    return {
+        "source": {
+            # source 记录文件来源和被试信息，同时保留原始文件名和去后缀后的被试 ID。
+            "input_file_name": input_file_name,
+            "participant_file_names": result.participant_file_names,
+            "participant_ids": result.participant_ids,
+        },
+        # 参数完整展开，保证同一份 structured 输出可以追溯当时的学习阈值和状态列。
+        "parameters": asdict(params),
+        "grammar": grammar_items,
+        "parsed": {
+            # parsed 保存最终解析序列和对齐状态；旧格式 gram 字段由验证适配器从 sequence 重建。
+            "original_sequence": result.original_sequence,
+            "sequence": result.parsed_sequence,
+            "state_features": result.parsed_state_features,
+        },
+        "skip_gram": {
+            # skip_gram 字段使用新目标 token 名称，例如 "E-A"。
+            "target": params.skip_gram_target,
+            "found": skip_gram.found,
+            "count": skip_gram.count,
+        },
+    }
 
 
 def process_strategy_state_file(

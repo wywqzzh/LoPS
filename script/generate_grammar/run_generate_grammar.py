@@ -51,13 +51,21 @@ def parse_args() -> argparse.Namespace:
     """解析 generate_grammar 运行入口的命令行参数。
 
     返回值包含输入目录、状态图目录、输出目录和学习参数；默认路径指向
-    仓库内 ``data/generate_grammar``，调用方可以通过命令行覆盖。
+    当前仓库内前置脚本生成的数据，调用方可以通过命令行覆盖。
     """
-    # 常用数据目录固定在 data/generate_grammar 下，因此参数提供字符串默认值。
-    # 用户仍可通过命令行覆盖这些路径，便于比较其它数据集或临时输出目录。
+    # 默认输入接入当前仓库的正式链路：预处理脚本生成 strategy_sequence，
+    # 状态依赖图脚本生成 state_dependency_graph，grammar 脚本只消费这些新结构数据。
     parser = argparse.ArgumentParser(description="Run LoPS generate_grammar refactor pipeline.")
-    parser.add_argument("--strategy-sequence-dir", type=Path, default="data/generate_grammar/input/strategy_sequence")
-    parser.add_argument("--state-graph-dir", type=Path, default="data/generate_grammar/input/state_graph")
+    parser.add_argument(
+        "--strategy-sequence-dir",
+        type=Path,
+        default="data/human_fmri_data_preprocess/strategy_sequence",
+    )
+    parser.add_argument(
+        "--state-graph-dir",
+        type=Path,
+        default="data/state_dependency_graph/state_dependency_graph_data",
+    )
     parser.add_argument("--output-dir", type=Path, default="data/generate_grammar/refactored-output/grammar")
     parser.add_argument("--alpha", type=float, default=0.5)
     parser.add_argument("--max-iterations", type=int, default=100000)

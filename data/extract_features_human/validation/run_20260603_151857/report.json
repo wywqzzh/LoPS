@@ -1,0 +1,271 @@
+{
+  "run_id": "run_20260603_151857",
+  "input_dir": "/home/zzh/project/LoPS/data/extract_features_human/input/corrected_weight_data",
+  "feature_output_dir": "/home/zzh/project/LoPS/data/extract_features_human/feature_data",
+  "discrete_output_dir": "/home/zzh/project/LoPS/data/extract_features_human/discrete_feature_data",
+  "baseline_feature_dir": "/home/zzh/project/LoPS/data/extract_features_human/baseline/feature_data",
+  "baseline_discrete_dir": "/home/zzh/project/LoPS/data/extract_features_human/baseline/discrete_feature_data",
+  "current_raw_discrete_dir": "/home/zzh/project/LoPS/data/human_fmri_data_preprocess/fmri_discrete_feature_data",
+  "extraction_summary": [
+    {
+      "input_file": "031222-401-03-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "031222-401.pkl",
+      "rows": 6057,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "041122-401-04-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "041122-401.pkl",
+      "rows": 4566,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "041122-403-04-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "041122-403.pkl",
+      "rows": 5170,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "041222-401-04-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "041222-401.pkl",
+      "rows": 4085,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "051122-401-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "051122-401.pkl",
+      "rows": 5652,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "051122-402-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "051122-402.pkl",
+      "rows": 6010,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "051122-501-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "051122-501.pkl",
+      "rows": 6197,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "071122-401-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "071122-401.pkl",
+      "rows": 4813,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "071122-402-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "071122-402.pkl",
+      "rows": 2758,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "071122-403-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "071122-403.pkl",
+      "rows": 4851,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "081122-401-08-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "081122-401.pkl",
+      "rows": 5009,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "091122-401-09-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "091122-401.pkl",
+      "rows": 4611,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "101122-401-10-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "101122-401.pkl",
+      "rows": 3738,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "101122-402-10-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "101122-402.pkl",
+      "rows": 5253,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "111122-401-11-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "111122-401.pkl",
+      "rows": 3995,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "131122-402-13-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "131122-402.pkl",
+      "rows": 4770,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "131222-401-13-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "131222-401.pkl",
+      "rows": 5119,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "141222-401-14-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "141222-401.pkl",
+      "rows": 2617,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "141222-402-14-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "141222-402.pkl",
+      "rows": 5921,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "151122-401-15-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "151122-401.pkl",
+      "rows": 7329,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "161122-401-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "161122-401.pkl",
+      "rows": 4600,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "161122-402-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "161122-402.pkl",
+      "rows": 3917,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "161122-403-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "161122-403.pkl",
+      "rows": 5061,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "161122-404-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "161122-404.pkl",
+      "rows": 4256,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "171122-401-17-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "171122-401.pkl",
+      "rows": 5999,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "180522-502-21-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "180522-502.pkl",
+      "rows": 4397,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "211122-402-21-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "211122-402.pkl",
+      "rows": 5532,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "231122-401-23-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "231122-401.pkl",
+      "rows": 6410,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "231122-402-23-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "231122-402.pkl",
+      "rows": 5385,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "241122-401-24-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "241122-401.pkl",
+      "rows": 4773,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "241122-402-24-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "241122-402.pkl",
+      "rows": 5065,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "301122-402-30-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "301122-402.pkl",
+      "rows": 5712,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "311022-401-31-Oct-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "311022-401.pkl",
+      "rows": 4191,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    },
+    {
+      "input_file": "311022-501-31-Oct-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "311022-501.pkl",
+      "rows": 4725,
+      "feature_columns": 21,
+      "discrete_columns": 26
+    }
+  ],
+  "feature_data": {
+    "output_files": 34,
+    "baseline_files": 34,
+    "failed_files": {},
+    "is_exact_match": true
+  },
+  "discrete_feature_data": {
+    "output_files": 34,
+    "baseline_files": 34,
+    "failed_files": {},
+    "is_exact_match": true
+  },
+  "grammar_invariant": {
+    "left_files": 34,
+    "right_files": 34,
+    "failed_files": {},
+    "is_exact_match": true,
+    "current_grammar_dir": "/home/zzh/project/LoPS/data/extract_features_human/validation/run_20260603_151857/chain_invariant/current_chain/grammar",
+    "new_grammar_dir": "/home/zzh/project/LoPS/data/extract_features_human/validation/run_20260603_151857/chain_invariant/new_extractor_chain/grammar"
+  },
+  "is_exact_match": true,
+  "report_path": "/home/zzh/project/LoPS/data/extract_features_human/validation/run_20260603_151857/report.json"
+}

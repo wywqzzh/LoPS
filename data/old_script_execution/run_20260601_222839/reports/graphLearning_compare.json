@@ -1,0 +1,371 @@
+{
+  "old_state_dir": "/home/zzh/project/Pacman/2.Pac-man/Monkey_Analysis/fmri_data_process/StateGraph",
+  "new_state_dir": "/home/zzh/project/LoPS/data/old_script_execution/run_20260601_222839/StateGraph",
+  "strategy_sequence_dir": "/home/zzh/project/Pacman/2.Pac-man/Monkey_Analysis/fmri_data_process/StrategySequence",
+  "file_count": 34,
+  "summary": {
+    "missing": 0,
+    "G": 1,
+    "stateNames": 0,
+    "data": 34,
+    "keys": 0,
+    "old_data_not_current_strategy_sequence": 34,
+    "new_data_not_current_strategy_sequence": 0
+  },
+  "all_exact_against_old_state_graph": false,
+  "examples": [
+    {
+      "file": "031222-401.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        2186
+      ],
+      "new_data_shape": [
+        6,
+        2178
+      ],
+      "current_strategy_state_shape": [
+        6,
+        2178
+      ]
+    },
+    {
+      "file": "041122-401.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        7014
+      ],
+      "new_data_shape": [
+        6,
+        6369
+      ],
+      "current_strategy_state_shape": [
+        6,
+        6369
+      ]
+    },
+    {
+      "file": "041122-403.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        2444
+      ],
+      "new_data_shape": [
+        6,
+        2823
+      ],
+      "current_strategy_state_shape": [
+        6,
+        2823
+      ]
+    },
+    {
+      "file": "041222-401.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        5894
+      ],
+      "new_data_shape": [
+        6,
+        5586
+      ],
+      "current_strategy_state_shape": [
+        6,
+        5586
+      ]
+    },
+    {
+      "file": "051122-401.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        4120
+      ],
+      "new_data_shape": [
+        6,
+        4108
+      ],
+      "current_strategy_state_shape": [
+        6,
+        4108
+      ]
+    },
+    {
+      "file": "051122-402.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        5023
+      ],
+      "new_data_shape": [
+        6,
+        6113
+      ],
+      "current_strategy_state_shape": [
+        6,
+        6113
+      ]
+    },
+    {
+      "file": "051122-501.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        3698
+      ],
+      "new_data_shape": [
+        6,
+        2983
+      ],
+      "current_strategy_state_shape": [
+        6,
+        2983
+      ]
+    },
+    {
+      "file": "071122-401.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        4724
+      ],
+      "new_data_shape": [
+        6,
+        4706
+      ],
+      "current_strategy_state_shape": [
+        6,
+        4706
+      ]
+    },
+    {
+      "file": "071122-402.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        4489
+      ],
+      "new_data_shape": [
+        6,
+        4477
+      ],
+      "current_strategy_state_shape": [
+        6,
+        4477
+      ]
+    },
+    {
+      "file": "071122-403.pkl",
+      "mismatches": [
+        "data"
+      ],
+      "old_data_shape": [
+        6,
+        2478
+      ],
+      "new_data_shape": [
+        6,
+        2470
+      ],
+      "current_strategy_state_shape": [
+        6,
+        2470
+      ]
+    }
+  ],
+  "per_file": {
+    "031222-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "041122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "041122-403.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "041222-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "051122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "051122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "051122-501.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "071122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "071122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "071122-403.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "081122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "091122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "101122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "101122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "111122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "131122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "131222-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "141222-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "141222-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "151122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "161122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "161122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "161122-403.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "161122-404.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "171122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "180522-502.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "211122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "231122-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "231122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "241122-401.pkl": {
+      "mismatches": [
+        "G",
+        "data"
+      ]
+    },
+    "241122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "301122-402.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "311022-401.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    },
+    "311022-501.pkl": {
+      "mismatches": [
+        "data"
+      ]
+    }
+  }
+}

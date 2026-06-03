@@ -1,0 +1,40 @@
+{
+  "input_file_count": 34,
+  "fmri_output_file_count": 34,
+  "monkey_direct_output_file_count": 0,
+  "monkey_direct_failure_count": 34,
+  "monkey_direct_failures_first_5": {
+    "031222-401.pkl": {
+      "type": "IndexError",
+      "message": "index 9 is out of bounds for axis 0 with size 9"
+    },
+    "041122-401.pkl": {
+      "type": "IndexError",
+      "message": "index 10 is out of bounds for axis 0 with size 9"
+    },
+    "041122-403.pkl": {
+      "type": "IndexError",
+      "message": "index 9 is out of bounds for axis 0 with size 9"
+    },
+    "041222-401.pkl": {
+      "type": "IndexError",
+      "message": "index 9 is out of bounds for axis 0 with size 9"
+    },
+    "051122-401.pkl": {
+      "type": "IndexError",
+      "message": "index 10 is out of bounds for axis 0 with size 9"
+    }
+  },
+  "strategy_map_for_mapped_run": {
+    "0": 0,
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "6": 4,
+    "7": 5,
+    "8": 6,
+    "9": 7,
+    "10": 8
+  },
+  "monkey_mapped_output_file_count": 34
+}

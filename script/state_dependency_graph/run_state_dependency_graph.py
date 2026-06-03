@@ -41,8 +41,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input-dir",
         type=Path,
-        default=PROJECT_ROOT / "data/state_dependency_graph/strategy_sequence_data",
-        help="strategy_sequence 输入目录。",
+        default=PROJECT_ROOT / "data/human_fmri_data_preprocess/strategy_sequence",
+        help="human_fmri_data_preprocess 生成的 strategy_sequence 输入目录。",
     )
     parser.add_argument(
         "--output-dir",
@@ -63,7 +63,7 @@ def parse_args() -> argparse.Namespace:
         "--legacy-dir",
         type=Path,
         default=PROJECT_ROOT / "data/generate_grammar/input/state_graph",
-        help="当前仓库内的旧结果基准目录，仅用于验证。",
+        help="当前仓库内的旧结果基准目录，仅用于显式验证。",
     )
     parser.add_argument(
         "--validation-dir",
