@@ -1,0 +1,405 @@
+{
+  "run_id": "run_20260603_155227",
+  "input_dir": "/home/zzh/project/LoPS/data/revise_human_weight/input/weight_data",
+  "output_dir": "/home/zzh/project/LoPS/data/revise_human_weight/corrected_weight_data",
+  "baseline_dir": "/home/zzh/project/LoPS/data/revise_human_weight/baseline/corrected_weight_data",
+  "constant_dir": "/home/zzh/project/LoPS/data/extract_features_human/input/constant_data",
+  "revise_summary": [
+    {
+      "input_file": "031222-401-03-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "031222-401-03-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10035,
+      "output_rows": 6057,
+      "mean_revise_is_correct": 0.8836844854605607
+    },
+    {
+      "input_file": "041122-401-04-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "041122-401-04-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10885,
+      "output_rows": 4566,
+      "mean_revise_is_correct": 0.8494928049068177
+    },
+    {
+      "input_file": "041122-403-04-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "041122-403-04-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9876,
+      "output_rows": 5170,
+      "mean_revise_is_correct": 0.8899287894201424
+    },
+    {
+      "input_file": "041222-401-04-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "041222-401-04-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10651,
+      "output_rows": 4085,
+      "mean_revise_is_correct": 0.8454869964303927
+    },
+    {
+      "input_file": "051122-401-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "051122-401-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10318,
+      "output_rows": 5652,
+      "mean_revise_is_correct": 0.85999608380654
+    },
+    {
+      "input_file": "051122-402-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "051122-402-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10529,
+      "output_rows": 6010,
+      "mean_revise_is_correct": 0.8546594982078853
+    },
+    {
+      "input_file": "051122-501-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "051122-501-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10028,
+      "output_rows": 6197,
+      "mean_revise_is_correct": 0.8783105418037044
+    },
+    {
+      "input_file": "071122-401-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "071122-401-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10100,
+      "output_rows": 4813,
+      "mean_revise_is_correct": 0.844801055176962
+    },
+    {
+      "input_file": "071122-402-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "071122-402-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10518,
+      "output_rows": 2758,
+      "mean_revise_is_correct": 0.8786127167630058
+    },
+    {
+      "input_file": "071122-403-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "071122-403-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9556,
+      "output_rows": 4851,
+      "mean_revise_is_correct": 0.9003001715265866
+    },
+    {
+      "input_file": "081122-401-08-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "081122-401-08-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10097,
+      "output_rows": 5009,
+      "mean_revise_is_correct": 0.8772563176895307
+    },
+    {
+      "input_file": "091122-401-09-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "091122-401-09-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10574,
+      "output_rows": 4611,
+      "mean_revise_is_correct": 0.8621311106104979
+    },
+    {
+      "input_file": "101122-401-10-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "101122-401-10-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9694,
+      "output_rows": 3738,
+      "mean_revise_is_correct": 0.8552706552706553
+    },
+    {
+      "input_file": "101122-402-10-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "101122-402-10-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10340,
+      "output_rows": 5253,
+      "mean_revise_is_correct": 0.8758488964346349
+    },
+    {
+      "input_file": "111122-401-11-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "111122-401-11-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9737,
+      "output_rows": 3995,
+      "mean_revise_is_correct": 0.8884286823712141
+    },
+    {
+      "input_file": "131122-402-13-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "131122-402-13-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9855,
+      "output_rows": 4770,
+      "mean_revise_is_correct": 0.9039012563367864
+    },
+    {
+      "input_file": "131222-401-13-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "131222-401-13-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9823,
+      "output_rows": 5119,
+      "mean_revise_is_correct": 0.9085563665855637
+    },
+    {
+      "input_file": "141222-401-14-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "141222-401-14-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10021,
+      "output_rows": 2617,
+      "mean_revise_is_correct": 0.8595672464997879
+    },
+    {
+      "input_file": "141222-402-14-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "141222-402-14-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10311,
+      "output_rows": 5921,
+      "mean_revise_is_correct": 0.8780444126074498
+    },
+    {
+      "input_file": "151122-401-15-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "151122-401-15-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10886,
+      "output_rows": 7329,
+      "mean_revise_is_correct": 0.8740950582310356
+    },
+    {
+      "input_file": "161122-401-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "161122-401-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10522,
+      "output_rows": 4600,
+      "mean_revise_is_correct": 0.8596652144003669
+    },
+    {
+      "input_file": "161122-402-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "161122-402-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9954,
+      "output_rows": 3917,
+      "mean_revise_is_correct": 0.8738355070535001
+    },
+    {
+      "input_file": "161122-403-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "161122-403-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10797,
+      "output_rows": 5061,
+      "mean_revise_is_correct": 0.858274647887324
+    },
+    {
+      "input_file": "161122-404-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "161122-404-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10105,
+      "output_rows": 4256,
+      "mean_revise_is_correct": 0.8620689655172413
+    },
+    {
+      "input_file": "171122-401-17-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "171122-401-17-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9830,
+      "output_rows": 5999,
+      "mean_revise_is_correct": 0.8652794921530594
+    },
+    {
+      "input_file": "180522-502-21-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "180522-502-21-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10139,
+      "output_rows": 4397,
+      "mean_revise_is_correct": 0.8630674846625767
+    },
+    {
+      "input_file": "211122-402-21-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "211122-402-21-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9538,
+      "output_rows": 5532,
+      "mean_revise_is_correct": 0.9023467070401211
+    },
+    {
+      "input_file": "231122-401-23-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "231122-401-23-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10224,
+      "output_rows": 6410,
+      "mean_revise_is_correct": 0.8661792212208808
+    },
+    {
+      "input_file": "231122-402-23-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "231122-402-23-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10483,
+      "output_rows": 5385,
+      "mean_revise_is_correct": 0.8819159335288368
+    },
+    {
+      "input_file": "241122-401-24-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "241122-401-24-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10568,
+      "output_rows": 4773,
+      "mean_revise_is_correct": 0.8556297490214138
+    },
+    {
+      "input_file": "241122-402-24-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "241122-402-24-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10249,
+      "output_rows": 5065,
+      "mean_revise_is_correct": 0.8773858921161826
+    },
+    {
+      "input_file": "301122-402-30-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "301122-402-30-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10233,
+      "output_rows": 5712,
+      "mean_revise_is_correct": 0.838733296723412
+    },
+    {
+      "input_file": "311022-401-31-Oct-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "311022-401-31-Oct-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 9644,
+      "output_rows": 4191,
+      "mean_revise_is_correct": 0.9103260869565217
+    },
+    {
+      "input_file": "311022-501-31-Oct-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "output_file": "311022-501-31-Oct-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "input_rows": 10284,
+      "output_rows": 4725,
+      "mean_revise_is_correct": 0.8406461471294477
+    }
+  ],
+  "corrected_weight": {
+    "output_files": 34,
+    "baseline_files": 34,
+    "failed_files": {},
+    "diagnostic_diffs_by_file": {
+      "031222-401-03-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 84,
+        "revise_is_correct": 74
+      },
+      "041122-401-04-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 258,
+        "revise_is_correct": 244
+      },
+      "041122-403-04-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 174,
+        "revise_is_correct": 155
+      },
+      "041222-401-04-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 260,
+        "revise_is_correct": 231
+      },
+      "051122-401-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 278,
+        "revise_is_correct": 251
+      },
+      "051122-402-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 370,
+        "revise_is_correct": 340
+      },
+      "051122-501-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 188,
+        "revise_is_correct": 175
+      },
+      "071122-401-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 354,
+        "revise_is_correct": 326
+      },
+      "071122-402-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 106,
+        "revise_is_correct": 92
+      },
+      "071122-403-07-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 118,
+        "revise_is_correct": 102
+      },
+      "081122-401-08-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 203,
+        "revise_is_correct": 181
+      },
+      "091122-401-09-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 312,
+        "revise_is_correct": 278
+      },
+      "101122-401-10-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 195,
+        "revise_is_correct": 179
+      },
+      "101122-402-10-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 186,
+        "revise_is_correct": 174
+      },
+      "111122-401-11-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 109,
+        "revise_is_correct": 98
+      },
+      "131122-402-13-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 88,
+        "revise_is_correct": 81
+      },
+      "131222-401-13-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 80,
+        "revise_is_correct": 71
+      },
+      "141222-401-14-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 125,
+        "revise_is_correct": 114
+      },
+      "141222-402-14-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 224,
+        "revise_is_correct": 204
+      },
+      "151122-401-15-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 240,
+        "revise_is_correct": 210
+      },
+      "161122-401-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 270,
+        "revise_is_correct": 248
+      },
+      "161122-402-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 185,
+        "revise_is_correct": 168
+      },
+      "161122-403-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 233,
+        "revise_is_correct": 207
+      },
+      "161122-404-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 206,
+        "revise_is_correct": 187
+      },
+      "171122-401-17-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 116,
+        "revise_is_correct": 111
+      },
+      "180522-502-21-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 130,
+        "revise_is_correct": 115
+      },
+      "211122-402-21-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 100,
+        "revise_is_correct": 91
+      },
+      "231122-401-23-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 390,
+        "revise_is_correct": 347
+      },
+      "231122-402-23-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 285,
+        "revise_is_correct": 258
+      },
+      "241122-401-24-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 219,
+        "revise_is_correct": 196
+      },
+      "241122-402-24-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 169,
+        "revise_is_correct": 154
+      },
+      "301122-402-30-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 267,
+        "revise_is_correct": 245
+      },
+      "311022-401-31-Oct-2022-1-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 44,
+        "revise_is_correct": 40
+      },
+      "311022-501-31-Oct-2022-2-with_Q-merge_weight-dynamic-res.pkl": {
+        "predict_dir": 215,
+        "revise_is_correct": 205
+      }
+    },
+    "total_diagnostic_diffs": {
+      "predict_dir": 6781,
+      "revise_is_correct": 6152
+    },
+    "is_exact_match_excluding_random_diagnostics": true
+  },
+  "grammar_invariant": {
+    "left_files": 34,
+    "right_files": 34,
+    "failed_files": {},
+    "is_exact_match": true,
+    "baseline_grammar_dir": "/home/zzh/project/LoPS/data/revise_human_weight/validation/run_20260603_155227/grammar_invariant/baseline_chain/grammar",
+    "new_grammar_dir": "/home/zzh/project/LoPS/data/revise_human_weight/validation/run_20260603_155227/grammar_invariant/new_chain/grammar"
+  },
+  "is_passed": true,
+  "report_path": "/home/zzh/project/LoPS/data/revise_human_weight/validation/run_20260603_155227/report.json"
+}
