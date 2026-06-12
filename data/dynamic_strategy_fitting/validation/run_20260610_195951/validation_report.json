@@ -1,0 +1,226 @@
+{
+  "target": "dynamicStrategyFitting_all_segments",
+  "run_dir": "/home/zzh/project/LoPS/data/dynamic_strategy_fitting/validation/run_20260610_195951",
+  "input_dir": "/home/zzh/project/LoPS/data/correct_utility_human/corrected_utility_data",
+  "validation_input_dir": "/home/zzh/project/LoPS/data/dynamic_strategy_fitting/validation/run_20260610_195951/input",
+  "adjacent_map": "/home/zzh/project/LoPS/data/correct_utility_human/constant_data/adjacent_map_fmri.csv",
+  "legacy_script": "/home/zzh/project/Pacman/Language-of-Problem-Solving/BasicStrategy/FittingWeightHuman.py",
+  "game_selection": "edge",
+  "workers": 5,
+  "config": {
+    "agents": [
+      "global",
+      "local",
+      "evade_blinky",
+      "evade_clyde",
+      "evade_ghost3",
+      "evade_ghost4",
+      "approach",
+      "energizer",
+      "no_energizer"
+    ],
+    "stay_length": 6,
+    "ga_population_size": 100,
+    "ga_iterations": 500,
+    "ga_mutation_probability": 0.01,
+    "ga_precision": 0.001,
+    "weight_penalty": 0.1,
+    "vague_accuracy_threshold": 0.51,
+    "random_seed": 20260610,
+    "segment_workers": 32,
+    "use_segment_seed": true
+  },
+  "input_summary": [
+    {
+      "filename": "031222-401-03-Dec-2022-1-with_Q.pkl",
+      "source_rows": 10035,
+      "validation_rows": 459,
+      "selected_games": [
+        "1",
+        "42"
+      ]
+    },
+    {
+      "filename": "041122-401-04-Nov-2022-2-with_Q.pkl",
+      "source_rows": 10885,
+      "validation_rows": 755,
+      "selected_games": [
+        "1",
+        "29"
+      ]
+    },
+    {
+      "filename": "041122-403-04-Nov-2022-1-with_Q.pkl",
+      "source_rows": 9876,
+      "validation_rows": 419,
+      "selected_games": [
+        "1",
+        "45"
+      ]
+    },
+    {
+      "filename": "041222-401-04-Dec-2022-1-with_Q.pkl",
+      "source_rows": 10651,
+      "validation_rows": 782,
+      "selected_games": [
+        "1",
+        "28"
+      ]
+    },
+    {
+      "filename": "051122-401-05-Nov-2022-1-with_Q.pkl",
+      "source_rows": 10318,
+      "validation_rows": 673,
+      "selected_games": [
+        "1",
+        "30"
+      ]
+    }
+  ],
+  "legacy_tasks": [
+    {
+      "input_file": "031222-401-03-Dec-2022-1-with_Q.pkl",
+      "seed": 20260610,
+      "pid": 2039125,
+      "return_code": 0,
+      "elapsed_seconds": 13.015,
+      "log_path": "/home/zzh/project/LoPS/data/dynamic_strategy_fitting/validation/run_20260610_195951/logs/031222-401-03-Dec-2022-1-with_Q.legacy.log"
+    },
+    {
+      "input_file": "041122-401-04-Nov-2022-2-with_Q.pkl",
+      "seed": 20260611,
+      "pid": 2039126,
+      "return_code": 0,
+      "elapsed_seconds": 24.027,
+      "log_path": "/home/zzh/project/LoPS/data/dynamic_strategy_fitting/validation/run_20260610_195951/logs/041122-401-04-Nov-2022-2-with_Q.legacy.log"
+    },
+    {
+      "input_file": "041122-403-04-Nov-2022-1-with_Q.pkl",
+      "seed": 20260612,
+      "pid": 2039127,
+      "return_code": 0,
+      "elapsed_seconds": 25.028,
+      "log_path": "/home/zzh/project/LoPS/data/dynamic_strategy_fitting/validation/run_20260610_195951/logs/041122-403-04-Nov-2022-1-with_Q.legacy.log"
+    },
+    {
+      "input_file": "041222-401-04-Dec-2022-1-with_Q.pkl",
+      "seed": 20260613,
+      "pid": 2039128,
+      "return_code": 0,
+      "elapsed_seconds": 26.029,
+      "log_path": "/home/zzh/project/LoPS/data/dynamic_strategy_fitting/validation/run_20260610_195951/logs/041222-401-04-Dec-2022-1-with_Q.legacy.log"
+    },
+    {
+      "input_file": "051122-401-05-Nov-2022-1-with_Q.pkl",
+      "seed": 20260614,
+      "pid": 2039129,
+      "return_code": 0,
+      "elapsed_seconds": 27.029,
+      "log_path": "/home/zzh/project/LoPS/data/dynamic_strategy_fitting/validation/run_20260610_195951/logs/051122-401-05-Nov-2022-1-with_Q.legacy.log"
+    }
+  ],
+  "current_tasks": [
+    {
+      "input_file": "031222-401-03-Dec-2022-1-with_Q.pkl",
+      "output_file": "031222-401-03-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "rows": 459,
+      "columns": 53,
+      "seed": 20260610
+    },
+    {
+      "input_file": "041122-401-04-Nov-2022-2-with_Q.pkl",
+      "output_file": "041122-401-04-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+      "rows": 755,
+      "columns": 53,
+      "seed": 20260611
+    },
+    {
+      "input_file": "041122-403-04-Nov-2022-1-with_Q.pkl",
+      "output_file": "041122-403-04-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "rows": 419,
+      "columns": 53,
+      "seed": 20260612
+    },
+    {
+      "input_file": "041222-401-04-Dec-2022-1-with_Q.pkl",
+      "output_file": "041222-401-04-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "rows": 782,
+      "columns": 53,
+      "seed": 20260613
+    },
+    {
+      "input_file": "051122-401-05-Nov-2022-1-with_Q.pkl",
+      "output_file": "051122-401-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+      "rows": 673,
+      "columns": 53,
+      "seed": 20260614
+    }
+  ],
+  "comparison": {
+    "legacy_file_count": 5,
+    "current_file_count": 5,
+    "all_equal": true,
+    "file_reports": [
+      {
+        "filename": "031222-401-03-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+        "equal": true,
+        "shape": [
+          459,
+          53
+        ],
+        "legacy_sha256": "7d067e5373cb131d3c1ee3dccf2b3afedc61589108d4458e6b85cc64dd4c082d",
+        "current_sha256": "7d067e5373cb131d3c1ee3dccf2b3afedc61589108d4458e6b85cc64dd4c082d",
+        "sha256_equal": true,
+        "first_difference": null
+      },
+      {
+        "filename": "041122-401-04-Nov-2022-2-with_Q-merge_weight-dynamic-res.pkl",
+        "equal": true,
+        "shape": [
+          755,
+          53
+        ],
+        "legacy_sha256": "a195c79bb08123f52b0776903d5d0729a72e9d26fd26514ae098818face50e43",
+        "current_sha256": "a195c79bb08123f52b0776903d5d0729a72e9d26fd26514ae098818face50e43",
+        "sha256_equal": true,
+        "first_difference": null
+      },
+      {
+        "filename": "041122-403-04-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+        "equal": true,
+        "shape": [
+          419,
+          53
+        ],
+        "legacy_sha256": "9a29adafc3ec6eba49c49697e15cbcde2a649ffbfd98ad53af2a5bd4b13d6ade",
+        "current_sha256": "9a29adafc3ec6eba49c49697e15cbcde2a649ffbfd98ad53af2a5bd4b13d6ade",
+        "sha256_equal": true,
+        "first_difference": null
+      },
+      {
+        "filename": "041222-401-04-Dec-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+        "equal": true,
+        "shape": [
+          782,
+          53
+        ],
+        "legacy_sha256": "ccace99926a2022fd547fd01de21ad14cee270d181b295dbc8e81f5e380ca144",
+        "current_sha256": "ccace99926a2022fd547fd01de21ad14cee270d181b295dbc8e81f5e380ca144",
+        "sha256_equal": true,
+        "first_difference": null
+      },
+      {
+        "filename": "051122-401-05-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+        "equal": true,
+        "shape": [
+          673,
+          53
+        ],
+        "legacy_sha256": "1cb1900ac820cced3f4124f82256081894ba93f72362f588a566165db9e0d646",
+        "current_sha256": "1cb1900ac820cced3f4124f82256081894ba93f72362f588a566165db9e0d646",
+        "sha256_equal": true,
+        "first_difference": null
+      }
+    ]
+  }
+}

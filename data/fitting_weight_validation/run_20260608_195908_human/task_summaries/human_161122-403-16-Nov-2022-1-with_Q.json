@@ -1,0 +1,8 @@
+{
+  "script_key": "human",
+  "input_file": "161122-403-16-Nov-2022-1-with_Q.pkl",
+  "output_file": "161122-403-16-Nov-2022-1-with_Q-merge_weight-dynamic-res.pkl",
+  "output_exists": true,
+  "output_size": 26070909,
+  "log_file": "data/fitting_weight_validation/run_20260608_195908_human/logs/human_161122-403-16-Nov-2022-1-with_Q.log"
+}

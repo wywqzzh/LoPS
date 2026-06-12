@@ -1,0 +1,4378 @@
+{
+  "summary": {
+    "new_dir": "/home/zzh/project/LoPS/data/pacman_data/frame_data",
+    "old_dir": "/home/zzh/project/Pacman/2.Pac-man/Monkey_Analysis/fmri_data_process/fmriFrameData",
+    "common_subject_count": 29,
+    "key_set_equal_subject_count": 29,
+    "row_order_equal_subject_count": 0,
+    "semantic_exact_match_after_alignment_subject_count": 0,
+    "subjects_with_semantic_mismatch": [
+      "031222-401-03-Dec-2022-1",
+      "041122-401-04-Nov-2022-2",
+      "041122-403-04-Nov-2022-1",
+      "041222-401-04-Dec-2022-1",
+      "051122-401-05-Nov-2022-1",
+      "051122-402-05-Nov-2022-1",
+      "071122-401-07-Nov-2022-1",
+      "071122-402-07-Nov-2022-1",
+      "071122-403-07-Nov-2022-1",
+      "081122-401-08-Nov-2022-1",
+      "091122-401-09-Nov-2022-1",
+      "101122-401-10-Nov-2022-1",
+      "101122-402-10-Nov-2022-1",
+      "111122-401-11-Nov-2022-1",
+      "131122-402-13-Nov-2022-1",
+      "151122-401-15-Nov-2022-1",
+      "161122-401-16-Nov-2022-1",
+      "161122-402-16-Nov-2022-1",
+      "161122-403-16-Nov-2022-1",
+      "161122-404-16-Nov-2022-1",
+      "171122-401-17-Nov-2022-1",
+      "180522-502-21-Nov-2022-1",
+      "211122-402-21-Nov-2022-1",
+      "231122-401-23-Nov-2022-1",
+      "231122-402-23-Nov-2022-2",
+      "241122-401-24-Nov-2022-1",
+      "241122-402-24-Nov-2022-1",
+      "301122-402-30-Nov-2022-1",
+      "311022-401-31-Oct-2022-1"
+    ],
+    "column_mismatch_totals": {
+      "JoyStick": 39889,
+      "Map": 0,
+      "beans": 0,
+      "energizers": 0,
+      "ghost1Pos": 0,
+      "ghost2Pos": 0,
+      "ghost3Pos": 0,
+      "ghost4Pos": 0,
+      "ifscared1": 0,
+      "ifscared2": 0,
+      "ifscared3": 0,
+      "ifscared4": 0,
+      "pacmanPos": 0,
+      "pacman_dir": 0
+    },
+    "columns_compared": [
+      "DayTrial",
+      "Step",
+      "pacmanPos",
+      "ghost1Pos",
+      "ghost2Pos",
+      "ghost3Pos",
+      "ghost4Pos",
+      "ifscared1",
+      "ifscared2",
+      "ifscared3",
+      "ifscared4",
+      "pacman_dir",
+      "JoyStick",
+      "Map",
+      "beans",
+      "energizers"
+    ],
+    "normalization": [
+      "按 (DayTrial, Step) 对齐帧。",
+      "位置字段把旧版字符串 tuple/list 和当前 tuple/list 统一为规范 repr。",
+      "Map 字段把旧版字符列表字符串转换为连续字符串。",
+      "方向字段把 NaN 和空字符串统一为空字符串。",
+      "数值字段统一 numpy 标量、int 和整数型 float。",
+      "beans/energizers 统一为旧版 repr 字符串。",
+      "只比较共同语义字段，排除当前额外绘图字段和旧版独有 fruit/Unnamed 字段。"
+    ]
+  },
+  "subjects": [
+    {
+      "subject": "031222-401-03-Dec-2022-1",
+      "new_rows": 247257,
+      "old_rows": 247257,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 49,
+      "old_trial_count": 49,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 4719,
+          "examples": [
+            {
+              "DayTrial": "1-1-031222-401-03-Dec-2022",
+              "Step": 2367,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-1-031222-401-03-Dec-2022",
+              "Step": 2368,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-1-031222-401-03-Dec-2022",
+              "Step": 2369,
+              "new": "'right'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 4719
+    },
+    {
+      "subject": "041122-401-04-Nov-2022-2",
+      "new_rows": 268287,
+      "old_rows": 268287,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 40,
+      "old_trial_count": 40,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 243,
+          "examples": [
+            {
+              "DayTrial": "1-1-041122-401-04-Nov-2022",
+              "Step": 632,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-041122-401-04-Nov-2022",
+              "Step": 633,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-041122-401-04-Nov-2022",
+              "Step": 634,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 243
+    },
+    {
+      "subject": "041122-403-04-Nov-2022-1",
+      "new_rows": 243455,
+      "old_rows": 243455,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 51,
+      "old_trial_count": 51,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 5726,
+          "examples": [
+            {
+              "DayTrial": "12-1-041122-403-04-Nov-2022",
+              "Step": 126,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "12-1-041122-403-04-Nov-2022",
+              "Step": 127,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "12-1-041122-403-04-Nov-2022",
+              "Step": 128,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 5726
+    },
+    {
+      "subject": "041222-401-04-Dec-2022-1",
+      "new_rows": 262307,
+      "old_rows": 262307,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 43,
+      "old_trial_count": 43,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 6774,
+          "examples": [
+            {
+              "DayTrial": "1-1-041222-401-04-Dec-2022",
+              "Step": 348,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-041222-401-04-Dec-2022",
+              "Step": 349,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-041222-401-04-Dec-2022",
+              "Step": 350,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 6774
+    },
+    {
+      "subject": "051122-401-05-Nov-2022-1",
+      "new_rows": 254651,
+      "old_rows": 254651,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 42,
+      "old_trial_count": 42,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 399,
+          "examples": [
+            {
+              "DayTrial": "10-1-051122-401-05-Nov-2022",
+              "Step": 706,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-051122-401-05-Nov-2022",
+              "Step": 707,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-051122-401-05-Nov-2022",
+              "Step": 708,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 399
+    },
+    {
+      "subject": "051122-402-05-Nov-2022-1",
+      "new_rows": 258903,
+      "old_rows": 258903,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 43,
+      "old_trial_count": 43,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 2384,
+          "examples": [
+            {
+              "DayTrial": "10-1-051122-402-05-Nov-2022",
+              "Step": 33,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-051122-402-05-Nov-2022",
+              "Step": 34,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-051122-402-05-Nov-2022",
+              "Step": 35,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 2384
+    },
+    {
+      "subject": "071122-401-07-Nov-2022-1",
+      "new_rows": 249164,
+      "old_rows": 249164,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 51,
+      "old_trial_count": 51,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 5122,
+          "examples": [
+            {
+              "DayTrial": "10-1-071122-401-07-Nov-2022",
+              "Step": 318,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-071122-401-07-Nov-2022",
+              "Step": 319,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-071122-401-07-Nov-2022",
+              "Step": 320,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 5122
+    },
+    {
+      "subject": "071122-402-07-Nov-2022-1",
+      "new_rows": 258865,
+      "old_rows": 258865,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 46,
+      "old_trial_count": 46,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 1849,
+          "examples": [
+            {
+              "DayTrial": "12-2-071122-402-07-Nov-2022",
+              "Step": 1081,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "12-2-071122-402-07-Nov-2022",
+              "Step": 1082,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "12-2-071122-402-07-Nov-2022",
+              "Step": 1083,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 1849
+    },
+    {
+      "subject": "071122-403-07-Nov-2022-1",
+      "new_rows": 235168,
+      "old_rows": 235168,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 57,
+      "old_trial_count": 57,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 198,
+          "examples": [
+            {
+              "DayTrial": "10-1-071122-403-07-Nov-2022",
+              "Step": 49,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-071122-403-07-Nov-2022",
+              "Step": 50,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-071122-403-07-Nov-2022",
+              "Step": 51,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 198
+    },
+    {
+      "subject": "081122-401-08-Nov-2022-1",
+      "new_rows": 249158,
+      "old_rows": 249158,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 47,
+      "old_trial_count": 47,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 200,
+          "examples": [
+            {
+              "DayTrial": "10-1-081122-401-08-Nov-2022",
+              "Step": 1687,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-081122-401-08-Nov-2022",
+              "Step": 1688,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-081122-401-08-Nov-2022",
+              "Step": 1689,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 200
+    },
+    {
+      "subject": "091122-401-09-Nov-2022-1",
+      "new_rows": 260615,
+      "old_rows": 260615,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 46,
+      "old_trial_count": 46,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 72,
+          "examples": [
+            {
+              "DayTrial": "18-2-091122-401-09-Nov-2022",
+              "Step": 56,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "18-2-091122-401-09-Nov-2022",
+              "Step": 57,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "18-2-091122-401-09-Nov-2022",
+              "Step": 58,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 72
+    },
+    {
+      "subject": "101122-401-10-Nov-2022-1",
+      "new_rows": 238733,
+      "old_rows": 238733,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 53,
+      "old_trial_count": 53,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 120,
+          "examples": [
+            {
+              "DayTrial": "18-1-101122-401-10-Nov-2022",
+              "Step": 111,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "18-1-101122-401-10-Nov-2022",
+              "Step": 112,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "18-1-101122-401-10-Nov-2022",
+              "Step": 113,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 120
+    },
+    {
+      "subject": "101122-402-10-Nov-2022-1",
+      "new_rows": 254550,
+      "old_rows": 254550,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 42,
+      "old_trial_count": 42,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 185,
+          "examples": [
+            {
+              "DayTrial": "10-1-101122-402-10-Nov-2022",
+              "Step": 5390,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "10-1-101122-402-10-Nov-2022",
+              "Step": 5391,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "10-1-101122-402-10-Nov-2022",
+              "Step": 5392,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 185
+    },
+    {
+      "subject": "111122-401-11-Nov-2022-1",
+      "new_rows": 239583,
+      "old_rows": 239583,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 57,
+      "old_trial_count": 57,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 155,
+          "examples": [
+            {
+              "DayTrial": "10-1-111122-401-11-Nov-2022",
+              "Step": 1144,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-111122-401-11-Nov-2022",
+              "Step": 1145,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "10-1-111122-401-11-Nov-2022",
+              "Step": 1146,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 155
+    },
+    {
+      "subject": "131122-402-13-Nov-2022-1",
+      "new_rows": 242069,
+      "old_rows": 242069,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 60,
+      "old_trial_count": 60,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 36,
+          "examples": [
+            {
+              "DayTrial": "1-1-131222-402-13-Nov-2022",
+              "Step": 390,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-1-131222-402-13-Nov-2022",
+              "Step": 391,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-1-131222-402-13-Nov-2022",
+              "Step": 392,
+              "new": "'right'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 36
+    },
+    {
+      "subject": "151122-401-15-Nov-2022-1",
+      "new_rows": 268173,
+      "old_rows": 268173,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 38,
+      "old_trial_count": 38,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 162,
+          "examples": [
+            {
+              "DayTrial": "10-1-151122-401-15-Nov-2022",
+              "Step": 1448,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "10-1-151122-401-15-Nov-2022",
+              "Step": 1449,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "10-1-151122-401-15-Nov-2022",
+              "Step": 1450,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 162
+    },
+    {
+      "subject": "161122-401-16-Nov-2022-1",
+      "new_rows": 259546,
+      "old_rows": 259546,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 47,
+      "old_trial_count": 47,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 3360,
+          "examples": [
+            {
+              "DayTrial": "1-1-161122-401-16-Nov-2022",
+              "Step": 563,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-161122-401-16-Nov-2022",
+              "Step": 564,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-161122-401-16-Nov-2022",
+              "Step": 565,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 3360
+    },
+    {
+      "subject": "161122-402-16-Nov-2022-1",
+      "new_rows": 245075,
+      "old_rows": 245075,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 55,
+      "old_trial_count": 55,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 612,
+          "examples": [
+            {
+              "DayTrial": "12-1-161122-402-16-Nov-2022",
+              "Step": 825,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "12-1-161122-402-16-Nov-2022",
+              "Step": 826,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "12-1-161122-402-16-Nov-2022",
+              "Step": 827,
+              "new": "'right'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 612
+    },
+    {
+      "subject": "161122-403-16-Nov-2022-1",
+      "new_rows": 266038,
+      "old_rows": 266038,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 34,
+      "old_trial_count": 34,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 174,
+          "examples": [
+            {
+              "DayTrial": "1-1-161122-403-16-Nov-2022",
+              "Step": 628,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-161122-403-16-Nov-2022",
+              "Step": 629,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-161122-403-16-Nov-2022",
+              "Step": 630,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 174
+    },
+    {
+      "subject": "161122-404-16-Nov-2022-1",
+      "new_rows": 249082,
+      "old_rows": 249082,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 53,
+      "old_trial_count": 53,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 7,
+          "examples": [
+            {
+              "DayTrial": "18-2-161122-404-16-Nov-2022",
+              "Step": 4605,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "18-2-161122-404-16-Nov-2022",
+              "Step": 4606,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "18-2-161122-404-16-Nov-2022",
+              "Step": 4607,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 7
+    },
+    {
+      "subject": "171122-401-17-Nov-2022-1",
+      "new_rows": 241778,
+      "old_rows": 241778,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 53,
+      "old_trial_count": 53,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 6243,
+          "examples": [
+            {
+              "DayTrial": "1-1-171122-401-17-Nov-2022",
+              "Step": 2246,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-171122-401-17-Nov-2022",
+              "Step": 2247,
+              "new": "'left'",
+              "old": "'up'"
+            },
+            {
+              "DayTrial": "1-1-171122-401-17-Nov-2022",
+              "Step": 2248,
+              "new": "'left'",
+              "old": "'up'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 6243
+    },
+    {
+      "subject": "180522-502-21-Nov-2022-1",
+      "new_rows": 249273,
+      "old_rows": 249273,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 49,
+      "old_trial_count": 49,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 658,
+          "examples": [
+            {
+              "DayTrial": "1-1-180522-502-21-Nov-2022",
+              "Step": 1853,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-1-180522-502-21-Nov-2022",
+              "Step": 1854,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-1-180522-502-21-Nov-2022",
+              "Step": 1855,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 658
+    },
+    {
+      "subject": "211122-402-21-Nov-2022-1",
+      "new_rows": 234558,
+      "old_rows": 234558,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 60,
+      "old_trial_count": 60,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 184,
+          "examples": [
+            {
+              "DayTrial": "1-1-211122-402-21-Nov-2022",
+              "Step": 802,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-1-211122-402-21-Nov-2022",
+              "Step": 803,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-1-211122-402-21-Nov-2022",
+              "Step": 804,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 184
+    },
+    {
+      "subject": "231122-401-23-Nov-2022-1",
+      "new_rows": 252486,
+      "old_rows": 252486,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 47,
+      "old_trial_count": 47,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 23,
+          "examples": [
+            {
+              "DayTrial": "1-2-231122-401-23-Nov-2022",
+              "Step": 2039,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-2-231122-401-23-Nov-2022",
+              "Step": 2040,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "1-2-231122-401-23-Nov-2022",
+              "Step": 2041,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 23
+    },
+    {
+      "subject": "231122-402-23-Nov-2022-2",
+      "new_rows": 258413,
+      "old_rows": 258413,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 50,
+      "old_trial_count": 50,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 63,
+          "examples": [
+            {
+              "DayTrial": "11-1-231122-402-23-Nov-2022",
+              "Step": 260,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "11-1-231122-402-23-Nov-2022",
+              "Step": 261,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "11-1-231122-402-23-Nov-2022",
+              "Step": 262,
+              "new": "'right'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 63
+    },
+    {
+      "subject": "241122-401-24-Nov-2022-1",
+      "new_rows": 260768,
+      "old_rows": 260768,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 39,
+      "old_trial_count": 39,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 7,
+          "examples": [
+            {
+              "DayTrial": "24-1-241122-401-24-Nov-2022",
+              "Step": 1993,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "24-1-241122-401-24-Nov-2022",
+              "Step": 1994,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "24-1-241122-401-24-Nov-2022",
+              "Step": 1995,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 7
+    },
+    {
+      "subject": "241122-402-24-Nov-2022-1",
+      "new_rows": 251226,
+      "old_rows": 251226,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 48,
+      "old_trial_count": 48,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 7,
+          "examples": [
+            {
+              "DayTrial": "38-1-241122-402-24-Nov-2022",
+              "Step": 4612,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "38-1-241122-402-24-Nov-2022",
+              "Step": 4613,
+              "new": "'right'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "38-1-241122-402-24-Nov-2022",
+              "Step": 4614,
+              "new": "'right'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 7
+    },
+    {
+      "subject": "301122-402-30-Nov-2022-1",
+      "new_rows": 252322,
+      "old_rows": 252322,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 46,
+      "old_trial_count": 46,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 97,
+          "examples": [
+            {
+              "DayTrial": "16-1-301122-402-30-Nov-2022",
+              "Step": 601,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "16-1-301122-402-30-Nov-2022",
+              "Step": 602,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "16-1-301122-402-30-Nov-2022",
+              "Step": 603,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 97
+    },
+    {
+      "subject": "311022-401-31-Oct-2022-1",
+      "new_rows": 237423,
+      "old_rows": 237423,
+      "new_columns": 47,
+      "old_columns": 19,
+      "new_trial_count": 59,
+      "old_trial_count": 59,
+      "key_set_equal": true,
+      "row_order_equal": false,
+      "missing_keys_in_old": 0,
+      "extra_keys_in_old": 0,
+      "compared_columns": [
+        "DayTrial",
+        "Step",
+        "pacmanPos",
+        "ghost1Pos",
+        "ghost2Pos",
+        "ghost3Pos",
+        "ghost4Pos",
+        "ifscared1",
+        "ifscared2",
+        "ifscared3",
+        "ifscared4",
+        "pacman_dir",
+        "JoyStick",
+        "Map",
+        "beans",
+        "energizers"
+      ],
+      "excluded_new_only_columns": [
+        "g1Dir",
+        "g1Frame",
+        "g1ModeR",
+        "g1Scared",
+        "g1pX",
+        "g1pY",
+        "g2Dir",
+        "g2Frame",
+        "g2ModeR",
+        "g2Scared",
+        "g2pX",
+        "g2pY",
+        "g3Dir",
+        "g3Frame",
+        "g3ModeR",
+        "g3Scared",
+        "g3pX",
+        "g3pY",
+        "g4Dir",
+        "g4Frame",
+        "g4ModeR",
+        "g4Scared",
+        "g4pX",
+        "g4pY",
+        "pDir",
+        "pFrame",
+        "ppX",
+        "ppY",
+        "waterDelay",
+        "waterStatus",
+        "waterTS"
+      ],
+      "excluded_old_only_columns": [
+        "Unnamed: 0",
+        "fruitPos",
+        "fruitType"
+      ],
+      "column_mismatches": {
+        "pacmanPos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost1Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost2Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost3Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ghost4Pos": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared1": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared2": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared3": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "ifscared4": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "pacman_dir": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "JoyStick": {
+          "mismatch_count": 110,
+          "examples": [
+            {
+              "DayTrial": "10-1-311022-401-31-Oct-2022",
+              "Step": 1344,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "10-1-311022-401-31-Oct-2022",
+              "Step": 1345,
+              "new": "'left'",
+              "old": "'down'"
+            },
+            {
+              "DayTrial": "10-1-311022-401-31-Oct-2022",
+              "Step": 1346,
+              "new": "'left'",
+              "old": "'down'"
+            }
+          ]
+        },
+        "Map": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "beans": {
+          "mismatch_count": 0,
+          "examples": []
+        },
+        "energizers": {
+          "mismatch_count": 0,
+          "examples": []
+        }
+      },
+      "semantic_exact_match_after_alignment": false,
+      "total_semantic_mismatch_cells": 110
+    }
+  ]
+}

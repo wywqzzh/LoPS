@@ -1,0 +1,27 @@
+{
+  "source_file": "031222-401-03-Dec-2022-1.pkl",
+  "sample_source_rows": [
+    0,
+    1,
+    2,
+    115,
+    249,
+    250,
+    1000
+  ],
+  "checked_q_columns": [
+    "global_Q",
+    "local_Q",
+    "evade_blinky_Q",
+    "evade_clyde_Q",
+    "evade_ghost3_Q",
+    "evade_ghost4_Q",
+    "approach_Q",
+    "energizer_Q",
+    "no_energizer_Q"
+  ],
+  "checked_rows": 7,
+  "q_differences": [],
+  "all_q_values_equal": true,
+  "note": "旧代码为当前磁盘 PreEstimation_fmri.py 与 Agent 代码实跑；仅对 NumPy ragged ghost array 做 dtype=object 兼容补丁，不改变算法逻辑。"
+}

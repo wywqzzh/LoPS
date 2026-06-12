@@ -1,0 +1,71 @@
+{
+  "human_output_count": 0,
+  "monkey_output_count": 0,
+  "checked_files": 0,
+  "human_only": [],
+  "monkey_only": [],
+  "different_file_count": 0,
+  "all_outputs_equal": false,
+  "file_comparisons": [],
+  "sample_names": [
+    "071122-403-07-Nov-2022-1-with_Q.pkl",
+    "081122-401-08-Nov-2022-1-with_Q.pkl",
+    "161122-403-16-Nov-2022-1-with_Q.pkl",
+    "231122-401-23-Nov-2022-1-with_Q.pkl",
+    "241122-402-24-Nov-2022-1-with_Q.pkl"
+  ],
+  "input_source_dir": "/home/zzh/project/Pacman/2.Pac-man/Monkey_Analysis/fmri_data_process/fmriCorrectedUtilityData",
+  "run_dir": "data/fitting_weight_validation/run_20260608_195935_monkey",
+  "human_script": "/home/zzh/project/Pacman/Language-of-Problem-Solving/BasicStrategy/FittingWeightHuman.py",
+  "monkey_script": "/home/zzh/project/Pacman/2.Pac-man/Monkey_Analysis/Behavior_Analysis/Fitting/MergeFitting_fmri_nan_ga_parallize_no_energizer.py",
+  "seed_base": 20260608,
+  "workers": 5,
+  "script_key": "monkey",
+  "task_summaries": [
+    {
+      "script_key": "monkey",
+      "input_file": "071122-403-07-Nov-2022-1-with_Q.pkl",
+      "output_file": null,
+      "output_exists": false,
+      "output_size": 0,
+      "log_file": "data/fitting_weight_validation/run_20260608_195935_monkey/logs/monkey_071122-403-07-Nov-2022-1-with_Q.log",
+      "return_code": -15
+    },
+    {
+      "script_key": "monkey",
+      "input_file": "081122-401-08-Nov-2022-1-with_Q.pkl",
+      "output_file": null,
+      "output_exists": false,
+      "output_size": 0,
+      "log_file": "data/fitting_weight_validation/run_20260608_195935_monkey/logs/monkey_081122-401-08-Nov-2022-1-with_Q.log",
+      "return_code": -15
+    },
+    {
+      "script_key": "monkey",
+      "input_file": "161122-403-16-Nov-2022-1-with_Q.pkl",
+      "output_file": null,
+      "output_exists": false,
+      "output_size": 0,
+      "log_file": "data/fitting_weight_validation/run_20260608_195935_monkey/logs/monkey_161122-403-16-Nov-2022-1-with_Q.log",
+      "return_code": -15
+    },
+    {
+      "script_key": "monkey",
+      "input_file": "231122-401-23-Nov-2022-1-with_Q.pkl",
+      "output_file": null,
+      "output_exists": false,
+      "output_size": 0,
+      "log_file": "data/fitting_weight_validation/run_20260608_195935_monkey/logs/monkey_231122-401-23-Nov-2022-1-with_Q.log",
+      "return_code": -15
+    },
+    {
+      "script_key": "monkey",
+      "input_file": "241122-402-24-Nov-2022-1-with_Q.pkl",
+      "output_file": null,
+      "output_exists": false,
+      "output_size": 0,
+      "log_file": "data/fitting_weight_validation/run_20260608_195935_monkey/logs/monkey_241122-402-24-Nov-2022-1-with_Q.log",
+      "return_code": -15
+    }
+  ]
+}
