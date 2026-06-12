@@ -57,8 +57,10 @@ def is_empty_position_marker(value: Any) -> bool:
     关键约束：旧流程只在 ``len(curPosition) == 0`` 时跳过连续性检查。
     """
 
-    if isinstance(value, list):
+    if isinstance(value, (list, tuple)):
         return len(value) == 0
+    if isinstance(value, np.ndarray):
+        return value.size == 0
     if isinstance(value, str):
         return value.strip() == "[]"
     return False
@@ -188,8 +190,30 @@ def repair_known_ghost_position_errors(trial_tile_rows: pd.DataFrame) -> None:
             if column not in trial_tile_rows.columns:
                 continue
             value = trial_tile_rows.at[row_label, column]
-            if value in GHOST_POSITION_FIXES:
-                trial_tile_rows.at[row_label, column] = GHOST_POSITION_FIXES[value]
+            position = normalize_optional_ghost_fix_position(value)
+            if position in GHOST_POSITION_FIXES:
+                trial_tile_rows.at[row_label, column] = GHOST_POSITION_FIXES[position]
+
+
+def normalize_optional_ghost_fix_position(value: Any) -> tuple[int, int] | None:
+    """把 ghost 位置字段规范成可用于错误修正表查询的坐标。
+
+    输入语义：value 可以是 tuple/list 坐标、空列表标记或浮点缺失值。
+    输出语义：合法坐标返回 ``(x, y)``；空 ghost、缺失值或不可解析值返回 None。
+    关键约束：该函数只修复当前新 frame 中出现的 list/tuple 表示；字符串坐标保持旧流程行为，
+    避免改变既有字符串格式输入的 corrected tile 结果。
+    """
+
+    if value is None or is_empty_position_marker(value):
+        return None
+    if isinstance(value, (float, np.floating)) and np.isnan(value):
+        return None
+    if isinstance(value, (tuple, list)) and len(value) == 2:
+        return int(value[0]), int(value[1])
+    if isinstance(value, np.ndarray) and value.size == 2:
+        flattened = value.reshape(-1)
+        return int(flattened[0]), int(flattened[1])
+    return None
 
 
 def restore_missing_pacman_path_rows(trial_tile_rows: pd.DataFrame, trial_frame_rows: pd.DataFrame) -> pd.DataFrame:

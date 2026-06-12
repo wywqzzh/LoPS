@@ -146,38 +146,6 @@ def quadratic_path(
     return pts
 
 
-def cubic_path(
-    p0x: float,
-    p0y: float,
-    p1x: float,
-    p1y: float,
-    p2x: float,
-    p2y: float,
-    p3x: float,
-    p3y: float,
-    steps: int = 10,
-) -> list[tuple[float, float]]:
-    """生成三次贝塞尔曲线采样点，主要用于水果细节。"""
-
-    pts: list[tuple[float, float]] = []
-    for i in range(steps + 1):
-        t = i / steps
-        px = (
-            (1 - t) ** 3 * p0x
-            + 3 * (1 - t) ** 2 * t * p1x
-            + 3 * (1 - t) * t * t * p2x
-            + t**3 * p3x
-        )
-        py = (
-            (1 - t) ** 3 * p0y
-            + 3 * (1 - t) ** 2 * t * p1y
-            + 3 * (1 - t) * t * t * p2y
-            + t**3 * p3y
-        )
-        pts.append((px, py))
-    return pts
-
-
 class StaticMap:
     """根据 Map 字符串重建静态地图轮廓。
 
@@ -559,7 +527,7 @@ class PacmanRenderer:
             draw.rectangle([0, top * self.aa, clip_x, bottom * self.aa], fill=(0, 0, 0, 255))
 
     def _draw_map(self, draw: ImageDraw.ImageDraw, map_tiles: str) -> None:
-        """绘制静态墙体、ghost house 门、豆子、能量豆和水果。"""
+        """绘制静态墙体、ghost house 门、豆子和能量豆。"""
 
         # 先画一层较粗的淡蓝色光晕，再画黑色墙体面和亮色轮廓。
         ox = self.board_x_offset
@@ -598,8 +566,6 @@ class PacmanRenderer:
                 elif tile == "o":
                     r = int(0.47 * self.tile)
                     draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=energizer_color)
-                elif tile in {"C", "S", "O", "A", "M"}:
-                    self._draw_fruit(draw, tile, cx, cy)
 
         # 复现旧 MATLAB 隧道 mask，隐藏右侧隧道处的一小段边缘伪影。
         draw.rectangle(
@@ -703,22 +669,6 @@ class PacmanRenderer:
         blue = (0, 55, 255, 255)
         draw.rectangle([x + (2 + pxoff) * s, y + (3 + pyoff) * s, x + (4 + pxoff) * s, y + (5 + pyoff) * s], fill=blue)
         draw.rectangle([x + (-4 + pxoff) * s, y + (3 + pyoff) * s, x + (-2 + pxoff) * s, y + (5 + pyoff) * s], fill=blue)
-
-    def _draw_fruit(self, draw: ImageDraw.ImageDraw, fruit: str, x: float, y: float) -> None:
-        """绘制 Map 中的水果 tile；不同字符对应不同奖励物。"""
-
-        s = self.scale
-        if fruit == "C":
-            draw.ellipse([x - 6 * s, y - 1 * s, x - 0.5 * s, y + 4.5 * s], fill=(240, 24, 36, 255), outline=(20, 0, 0, 255))
-            draw.ellipse([x - 1 * s, y + 1 * s, x + 4.5 * s, y + 6.5 * s], fill=(240, 24, 36, 255), outline=(20, 0, 0, 255))
-            draw.line(cubic_path(x - 3 * s, y, x - s, y - 2 * s, x + 2 * s, y - 4 * s, x + 5 * s, y - 5 * s), fill=(255, 153, 0, 255), width=max(1, int(s)))
-        elif fruit == "M":
-            r = 5.5 * s
-            draw.ellipse([x - r, y - 3.5 * s, x + r, y + 7.5 * s], fill=(123, 243, 49, 255))
-        else:
-            color = {"S": (230, 20, 35, 255), "O": (255, 204, 51, 255), "A": (230, 25, 30, 255)}.get(fruit, (255, 204, 51, 255))
-            r = 5.2 * s
-            draw.ellipse([x - r, y - r, x + r, y + r], fill=color)
 
     def _draw_hud(self, draw: ImageDraw.ImageDraw, row: pd.Series) -> None:
         """绘制底部 Actual/Model 方向行。

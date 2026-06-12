@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "label": "tile_data",
+      "baseline_count": 34,
+      "current_count": 34,
+      "missing": [],
+      "extra": [],
+      "different_files": [],
+      "exact_match": true
+    },
+    {
+      "label": "corrected_tile_data",
+      "baseline_count": 34,
+      "current_count": 34,
+      "missing": [],
+      "extra": [],
+      "different_files": [],
+      "exact_match": true
+    }
+  ]
+}

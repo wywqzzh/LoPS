@@ -71,27 +71,21 @@ class UtilityConfig:
     global_depth: int = 15
     global_ignore_depth: int = 10
     global_ghost_attractive_thr: int = 34
-    global_fruit_attractive_thr: int = 34
     global_ghost_repulsive_thr: int = 34
     local_depth: int = 10
     local_ghost_attractive_thr: int = 10
-    local_fruit_attractive_thr: int = 10
     local_ghost_repulsive_thr: int = 10
     evade_depth: int = 10
     evade_ghost_attractive_thr: int = 0
-    evade_fruit_attractive_thr: int = 0
     evade_ghost_repulsive_thr: int = 0
     approach_depth: int = 10
     approach_ghost_attractive_thr: int = 0
-    approach_fruit_attractive_thr: int = 0
     approach_ghost_repulsive_thr: int = 0
     energizer_depth: int = 10
     energizer_ghost_attractive_thr: int = 0
-    energizer_fruit_attractive_thr: int = 0
     energizer_ghost_repulsive_thr: int = 0
     no_energizer_depth: int = 8
     no_energizer_ghost_attractive_thr: int = 0
-    no_energizer_fruit_attractive_thr: int = 0
     no_energizer_ghost_repulsive_thr: int = 0
 
 
@@ -108,8 +102,6 @@ class FrameState:
     energizers: list[tuple[int, int]] | float
     beans: list[tuple[int, int]] | float
     ghost_positions: list[tuple[int, int] | tuple[()]]
-    reward_type: int | float | Any
-    fruit_position: tuple[int, int] | float | Any
     ghost_status: list[Any]
     last_direction: str | None
 
@@ -127,8 +119,6 @@ class CompiledFrameState:
     bean_mask: int
     energizer_mask: int
     ghost_ids: tuple[int, int, int, int]
-    reward_type: int | float | Any
-    fruit_id: int
     ghost_status: tuple[Any, ...]
     last_direction_id: int | None
 
@@ -147,11 +137,6 @@ def load_map_data(adjacent_map_path: str | Path, distance_map_path: str | Path) 
     reward_amount = {
         1: 2,
         2: 4,
-        3: 3,
-        4: 5,
-        5: 8,
-        6: 12,
-        7: 17,
         8: 8,
         9: 8,
     }
@@ -218,8 +203,6 @@ def compile_frame_state(frame_state: FrameState, compiled_map: CompiledMapData) 
             -1 if position == () else compiled_map.position_to_id.get(position, -1)
             for position in frame_state.ghost_positions
         ),  # type: ignore[arg-type]
-        reward_type=frame_state.reward_type,
-        fruit_id=_optional_position_to_id(frame_state.fruit_position, compiled_map.position_to_id),
         ghost_status=tuple(frame_state.ghost_status),
         last_direction_id=None if frame_state.last_direction is None else DIRECTION_TO_INDEX[frame_state.last_direction],
     )
@@ -247,24 +230,12 @@ def parse_frame_state(row: pd.Series, columns: pd.Index | list[str] | tuple[str,
     else:
         ghost_status = [row[f"ifscared{index}"] for index in range(1, 5)]
 
-    if "fruitType" in column_set:
-        reward_type = int(row["fruitType"]) if not _is_float_missing(row["fruitType"]) else np.nan
-    else:
-        reward_type = row["Reward"]
-
-    if "fruit_pos" in column_set:
-        fruit_position = _parse_optional_fruit_position(row["fruit_pos"])
-    else:
-        fruit_position = _parse_optional_fruit_position(row["fruitPos"])
-
     last_direction = None if pd.isna(row["pacman_dir"]) else row["pacman_dir"]
     return FrameState(
         pacman_position=pacman_position,
         energizers=energizers,
         beans=beans,
         ghost_positions=ghost_positions,
-        reward_type=reward_type,
-        fruit_position=fruit_position,
         ghost_status=ghost_status,
         last_direction=last_direction,
     )
@@ -390,21 +361,6 @@ def _positions_to_mask(value: list[tuple[int, int]] | float, position_to_id: dic
     return mask
 
 
-def _optional_position_to_id(value: tuple[int, int] | float | Any, position_to_id: dict[tuple[int, int], int]) -> int:
-    """把可选水果位置转换为位置 id。
-
-    输入语义：value 是水果坐标、NaN 或其它缺失标记。
-    输出语义：存在且在地图中时返回位置 id，否则返回 -1。
-    关键约束：-1 在策略搜索中表示当前没有可吃水果。
-    """
-
-    if value is None or _is_float_missing(value):
-        return -1
-    if isinstance(value, tuple):
-        return position_to_id.get(value, -1)
-    return -1
-
-
 def _literal_eval_unless_float(value: Any) -> Any:
     """解析非浮点字符串字面量。
 
@@ -442,22 +398,6 @@ def _parse_optional_ghost_position(value: Any) -> tuple[int, int] | tuple[()]:
     if isinstance(parsed, list) and len(parsed) == 0:
         return ()
     return int(parsed[0]), int(parsed[1])
-
-
-def _parse_optional_fruit_position(value: Any) -> tuple[int, int] | float | Any:
-    """解析水果位置字段。
-
-    输入语义：value 可以是 NaN、None、tuple/list 坐标或坐标字符串。
-    输出语义：缺失值返回 `np.nan`，坐标返回 tuple。
-    关键约束：当前 fMRI 数据通常没有水果位置；这里只保留旧字段语义。
-    """
-
-    if value is None or _is_float_missing(value):
-        return np.nan
-    parsed = ast.literal_eval(value) if isinstance(value, str) else value
-    if isinstance(parsed, (tuple, list)) and len(parsed) == 2:
-        return int(parsed[0]), int(parsed[1])
-    return parsed
 
 
 def _parse_position_list(value: Any) -> list[tuple[int, int]] | float:

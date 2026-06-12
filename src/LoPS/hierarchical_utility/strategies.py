@@ -41,7 +41,6 @@ class StrategyState:
     utility: float
     bean_mask: int
     energizer_mask: int
-    fruit_id: int
     ghost_status: tuple[Any, ...]
 
 
@@ -202,13 +201,13 @@ class SharedPathUtilityEngine:
     def _initial_strategy_states(self) -> tuple[StrategyState | None, ...]:
         """创建根节点上各路径策略的初始状态。
 
-        输入语义：使用当前帧的 bean、energizer、fruit 和 ghost 状态。
+        输入语义：使用当前帧的 bean、energizer 和 ghost 状态。
         输出语义：返回长度固定为 8 的策略状态 tuple。
         关键约束：Evade 策略只携带被选择的单只 ghost 状态，其余策略携带完整 ghost 状态。
         """
 
         frame = self.frame_state
-        base_state = StrategyState(0.0, frame.bean_mask, frame.energizer_mask, frame.fruit_id, frame.ghost_status)
+        base_state = StrategyState(0.0, frame.bean_mask, frame.energizer_mask, frame.ghost_status)
         states: list[StrategyState | None] = [base_state]
         for ghost_index in range(len(GHOST_NAMES)):
             states.append(
@@ -216,7 +215,6 @@ class SharedPathUtilityEngine:
                     0.0,
                     frame.bean_mask,
                     frame.energizer_mask,
-                    frame.fruit_id,
                     (frame.ghost_status[ghost_index],),
                 )
             )
@@ -244,7 +242,7 @@ class SharedPathUtilityEngine:
         """
 
         if strategy_index == LOCAL_INDEX:
-            bean_mask, energizer_mask, fruit_id, ghost_status, exact_reward = self._apply_local_reward(
+            bean_mask, energizer_mask, ghost_status, exact_reward = self._apply_local_reward(
                 state,
                 next_position_id,
             )
@@ -254,7 +252,6 @@ class SharedPathUtilityEngine:
                     state.utility + exact_reward + 0.0 * exact_risk,
                     bean_mask,
                     energizer_mask,
-                    fruit_id,
                     ghost_status,
                 ),
                 terminated,
@@ -262,7 +259,7 @@ class SharedPathUtilityEngine:
 
         if EVADE_START_INDEX <= strategy_index < APPROACH_INDEX:
             ghost_index = strategy_index - EVADE_START_INDEX
-            bean_mask, energizer_mask, fruit_id, ghost_status, exact_reward = self._apply_local_reward(
+            bean_mask, energizer_mask, ghost_status, exact_reward = self._apply_local_reward(
                 state,
                 next_position_id,
             )
@@ -277,7 +274,6 @@ class SharedPathUtilityEngine:
                     state.utility + 0.0 * exact_reward + exact_risk,
                     bean_mask,
                     energizer_mask,
-                    fruit_id,
                     ghost_status,
                 ),
                 terminated,
@@ -295,7 +291,6 @@ class SharedPathUtilityEngine:
                     state.utility + exact_reward + 0.0 * exact_risk,
                     state.bean_mask,
                     state.energizer_mask,
-                    state.fruit_id,
                     ghost_status,
                 ),
                 reward_terminated or risk_terminated,
@@ -309,13 +304,12 @@ class SharedPathUtilityEngine:
                     state.utility + exact_reward + 0.0 * exact_risk,
                     state.bean_mask,
                     energizer_mask,
-                    state.fruit_id,
                     ghost_status,
                 ),
                 terminated,
             )
 
-        bean_mask, fruit_id, exact_reward = self._apply_no_energizer_reward(state, next_position_id)
+        bean_mask, exact_reward = self._apply_no_energizer_reward(state, next_position_id)
         energizer_mask, ghost_status, exact_risk, terminated = self._apply_no_energizer_risk(
             state,
             next_position_id,
@@ -326,28 +320,22 @@ class SharedPathUtilityEngine:
                 state.utility + 0.0 * exact_reward + exact_risk,
                 bean_mask,
                 energizer_mask,
-                fruit_id,
                 ghost_status,
             ),
             terminated,
         )
 
-    def _apply_local_reward(
-        self,
-        state: StrategyState,
-        next_position_id: int,
-    ) -> tuple[int, int, int, tuple[Any, ...], float]:
-        """计算 bean、energizer 和 fruit 的即时奖励状态转移。
+    def _apply_local_reward(self, state: StrategyState, next_position_id: int) -> tuple[int, int, tuple[Any, ...], float]:
+        """计算 bean 和 energizer 的即时奖励状态转移。
 
         输入语义：state 是父节点策略状态，next_position_id 是下一步位置。
-        输出语义：返回更新后的 bean/energizer/fruit/ghost 状态和即时奖励。
+        输出语义：返回更新后的 bean/energizer/ghost 状态和即时奖励。
         关键约束：吃 energizer 后，非死亡 ghost 在下一节点进入 scared 状态。
         """
 
         exact_reward = 0.0
         bean_mask = state.bean_mask
         energizer_mask = state.energizer_mask
-        fruit_id = state.fruit_id
         ghost_status = state.ghost_status
         next_bit = 1 << next_position_id
         if bean_mask & next_bit:
@@ -357,10 +345,7 @@ class SharedPathUtilityEngine:
             exact_reward += self.reward_amount[2]
             energizer_mask &= ~next_bit
             ghost_status = _scare_active_ghosts(ghost_status)
-        if fruit_id == next_position_id and not _is_float_marker(self.frame_state.reward_type):
-            exact_reward += self.reward_amount[int(self.frame_state.reward_type)]
-            fruit_id = -1
-        return bean_mask, energizer_mask, fruit_id, ghost_status, exact_reward
+        return bean_mask, energizer_mask, ghost_status, exact_reward
 
     def _apply_approach_reward(self, state: StrategyState, next_position_id: int) -> tuple[tuple[Any, ...], float, bool]:
         """计算 Approach 策略的 ghost 接触奖励。
@@ -387,7 +372,7 @@ class SharedPathUtilityEngine:
 
         输入语义：state 保存剩余 energizer 和 ghost 状态，next_position_id 是下一步位置。
         输出语义：返回更新后的 energizer bitmask、ghost 状态和即时奖励。
-        关键约束：该策略不处理 bean 和 fruit 奖励。
+        关键约束：该策略不处理 bean 奖励。
         """
 
         exact_reward = 0.0
@@ -400,25 +385,21 @@ class SharedPathUtilityEngine:
             ghost_status = _scare_active_ghosts(ghost_status)
         return energizer_mask, ghost_status, exact_reward
 
-    def _apply_no_energizer_reward(self, state: StrategyState, next_position_id: int) -> tuple[int, int, float]:
-        """计算 NoEnergizer 策略中 bean 和 fruit 的状态转移。
+    def _apply_no_energizer_reward(self, state: StrategyState, next_position_id: int) -> tuple[int, float]:
+        """计算 NoEnergizer 策略中的 bean 状态转移。
 
         输入语义：state 是父节点状态，next_position_id 是下一步位置。
-        输出语义：返回更新后的 bean bitmask、fruit id 和即时奖励。
+        输出语义：返回更新后的 bean bitmask 和即时奖励。
         关键约束：目标配置下该策略 reward 系数为 0，但对象移除状态仍会影响后续路径。
         """
 
         exact_reward = 0.0
         bean_mask = state.bean_mask
-        fruit_id = state.fruit_id
         next_bit = 1 << next_position_id
         if bean_mask & next_bit:
             exact_reward += self.reward_amount[1]
             bean_mask &= ~next_bit
-        if fruit_id == next_position_id and not _is_float_marker(self.frame_state.reward_type):
-            exact_reward += self.reward_amount[int(self.frame_state.reward_type)]
-            fruit_id = -1
-        return bean_mask, fruit_id, exact_reward
+        return bean_mask, exact_reward
 
     def _apply_no_energizer_risk(
         self,

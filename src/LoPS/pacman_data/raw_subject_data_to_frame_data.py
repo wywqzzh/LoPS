@@ -3,7 +3,7 @@
 
 旧流程是：
 1. MATLAB Raw2Mat2CSV 把 Data 表写成 Raw CSV Data/fmri/{subject}.csv；
-2. 同时根据 Map 写出 {subject}-R.csv，里面记录每一帧 beans/energizers/fruits 的位置；
+2. 同时根据 Map 写出 {subject}-R.csv，里面记录每一帧 beans/energizers 的位置；
 3. csvFormatTransform/toPkl.py 读取这两个 CSV，并调用 ppRaw.transData() 生成 frameData pkl。
 
 当前脚本直接读取 raw_subject_data 中已经生成的 PKL，不再依赖
@@ -29,14 +29,6 @@ import pandas as pd
 # Map 在 PKL/CSV 中保存为逐行展开后的 29 x 36 字符串。这里必须用
 # 序列化后的行宽 29 反推 reward 坐标；否则 beans/energizers 会整体错位。
 MAP_WIDTH = 29
-FRUIT_REWARD = {
-    "C": 3,
-    "S": 4,
-    "O": 5,
-    "A": 6,
-    "M": 7,
-}
-
 # 渲染器需要的原始像素坐标、帧编号和方向列。frame table 不只服务分析，
 # 也作为后续图片渲染的唯一逐帧数据来源，因此这些列不能在转换时丢弃。
 RENDER_SOURCE_COLUMNS = [
@@ -239,6 +231,9 @@ def convert_raw_subject_data_to_frame_data(df: pd.DataFrame) -> pd.DataFrame:
     # 这里显式 groupby(first)，保证后续每个输出行都是唯一的一帧。
     keys = ["DayTrial", "Step"]
     grouped_first = df.groupby(keys, sort=False, as_index=False).first()
+    # frame data 是后续 tile 抽样和 frameIndex 回指的基础表，必须先按 trial 数字编号
+    # 和帧号稳定排序，再生成 Unnamed: 0，避免字符串排序把 10-1 排在 2-1 前面。
+    grouped_first = _sort_grouped_frame_by_daytrial_step(grouped_first)
 
     # 这里构造的是旧 ``ppRaw.transData`` 的核心字段：
     # 位置字段使用 tuple，状态字段保持数值，Map/JoyStick 原样带入。
@@ -280,7 +275,56 @@ def convert_raw_subject_data_to_frame_data(df: pd.DataFrame) -> pd.DataFrame:
     # 旧 fmriFrameData 使用 0-based Step；逐帧原始 PKL 保留 MATLAB/Data 表的
     # 1-based Step。frame table 层转换时统一改成 0-based，便于和旧分析结果对齐。
     data_frame["Step"] = data_frame["Step"] - 1
+    # 旧式 frame_data 中 Unnamed: 0 表示排序后逐帧表的行号；corrected tile 阶段会把
+    # 它复制为 frameIndex，用于从 tile 抽样点回到原始 frame 区间补中间格。
+    data_frame.insert(0, "Unnamed: 0", np.arange(len(data_frame), dtype=np.int64))
     return data_frame
+
+
+def _sort_grouped_frame_by_daytrial_step(frame: pd.DataFrame) -> pd.DataFrame:
+    """按 DayTrial 的数字前缀和 Step 数值排序 frame 行。
+
+    输入语义：frame 是已按 DayTrial-Step 去重后的逐帧表，DayTrial 通常形如
+    ``"1-2-031222-401-03-Dec-2022"``。
+    输出语义：返回重排并 reset index 的 DataFrame，排序键为 DayTrial 前两个数字段、
+    DayTrial 剩余文本和 Step 数值。
+    关键约束：DayTrial 前两个分段必须按整数比较，不能按字符串比较，否则 ``10-1``
+    会错误排在 ``2-1`` 前面。
+    """
+
+    sort_keys = frame["DayTrial"].map(_day_trial_numeric_sort_key)
+    sortable = frame.assign(
+        _trial_major=[key[0] for key in sort_keys],
+        _trial_minor=[key[1] for key in sort_keys],
+        _trial_rest=[key[2] for key in sort_keys],
+        _step_numeric=pd.to_numeric(frame["Step"], errors="raise"),
+    )
+    sortable = sortable.sort_values(
+        by=["_trial_major", "_trial_minor", "_trial_rest", "_step_numeric"],
+        kind="mergesort",
+    )
+    return sortable.drop(
+        columns=["_trial_major", "_trial_minor", "_trial_rest", "_step_numeric"]
+    ).reset_index(drop=True)
+
+
+def _day_trial_numeric_sort_key(value: object) -> tuple[int, int, str]:
+    """提取 DayTrial 的数字排序键。
+
+    输入语义：value 是 DayTrial 字段值，至少需要包含两个以连字符分隔的数字段。
+    输出语义：返回 ``(第一数字段, 第二数字段, 剩余文本)``，供 frame 行排序使用。
+    关键约束：如果前两个字段不是整数，直接抛出 FrameDataError，避免静默退回字符串排序。
+    """
+
+    parts = str(value).split("-")
+    if len(parts) < 2:
+        raise FrameDataError(f"DayTrial 缺少前两个数字段，无法排序：{value!r}")
+    try:
+        major = int(parts[0])
+        minor = int(parts[1])
+    except ValueError as exc:
+        raise FrameDataError(f"DayTrial 前两个字段必须是数字，无法排序：{value!r}") from exc
+    return major, minor, "-".join(parts[2:])
 
 
 def _ghost_position(frame: pd.DataFrame, ghost_prefix: str) -> list[object]:
@@ -381,10 +425,8 @@ def _parse_map_rewards(map_text: str) -> tuple[list[tuple[int, int]], list[tuple
 
     beans: list[tuple[int, int]] = []
     energizers: list[tuple[int, int]] = []
-    # 旧 Mat2Csv 也会识别 fruit，但 ppRaw.transData 当前没有把 fruit 合并进输出；
-    # 因此这里仅返回 transData 实际使用到的 Reward==1/2。
     for index, char in enumerate(map_text):
-        if char != "." and char != "o" and char not in FRUIT_REWARD:
+        if char != "." and char != "o":
             continue
         position = (index % MAP_WIDTH + 1, index // MAP_WIDTH + 1)
         if char == ".":

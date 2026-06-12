@@ -226,7 +226,9 @@ def main() -> None:
     print(f"Q 列差异文件数：{report['q_different_count']}")
     print(f"DataFrame 结构差异文件数：{report['dataframe_different_count']}")
     print(f"验证报告：{report_path.resolve()}")
-    if report["q_different_count"] or report["dataframe_different_count"] or report["missing_or_extra_files"]:
+    # missing_or_extra_files 是固定结构的字典；只有任一列表非空才代表文件集合不一致。
+    has_missing_or_extra_files = any(report["missing_or_extra_files"].values())
+    if report["q_different_count"] or report["dataframe_different_count"] or has_missing_or_extra_files:
         raise SystemExit(1)
 
 
