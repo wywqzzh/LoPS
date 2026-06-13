@@ -1,6 +1,6 @@
 """人类 fMRI 动态策略权重拟合。
 
-本模块实现 corrected utility 数据到 WeightData 的动态策略拟合流程。它只依赖
+本模块实现集中 utility 数据到 WeightData 的动态策略拟合流程。它只依赖
 调用方显式传入的数据路径和地图常量，不包含旧项目路径，也不导入旧项目代码。
 """
 
@@ -184,184 +184,37 @@ def one_hot_direction(value: str) -> list[int]:
     return result
 
 
-def normalize_with_inf(values: np.ndarray) -> np.ndarray:
-    """按旧规则归一化可能包含 ``-inf`` 的四方向 Q 值。
-
-    输入语义：values 是长度为 4 的 Q 值数组，墙方向可能是 ``-inf``。
-    输出语义：返回归一化后的数组；有限值全为 0 时保持 0。
-    关键约束：只用非 inf 位置计算最大值，避免墙方向影响归一化。
-    """
-
-    result = values.copy()
-    finite_indices = np.where(~np.isinf(values))[0]
-    if set(values[finite_indices]) == {0}:
-        result[finite_indices] = 0
-    else:
-        result[finite_indices] = result[finite_indices] / np.max(result[finite_indices])
-    return result
-
-
-def make_evade_q_non_negative(
-    q_values: np.ndarray,
-    offset: float,
-    position: tuple[int, int],
-    adjacent_map: dict[tuple[int, int], dict[str, tuple[int, int] | float]],
-) -> np.ndarray:
-    """把 evade/no_energizer 类 Q 值平移到非负尺度并归一化。
-
-    输入语义：q_values 是单帧四方向 Q 数组；offset 是该列全局有限最小值。
-    输出语义：返回旧规则归一化后的 Q 值。
-    关键约束：旧脚本会原地修改传入的 Q 数组；这里保留该行为以保证输出 raw Q 列一致。
-    """
-
-    normalized_position = normalize_tunnel_position(position)
-    available_indices: list[int] = []
-    for direction in DIRECTION_NAMES:
-        adjacent_value = adjacent_map[normalized_position][direction]
-        if adjacent_value is not None and not isinstance(adjacent_value, float):
-            available_indices.append(DIRECTION_NAMES.index(direction))
-    q_values[available_indices] = q_values[available_indices] - offset
-    return normalize_with_inf(q_values)
-
-
 def prepare_fitting_dataframe(
     raw_data: pd.DataFrame,
     adjacent_map: dict[tuple[int, int], dict[str, tuple[int, int] | float]],
     config: DynamicStrategyFittingConfig | None = None,
 ) -> pd.DataFrame:
-    """把 corrected utility 表整理成动态拟合使用的 DataFrame。
+    """校验并读取动态拟合使用的集中 utility DataFrame。
 
-    输入语义：raw_data 是单个被试的 corrected utility 输出表。
-    输出语义：返回追加 ``file/game/next_pacman_dir_fill/*_Q_norm`` 的拟合输入表。
-    关键约束：行重排、Q 修正和 trial 过滤都保留旧流程语义。
+    输入语义：raw_data 是 calculate_utility 阶段输出的单被试 DataFrame。
+    输出语义：返回可直接用于拟合的 DataFrame，不新增或改写 Q 相关字段。
+    关键约束：Q 计算、不可走方向修正和 Q_norm 归一化必须在上游阶段完成。
     """
 
     config = DynamicStrategyFittingConfig() if config is None else config
     data = raw_data.copy(deep=True)
 
-    # 旧脚本先按 DayTrial 的首次出现顺序重组数据，确保同一 trial 的行连续。
-    day_trials = data.DayTrial.unique()
-    data = pd.concat([data[data.DayTrial == day_trial] for day_trial in day_trials]).reset_index(drop=True)
-
     for column in PARSED_POSITION_COLUMNS:
         if column in data.columns:
             data[column] = data[column].apply(parse_literal_if_needed)
 
-    # 少数旧数据同时包含普通 Q 和 inf Q；当前正式输入通常只有普通 Q。
-    data = replace_inf_q_columns_if_present(data)
+    required_columns = ["file", "game", "next_pacman_dir_fill"]
+    required_columns.extend(f"{agent}_Q_norm" for agent in config.agents)
+    missing_columns = [column for column in required_columns if column not in data.columns]
+    if missing_columns:
+        raise ValueError(
+            "动态拟合输入缺少 calculate_utility 阶段应生成的字段："
+            f"{missing_columns}。请先运行 script/calculate_utility/run_calculate_utility.py。"
+        )
 
-    if "DayTrial" in data.columns.values:
-        data["file"] = data.DayTrial
-
-    # game 去掉 round 编号，同一 game 的不同 round 共享下一步方向 shift 边界。
-    data["game"] = data.file.str.split("-").apply(lambda parts: "-".join([parts[0]] + parts[2:]))
-    grouped_trials: list[pd.DataFrame] = []
-    for _, group in data.groupby("game"):
-        group = group.copy()
-        group["next_pacman_dir_fill"] = group["pacman_dir"].shift(-1)
-        grouped_trials.append(copy.deepcopy(group))
-    data = pd.concat(grouped_trials)
-    data.reset_index(inplace=True, drop=True)
+    # 上游阶段已经按 game 生成下一步动作；这里仅把 None 规整成 NaN，便于后续合法性判断。
     data["next_pacman_dir_fill"] = data.next_pacman_dir_fill.apply(lambda value: value if value is not None else np.nan)
-
-    # 完全没有移动方向的 trial 不参与拟合，旧脚本直接从数据中剔除。
-    trial_records: list[pd.DataFrame] = []
-    for trial_name in np.unique(data.file.values):
-        trial_data = data[data.file == trial_name]
-        pacman_direction = trial_data.next_pacman_dir_fill
-        if np.sum(pacman_direction.apply(lambda value: isinstance(value, float))) == len(pacman_direction):
-            print(f"({trial_name}) Pacman No Move ! Shape = {pacman_direction.shape}")
-            continue
-        trial_records.append(trial_data)
-    data = pd.concat(trial_records).reset_index(drop=True)
-
-    # 逐列生成 *_Q_norm。evade/no_energizer 会原地平移 raw Q 数组，这是旧输出的一部分。
-    q_columns = list(data.filter(regex="_Q").columns)
-    for column in q_columns:
-        if ("evade" not in column) and ("no_energizer" not in column):
-            data[f"{column}_norm"] = data[column].apply(normalize_with_inf)
-        else:
-            flat_values = data[column].explode().values
-            offset = np.min(flat_values[flat_values != -np.inf])
-            data[f"{column}_norm"] = data[[column, "pacmanPos"]].apply(
-                lambda row: make_evade_q_non_negative(row[column], offset, row.pacmanPos, adjacent_map)
-                if set(row[column]) != {0}
-                else [0, 0, 0, 0],
-                axis=1,
-            )
-
-    # config 当前只影响后续拟合；这里引用一次避免调用方误以为 agents 会被忽略。
-    _ = config.agents
     return data
-
-
-def replace_inf_q_columns_if_present(data: pd.DataFrame) -> pd.DataFrame:
-    """在输入同时包含普通 Q 和 inf Q 时按旧规则替换普通 Q。
-
-    输入语义：data 可能包含 ``*_inf_Q`` 和已有 ``*_Q_norm`` 列。
-    输出语义：返回列替换后的 DataFrame。
-    关键约束：当前 human fMRI 输入通常不会进入该分支；实现它是为了保留旧数据格式边界。
-    """
-
-    if "global_Q" not in data.columns or "global_inf_Q" not in data.columns:
-        return data
-    if "no_energizer_inf_Q" in data.columns:
-        drop_columns = [
-            "global_Q",
-            "local_Q",
-            "evade_blinky_Q",
-            "evade_clyde_Q",
-            "approach_Q",
-            "energizer_Q",
-            "no_energizer_Q",
-            "global_Q_norm",
-            "local_Q_norm",
-            "evade_blinky_Q_norm",
-            "evade_clyde_Q_norm",
-            "approach_Q_norm",
-            "energizer_Q_norm",
-            "no_energizer_Q_norm",
-        ]
-        rename_columns = {
-            "global_inf_Q": "global_Q",
-            "local_inf_Q": "local_Q",
-            "evade_blinky_inf_Q": "evade_blinky_Q",
-            "evade_clyde_inf_Q": "evade_clyde_Q",
-            "approach_inf_Q": "approach_Q",
-            "energizer_inf_Q": "energizer_Q",
-            "no_energizer_inf_Q": "no_energizer_Q",
-        }
-    else:
-        drop_columns = [
-            "global_Q",
-            "local_Q",
-            "evade_blinky_Q",
-            "evade_clyde_Q",
-            "evade_ghost3_Q",
-            "evade_ghost4_Q",
-            "approach_Q",
-            "energizer_Q",
-            "global_Q_norm",
-            "local_Q_norm",
-            "evade_blinky_Q_norm",
-            "evade_clyde_Q_norm",
-            "evade_ghost3_Q_norm",
-            "evade_ghost4_Q_norm",
-            "approach_Q_norm",
-            "energizer_Q_norm",
-        ]
-        rename_columns = {
-            "global_inf_Q": "global_Q",
-            "local_inf_Q": "local_Q",
-            "evade_blinky_inf_Q": "evade_blinky_Q",
-            "evade_clyde_inf_Q": "evade_clyde_Q",
-            "evade_ghost3_inf_Q": "evade_ghost3_Q",
-            "evade_ghost4_inf_Q": "evade_ghost4_Q",
-            "approach_inf_Q": "approach_Q",
-            "energizer_inf_Q": "energizer_Q",
-        }
-    existing_drop_columns = [column for column in drop_columns if column in data.columns]
-    return data.drop(columns=existing_drop_columns).rename(columns=rename_columns)
 
 
 def all_directions_nan(
@@ -1119,7 +972,7 @@ def fit_dynamic_strategy_dataframe(
 ) -> pd.DataFrame:
     """对单个被试 DataFrame 执行完整动态策略拟合。
 
-    输入语义：raw_data 是 corrected utility 表；adjacent_map 是 fMRI 邻接表。
+    输入语义：raw_data 是 calculate_utility 输出表；adjacent_map 是 fMRI 邻接表。
     输出语义：返回追加 weight/contribution/is_correct 等列的 WeightData 表。
     关键约束：拟合所有上下文段落；随机过程由 config.random_seed 控制。
     """
@@ -1208,9 +1061,9 @@ def process_dynamic_strategy_file(
     config: DynamicStrategyFittingConfig | None = None,
     file_index: int = 0,
 ) -> dict[str, Any]:
-    """处理单个 corrected utility 文件并保存动态策略权重。
+    """处理单个集中 utility 文件并保存动态策略权重。
 
-    输入语义：input_path 是 corrected utility pickle，output_path 是目标 WeightData pickle。
+    输入语义：input_path 是 calculate_utility 输出 pickle，output_path 是目标 WeightData pickle。
     输出语义：写出拟合后的 DataFrame，并返回文件摘要。
     关键约束：若设置 random_seed，会按 ``random_seed + file_index`` 为每个文件设置独立种子。
     """
@@ -1259,9 +1112,9 @@ def process_dynamic_strategy_directory(
     config: DynamicStrategyFittingConfig | None = None,
     workers: int = 1,
 ) -> list[dict[str, Any]]:
-    """批量处理 corrected utility 目录。
+    """批量处理集中 utility 目录。
 
-    输入语义：input_dir 是扁平 pickle 目录，output_dir 是 WeightData 输出目录。
+    输入语义：input_dir 是 calculate_utility 的扁平 pickle 目录，output_dir 是 WeightData 输出目录。
     输出语义：每个输入文件写出 ``{stem}-merge_weight-dynamic-res.pkl``，返回摘要列表。
     关键约束：文件间独立；设置 seed 时按排序后的文件序号派生文件级 seed。
     """

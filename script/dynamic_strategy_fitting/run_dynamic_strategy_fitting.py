@@ -26,18 +26,18 @@ from LoPS.dynamic_strategy_fitting import (  # noqa: E402
 def parse_args() -> argparse.Namespace:
     """解析动态策略拟合命令行参数。
 
-    输入语义：允许覆盖输入目录、输出目录、邻接表、随机种子、并行数和 GA 参数。
+    输入语义：允许覆盖集中 utility 输入目录、输出目录、邻接表、随机种子、并行数和 GA 参数。
     输出语义：返回可直接构造配置并驱动目录批处理的参数对象。
     关键约束：默认路径只指向当前 LoPS 仓库 data 目录，不依赖旧项目路径。
     """
 
-    data_root = PROJECT_ROOT / "data"
+    data_root = PROJECT_ROOT / "pipeline_data"
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--input-dir",
         type=Path,
-        default=data_root / "correct_utility_human" / "corrected_utility_data",
-        help="corrected utility 输入目录。",
+        default=data_root / "calculate_utility" / "utility_data",
+        help="calculate_utility 输出的拟合输入目录。",
     )
     parser.add_argument(
         "--output-dir",
@@ -48,7 +48,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--adjacent-map",
         type=Path,
-        default=data_root / "correct_utility_human" / "constant_data" / "adjacent_map_fmri.csv",
+        default=data_root / "constant_data" / "adjacent_map_fmri.csv",
         help="fMRI 邻接表 CSV。",
     )
     parser.add_argument("--workers", type=int, default=min(8, os.cpu_count() or 1), help="文件级并行进程数。")

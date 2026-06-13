@@ -11,15 +11,14 @@
 1. `raw_mat_data -> raw_subject_data`
 2. `raw_subject_data -> frame_data`
 3. `frame_data -> tile_data -> corrected_tile_data`
-4. `corrected_tile_data -> utility_data`
-5. `utility_data -> corrected_utility_data`
-6. `corrected_utility_data -> weight_data`
-7. `weight_data -> corrected_weight_data`
-8. `corrected_weight_data -> feature_data / discrete_feature_data`
-9. `discrete_feature_data -> fmri_formed_data_ghost2 -> strategy_sequence`
-10. `strategy_sequence -> state_dependency_graph`
-11. `strategy_sequence + state_dependency_graph -> grammar`
-12. `grammar -> divide_person_result`
+4. `corrected_tile_data -> calculate_utility/utility_data`
+5. `calculate_utility/utility_data -> weight_data`
+6. `weight_data -> corrected_weight_data`
+7. `corrected_weight_data -> feature_data / discrete_feature_data`
+8. `discrete_feature_data -> fmri_formed_data_ghost2 -> strategy_sequence`
+9. `strategy_sequence -> state_dependency_graph`
+10. `strategy_sequence + state_dependency_graph -> grammar`
+11. `grammar -> divide_person_result`
 
 ## 主字段审计表
 
@@ -42,12 +41,12 @@
 | `JoyStick` | `raw_subject_data/frame_data` | object | 当前非视频主流程未参与计算 | 若分析不用，留在原始/视频数据 | `frame_data` | 主分析链路建议丢弃 |
 | `ppX`, `ppY`, `pFrame`, `g*pX`, `g*pY`, `g*Dir`, `g*ModeR`, `g*Scared`, `g*Frame` | `raw_subject_data/frame_data` | float/object | 视频渲染使用；当前非视频主流程未参与计算 | 与分析表分离为 render table | `frame_data` | 非视频主链路建议丢弃 |
 | `waterTS`, `waterStatus`, `waterDelay` | `raw_subject_data/frame_data` | float | 当前主流程未参与计算 | 若需要行为分析，单独事件表 | `raw_subject_data` | 当前主链路建议丢弃 |
-| `global_Q`, `local_Q`, `evade_blinky_Q`, `evade_clyde_Q`, `evade_ghost3_Q`, `evade_ghost4_Q`, `approach_Q`, `energizer_Q`, `no_energizer_Q` | `utility_data` | 每格为长度 4 的 ndarray/list | correct utility 修墙；dynamic 生成 `*_Q_norm`；revise 评分 | `np.ndarray(shape=(4,), dtype=float64)` | `utility_data` | 保留到 revise；之后可只保留离散 strategy/weight |
-| `*_Q_norm` 同 9 个 agent | `weight_data` | 每格长度 4 ndarray/list | dynamic 拟合；revise 重新评分 | `np.ndarray(shape=(4,), dtype=float64)` | `dynamic_strategy_fitting` | revise 后若 feature 不再用，可丢弃 |
+| `global_Q`, `local_Q`, `evade_blinky_Q`, `evade_clyde_Q`, `evade_ghost3_Q`, `evade_ghost4_Q`, `approach_Q`, `energizer_Q`, `no_energizer_Q` | `calculate_utility/utility_data` | 每格为长度 4 的 ndarray/list；不可走方向已为 `-inf`，`evade/no_energizer` 类字段已按拟合输入规则平移 | dynamic/revise 评分 | `np.ndarray(shape=(4,), dtype=float64)` | `calculate_utility` | 保留到 revise；之后可只保留离散 strategy/weight |
+| `*_Q_norm` 同 9 个 agent | `calculate_utility/utility_data` | 每格长度 4 ndarray/list | dynamic 拟合；revise 重新评分 | `np.ndarray(shape=(4,), dtype=float64)` | `calculate_utility` | revise 后若 feature 不再用，可丢弃 |
 | `available_dir` | `weight_data` | bool | dynamic 中修正不可走方向；输出后下游不计算使用 | bool | `dynamic_strategy_fitting` | 诊断字段，主链路不应继续透传 |
-| `file` | `weight_data`，由 `DayTrial` 复制 | 字符串 trial 名 | dynamic/revise 分 trial；feature/discrete/fMRI 构造 `game`；strategy sequence 文件聚合 | 标准 `trial_id` 字段 | `dynamic_strategy_fitting`，更好提前到 `frame_data` | 主链路保留到 strategy_sequence 前 |
-| `game` | `weight_data`，fMRI preprocess 也重算 | 字符串，去掉 round 编号 | dynamic shift 边界；fMRI split/keep-first 按 game 分组 | 标准 `game_id` 字段 | `frame_data` 或 `dynamic` 前 | 主链路保留到 formed 前 |
-| `next_pacman_dir_fill` | `weight_data` | str 或 NaN | dynamic 切段/拟合；revise 评分 | categorical/enum 或缺失 | `dynamic_strategy_fitting`，最好在 corrected tile 后 | 保留到 revise，之后可丢弃 |
+| `file` | `calculate_utility/utility_data`，由 `DayTrial` 复制 | 字符串 trial 名 | dynamic/revise 分 trial；feature/discrete/fMRI 构造 `game`；strategy sequence 文件聚合 | 标准 `trial_id` 字段 | `calculate_utility`，更好提前到 `frame_data` | 主链路保留到 strategy_sequence 前 |
+| `game` | `calculate_utility/utility_data`，fMRI preprocess 也重算 | 字符串，去掉 round 编号 | dynamic shift 边界；fMRI split/keep-first 按 game 分组 | 标准 `game_id` 字段 | `calculate_utility`，更好提前到 `frame_data` | 主链路保留到 formed 前 |
+| `next_pacman_dir_fill` | `calculate_utility/utility_data` | str 或 NaN | dynamic 切段/拟合；revise 评分 | categorical/enum 或缺失 | `calculate_utility`，最好在 corrected tile 后 | 保留到 revise，之后可丢弃 |
 | `level_0`, `index` | `weight_data` | int | dynamic/revise 用作全局行标签和旧索引映射 | 明确改为 `row_id`，不依赖 reset_index 副产物 | `dynamic_strategy_fitting` | `level_0` 当前被 feature/discrete 透传；建议改名后保留到 fMRI 前 |
 | `weight` | `weight_data` | 9 维权重 list/array | feature 输出；discrete/fMRI 透传；revise 初始策略参考 | `np.ndarray(shape=(9,), dtype=float64)` | `dynamic_strategy_fitting` | 若后续只需 `strategy`，可进入 diagnostic 或 feature 附表 |
 | `contribution` | `weight_data` | 9 维 list/array | revise 初始化 `revise_weight`；feature/discrete 透传 | `np.ndarray(shape=(9,), dtype=float64)` | `dynamic_strategy_fitting` | 保留到 revise/feature；后续可丢弃 |
@@ -106,7 +105,8 @@
    `frame_id`、`next_direction`，替代后续脚本重复用字符串 split、shift 和 reset_index。
 3. **主数据与诊断数据分离**：`predict_dir/is_correct/revise_is_correct/available_dir` 这类字段不应
    一路进入 feature/discrete/fMRI 数据。
-4. **Q 和权重格式固定**：9 个 agent 的 Q/weight/contribution/revise_weight 统一为定长
+4. **Q 和权重格式固定**：`calculate_utility` 已集中生成 raw `*_Q`、修正不可走方向并生成
+   `*_Q_norm`；后续拟合阶段不再重复归一化。9 个 agent 的 Q/weight/contribution/revise_weight 统一为定长
    `np.ndarray` 或拆成矩阵结构，禁止 list、ndarray、object 混用。
 5. **离散状态表瘦身**：grammar 实际使用 `IS1/IS2/PG1/PG2/PE/BN5`，`BN10` 当前保存在
    strategy sequence 但 state graph 默认不用；`PG/IS/IS3/IS4/PG3/PG4/EE` 应按后续分析需要决定是否保留。
