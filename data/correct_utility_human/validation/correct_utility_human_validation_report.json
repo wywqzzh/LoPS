@@ -1,8 +1,0 @@
-{
-  "output_dir": "/home/zzh/project/LoPS/data/correct_utility_human/corrected_utility_data",
-  "baseline_dir": "data/correct_utility_human/validation/legacy_current_source_output",
-  "output_files": 34,
-  "baseline_files": 34,
-  "failed_files": {},
-  "is_exact_match": true
-}

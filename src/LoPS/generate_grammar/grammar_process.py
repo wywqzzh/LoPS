@@ -37,7 +37,7 @@ class DividePersonRecord:
 def list_grammar_files(grammar_dir: Path) -> list[str]:
     """列出当前 grammar 输出目录中的 pickle 文件名。
 
-    输入语义：grammar_dir 是 ``run_generate_grammar.py`` 生成的结构化 grammar 目录。
+    输入语义：grammar_dir 是 ``11_generate_grammar.py`` 生成的结构化 grammar 目录。
     输出语义：返回排序后的 ``.pkl`` 文件名列表。
     关键约束：排序只用于保证输出摘要稳定，不改变单个文件的计算语义。
     """

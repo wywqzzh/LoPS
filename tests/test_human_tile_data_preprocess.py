@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+import importlib.util
 import sys
 from pathlib import Path
 
@@ -12,10 +13,16 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from script.human_tile_data_preprocess.run_human_tile_data_preprocess import (
-    normalize_optional_ghost_fix_position,
-    repair_known_ghost_position_errors,
-)
+SCRIPT_PATH = PROJECT_ROOT / "script" / "04_human_tile_data_preprocess.py"
+SCRIPT_SPEC = importlib.util.spec_from_file_location("script_04_human_tile_data_preprocess", SCRIPT_PATH)
+if SCRIPT_SPEC is None or SCRIPT_SPEC.loader is None:
+    raise ImportError(f"无法加载测试目标脚本：{SCRIPT_PATH}")
+SCRIPT_MODULE = importlib.util.module_from_spec(SCRIPT_SPEC)
+sys.modules[SCRIPT_SPEC.name] = SCRIPT_MODULE
+SCRIPT_SPEC.loader.exec_module(SCRIPT_MODULE)
+
+normalize_optional_ghost_fix_position = SCRIPT_MODULE.normalize_optional_ghost_fix_position
+repair_known_ghost_position_errors = SCRIPT_MODULE.repair_known_ghost_position_errors
 
 
 class HumanTileDataPreprocessTest(unittest.TestCase):

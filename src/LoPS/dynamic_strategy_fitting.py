@@ -218,7 +218,7 @@ def prepare_fitting_dataframe(
     if missing_columns:
         raise ValueError(
             "动态拟合输入缺少 calculate_utility 阶段应生成的字段："
-            f"{missing_columns}。请先运行 script/calculate_utility/run_calculate_utility.py。"
+            f"{missing_columns}。请先运行 script/05_calculate_utility.py。"
         )
 
     # 上游阶段已经生成 action_dir/available_dir；这里仅规范缺失值和 dtype。

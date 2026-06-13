@@ -8,8 +8,8 @@ from __future__ import annotations
 from pathlib import Path
 
 
-# 测试只读取 LoPS 仓库内已经迁移的数据，保证测试环境不依赖仓库外部路径。
-DATA_ROOT = Path(__file__).resolve().parents[1] / "data" / "generate_grammar"
-STRATEGY_SEQUENCE_DIR = DATA_ROOT / "input" / "strategy_sequence"
-STATE_GRAPH_DIR = DATA_ROOT / "input" / "state_graph"
-BASELINE_GRAMMAR_DIR = DATA_ROOT / "baseline" / "grammar"
+# 测试只读取 LoPS 仓库内 pipeline_data 的当前主流程结果，保证测试环境不依赖仓库外部路径。
+PIPELINE_ROOT = Path(__file__).resolve().parents[1] / "pipeline_data"
+STRATEGY_SEQUENCE_DIR = PIPELINE_ROOT / "human_fmri_data_preprocess" / "strategy_sequence"
+STATE_GRAPH_DIR = PIPELINE_ROOT / "state_dependency_graph" / "state_dependency_graph_data"
+BASELINE_GRAMMAR_DIR = PIPELINE_ROOT / "generate_grammar" / "grammar"
